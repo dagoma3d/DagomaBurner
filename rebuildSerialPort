@@ -1,0 +1,15 @@
+From : http://meow.noopkat.com/using-node-serialport-in-an-electron-app/
+
+Make sure you're on NodeJS version 4.0 or higher. (non, ça marche pas en 5.0 apparement)
+
+npm install -g electron-prebuilt
+npm install --save serialport
+npm install --save-dev electron-rebuild
+
+./node_modules/.bin/electron-rebuild -$(electron -v)
+electron .
+
+Si erreur :
+Uncaught Error: Cannot find module '~/my-electron-app/node_modules/serialport/build/serialport/v2.0.2/Release/node-v46-darwin-x64/serialport.node'
+
+mv ./node_modules/serialport/build/serialport/Release/electron-v34.0.1-darwin-x64 ./node_modules/serialport/build/serialport/Release/node-v46-darwin-x64

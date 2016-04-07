@@ -1,0 +1,1 @@
+C:\Users\jdelnatte.NEOTROPE\AppData\Roaming\npm\node_modules\electron-prebuilt\dist\electron.exe .
