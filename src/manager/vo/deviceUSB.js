@@ -2,8 +2,8 @@
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
-//var SerialPortLib = require("serial-worker");
-var SerialPortLib = require("serialport");
+var SerialPortLib = require("serial-worker");
+//var SerialPortLib = require("serialport");
 //var SerialPortLibNative = require("serialport");
 var SerialPort = SerialPortLib.SerialPort;
 var AbstractDeviceClass = require("./abstractDevice.js");
@@ -42,8 +42,8 @@ DeviceClassUSB.prototype.open = function (){
     //console.log("openSerial?", that.baudRate);
     that.serial = new SerialPort(that.portName, {
       baudrate: that.baudRate,
-      //parser: {type:"readline", value:"\r\n"},
-      parser: SerialPortLib.parsers.readline("\n"),
+      parser: {type:"readline", value:"\r\n"},
+      //parser: SerialPortLib.parsers.readline("\n"),
       //parser: SerialPortLib.parsers.byteDelimiter([10, 13]),
       disconnectedCallback : function disconnected(err){
         if(that.isBuilding == false)

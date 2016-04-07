@@ -5,18 +5,16 @@ html
     link(type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection")
   body
     div#bodyContainer
-      #errorMessage Aucune imprimante n'a &eacute;t&eacute; d&eacute;tect&eacute;e
-      #printConfig
-        h1 Device d&eacute;tect&eacute; avec l'UID 
-          span.port COM12
-        div.enum
-          p.key Version du Firmware : 
-            span.value#firmware V0.1.1
-        div.serverMessage
-          | Une nouvelle version du firmware (
-          span.value V0.1.2
-          |) est disponible pour votre imprimante.
-        a#burn.btn.big.wave-light Mettre &agrave; jour
+      form 
+        label Choose your COM port
+        select.browser-default
+          option(value="" disabled selected) Choose your COM port
+          option(value="1") COM 3
+          option(value="2") COM 4
+        
+        div#dragBox
+          .drag
+            | Drag and drop HEX file here
         
     script type="text/javascript"
       | window.$ = window.jQuery = require("../static/vendors/jquery/jquery-2.1.4.min.js");

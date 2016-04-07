@@ -85,7 +85,6 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
       that.emit("isDagoma", device);
     });
 
-
     device.on("delete", function(device){
       that.deletePortHandler(device);
     });
