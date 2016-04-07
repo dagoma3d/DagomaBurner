@@ -1,0 +1,19 @@
+{
+  "name": "SikwiApp",
+  "version": "0.1.5",
+  "main": "app.js",
+  "devDependencies": {
+    "electron-rebuild": "^1.0.2"
+  },
+  "dependencies": {
+    "ace": "0.0.2",
+    "electron-jade": "^1.3.0",
+    "electron-prebuilt": "^0.36.4",
+    "email-regex": "^1.0.0",
+    "jade": "^1.11.0",
+    "lodash": "^4.0.0",
+    "moment": "^2.11.1",
+    "serial-worker": "^1.0.3",
+    "serialport": "^2.0.5"
+  }
+}

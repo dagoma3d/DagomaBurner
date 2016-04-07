@@ -1,0 +1,26 @@
+html
+  head
+    title Dagoma Configurator
+    link(type="text/css" rel="stylesheet" href="../static/vendors/materialize/css/materialize.css"  media="screen,projection")
+    link(type="text/css" rel="stylesheet" href="../static/css/index.css"  media="screen,projection")
+  body
+    div#bodyContainer
+      #errorMessage Aucune imprimante n'a &eacute;t&eacute; d&eacute;tect&eacute;e
+      #printConfig
+        h1 Device d&eacute;tect&eacute; avec l'UID 
+          span.port COM12
+        div.enum
+          p.key Version du Firmware : 
+            span.value#firmware V0.1.1
+        div.serverMessage
+          | Une nouvelle version du firmware (
+          span.value V0.1.2
+          |) est disponible pour votre imprimante.
+        a#burn.btn.big.wave-light Mettre &agrave; jour
+        
+    script type="text/javascript"
+      | window.$ = window.jQuery = require("../static/vendors/jquery/jquery-2.1.4.min.js");
+      | window.Hammer = require('../static/vendors/hammer/hammer.min.js');
+      | document.jQuery = window.jQuery;
+    script(type="text/javascript" src="../static/vendors/materialize/js/materialize.js")
+    script(type="text/javascript" src="../controllers/index.js")
