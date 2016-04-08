@@ -1,7 +1,9 @@
 {
-  "name": "SikwiApp",
+  "name": "DagomaBurner",
   "version": "0.1.5",
   "main": "app.js",
+  "description":"Dagoma Melzi burner",
+  "author":"Dagoma",
   "devDependencies": {
     "electron-rebuild": "^1.0.2"
   },
@@ -15,5 +17,15 @@
     "moment": "^2.11.1",
     "serial-worker": "^1.0.3",
     "serialport": "^2.0.5"
+  },
+  "build": {
+    "app-bundle-id": "Dagoma Burner",
+    "app-category-type": "dagoma.fr.burner",
+    "iconUrl": "(windows only) A URL to an ICO file to use as the application icon, see details below"
+  },
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "pack": "build",
+    "dist": "build"
   }
 }

@@ -2,8 +2,8 @@
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
-var SerialPortLib = require("serialport");
-var SerialPort = SerialPortLib.SerialPort;
+//var SerialPortLib = require("serialport-worker");
+//var SerialPort = SerialPortLib.SerialPort;
 var AbstractDeviceClass = require("./abstractDevice.js");
 
 var root = __dirname + "/../";

@@ -4,7 +4,7 @@ body, html{
 	height: 100%;}
 
 html{
-  /*background-image: url("../images/logo.png");*/
+  background-image: url("../images/logo.png");
   background-size: auto;
   background-repeat: no-repeat;
   background-position: top left;
@@ -42,12 +42,33 @@ body{
   background-image: url("../images/arrow.png");
   background-repeat: no-repeat;
   background-position: center;
+	background-color: rgba(255,255,255, 0.9);
+	position: relative;
   text-align: center;
   padding-top: 150px;
 }
 
+.drag.hover{
+	opacity: 0.25;
+}
+
+.file{
+	padding: 10px;
+	width: 100%;
+}
+
+.fileName{
+	font-weight: bold;
+	text-align: center;
+	margin-top: 70px;
+}
+
 #burn{
   margin-left: 100px;
+	position: absolute;
+	bottom: 43px;
+	right: 10px;
+	background-color: #e19531;
 }
 
 #errorMessage{
@@ -75,4 +96,17 @@ p{
 .serverMessage{
   margin-top: 20px;
   font-weight: bold;
+}
+
+#globalLoader{
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+
+	z-index: 2;
+	background-color: rgba(255,255,255, 0.9);
+	padding-top: 130px;
+	text-align: center;
 }
