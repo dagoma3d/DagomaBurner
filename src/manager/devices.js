@@ -4,8 +4,8 @@ var root = __dirname + "/../";
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
-var SerialPortLib = require("serial-worker"); //From Tibus Github
-//var SerialPortLib = require("serialport");
+//var SerialPortLib = require("serial-worker"); //From Tibus Github
+var SerialPortLib = require("serialport");
 var SerialPort = SerialPortLib.SerialPort;
 
 var DeviceUSB = require(root+"manager/vo/deviceUSB.js");
@@ -85,6 +85,7 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
     });
 
     device.on("delete", function(device){
+      console.log("deletePortHandler", device);
       that.deletePortHandler(device);
     });
 
@@ -94,7 +95,7 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
 DeviceManagerClass.prototype.deletePortHandler = function(device){
   var that = this;
 
-  that.emit("deletePort", device);
+  that.emit("remove", device);
 
   delete that.devices[device.portName];
   delete that.readyDevices[device.portName];

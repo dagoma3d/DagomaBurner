@@ -196,7 +196,8 @@ Menu.setApplicationMenu(menu);
   });
 
   DeviceManager.on("remove", function(device){
-    updateDeviceList(device);
+    console.log("remove", device);
+    removeDeviceList(device);
   });
 
   var $dropZone = $("html");
@@ -262,5 +263,10 @@ Menu.setApplicationMenu(menu);
 } )( window.jQuery );
 
 function updateDeviceList(device){
-  $('select#com').append('<option val="'+device.portName+'">'+device.portName+'</option>');
+  device.$select = $('<option val="'+device.portName+'">'+device.portName+'</option>');
+  $('select#com').append(device.$select);
+}
+
+function removeDeviceList(device){
+  device.$select.remove();
 }
