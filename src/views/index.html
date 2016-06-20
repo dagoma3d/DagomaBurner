@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>Dagoma Configurator</title>
+    <link type="text/css" rel="stylesheet" href="../static/vendors/materialize/css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../static/css/index.css" media="screen,projection"/>
+  </head>
+  <body>
+    <div id="globalLoader">
+      <div class="roundInternalLoader">
+        <div class="preloader-wrapper small active">
+          <div class="spinner-layer spinner-blue">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <div class="spinner-layer spinner-red">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <div class="spinner-layer spinner-yellow">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+          <div class="spinner-layer spinner-green">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="bodyContainer">
+      <form>
+        <label>Choose your COM port</label>
+        <select id="com" class="browser-default">
+          <option value="" disabled="disabled" selected="selected">Choose your COM port</option>
+        </select>
+        <label>Choose the board's type</label>
+        <select id="type" class="browser-default">
+          <option value="" disabled="disabled" selected="selected">Choose the board's type</option>
+          <option value="melzi">Melzi</option>
+          <option value="mega">MKS</option>
+        </select>
+        <div id="dragBox">
+          <div class="drag">Drag and drop HEX file here</div>
+          <div class="file hide">
+            <p class="fileName">File.hex</p><a id="burn" class="btn">Burn</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script type="text/javascript">
+      window.$ = window.jQuery = require("../static/vendors/jquery/jquery-2.1.4.min.js");
+      window.Hammer = require('../static/vendors/hammer/hammer.min.js');
+      document.jQuery = window.jQuery;
+    </script>
+    <script type="text/javascript" src="../static/vendors/materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="../controllers/index.js"></script>
+  </body>
+</html>

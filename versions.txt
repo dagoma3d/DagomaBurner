@@ -1,0 +1,4 @@
+node : v5.10.1
+electron : v0.36.4
+serialport : 2.0.5
+avrgirl-arduino : 1.7.1

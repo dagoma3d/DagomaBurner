@@ -4,8 +4,8 @@ var root = __dirname + "/../";
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
-var SerialPortLib = require("serial-worker"); //From Tibus Github
-//var SerialPortLib = require("serialport");
+//var SerialPortLib = require("serial-worker"); //From Tibus Github
+var SerialPortLib = require("serialport");
 var SerialPort = SerialPortLib.SerialPort;
 
 var DeviceUSB = require(root+"manager/vo/deviceUSB.js");
@@ -41,13 +41,12 @@ DeviceManagerClass.prototype.resetPort = function(){
   var that = this;
 
   SerialPortLib.list(function (err, results){
-    //console.log("results", results);
 
     results.forEach(function(port){
         var portName = port.comName;
         //console.log(port);
         if(that.devices[portName] == null){
-            console.log(port.serialNumber);
+            console.log("port.serialNumber", port.serialNumber);
             //that.createDevice(portName, new DeviceUSB(portName, port.pnpId, port.manufacturer));
             that.createDevice(portName, new DeviceUSB(portName, port.serialNumber, port.manufacturer));
         }

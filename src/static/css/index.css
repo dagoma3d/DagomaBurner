@@ -33,7 +33,7 @@ body{
 
 #dragBox{
   width: 100%;
-  height: 200px;
+  height: 146px;
   border: 1px dashed grey;
   margin-top: 10px;
 }
@@ -45,7 +45,7 @@ body{
 	background-color: rgba(255,255,255, 0.9);
 	position: relative;
   text-align: center;
-  padding-top: 150px;
+  padding-top: 118px;
 }
 
 .drag.hover{
@@ -60,13 +60,13 @@ body{
 .fileName{
 	font-weight: bold;
 	text-align: center;
-	margin-top: 70px;
+	margin-top: 40px;
 }
 
 #burn{
   margin-left: 100px;
 	position: absolute;
-	bottom: 43px;
+	bottom: 37px;
 	right: 10px;
 	background-color: #e19531;
 }
