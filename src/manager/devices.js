@@ -4,8 +4,8 @@ var root = __dirname + "/../";
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
-//var SerialPortLib = require("serial-worker"); //From Tibus Github
-var SerialPortLib = require("serialport");
+var SerialPortLib = require("serial-worker"); //From Tibus Github
+//var SerialPortLib = require("serialport");
 var SerialPort = SerialPortLib.SerialPort;
 
 var DeviceUSB = require(root+"manager/vo/deviceUSB.js");
