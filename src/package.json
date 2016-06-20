@@ -9,5 +9,15 @@
     "lodash": "^4.0.0",
     "moment": "^2.11.1",
     "serialport": "^3.1.2"
-  }
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.1.0",
+    "node-gyp": "^3.3.1",
+    "node-pre-gyp": "^0.6.28"
+  },
+  "scripts": {
+    "install": "node-pre-gyp install --fallback-to-build --runtime=electron --target=1.1.0 --target_arch=x64 --directory=node_modules/serialport/ --update-binary --dist-url=https://atom.io/download/atom-shell",
+     "start": "electron app.js"
+  },
+  "engine": "^6.1.0"
 }
