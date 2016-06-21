@@ -9,6 +9,7 @@ sudo apt-get install -y nodejs
 
 cd ${PROJECT}/src || exit 1
 
+sudo npm install -g electron-prebuilt@1.2.3
 rm -rf node_modules && npm install
 
 ### Start
