@@ -28,7 +28,7 @@ function openWindow(){
     'min-width': 400,
     'min-height': 320,
     resizable: false, frame: true,
-    type:"dock",
+    //type:"dock",
     //'auto-hide-menu-bar': true,
     'use-content-size': true,
   });
