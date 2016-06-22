@@ -38,7 +38,7 @@ var template = [
       {
         label: 'Quit',
         accelerator: 'Command+Q',
-        click() { app.quit(); }
+        click() { require('electron').remote.app.quit(); }
       },
     ]
   },
