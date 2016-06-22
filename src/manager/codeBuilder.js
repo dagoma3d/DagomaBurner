@@ -13,6 +13,7 @@ module.exports = function(device, file, type, callback){
   console.log("burn to ", device.portName);
 
   var board = "mega";
+  device.isBuilding = true;
   device.pause();
 
   boards.byName.melzi = {
@@ -33,41 +34,25 @@ module.exports = function(device, file, type, callback){
     protocol: 'stk500v1'
   };
 
+  setTimeout(function(){
+    var avrgirl = new Avrgirl({
+      board: type, //"melzi",//"mega",
+      port: device.portName,
+      debug: true
+    });
 
-  var avrgirl = new Avrgirl({
-    board: type, //"melzi",//"mega",
-    port: device.portName,
-    debug: true
-  });
+    avrgirl.flash(file, function (error) {
+      if (error) {
+        console.log("error", error);
+        callback(false);
+      } else {
+        console.log('done.');
+        callback(true/*, result.message*/);
+      }
+      device.isBuilding = false;
+      setTimeout(function(){device.resume()}, 1000);
+    });
 
-  avrgirl.flash(file, function (error) {
-    if (error) {
-      console.log("error", error);
-      callback(false);
-    } else {
-      console.log('done.');
-      callback(true/*, result.message*/);
-    }
-    device.resume();
-  });
-
-  /*
-  {
-    baud: 57600,
-    signature: new Buffer([0x1e, 0x97, 0x05]), // ATmega2560
-    //0x1e9705
-    pageSize: 256,
-    delay1: 10,
-    delay2: 1,
-    timeout:0xc8,
-    stabDelay:0x64,
-    cmdexeDelay:0x19,
-    synchLoops:0x20,
-    byteDelay:0x00,
-    pollValue:0x53,
-    pollIndex:0x03,
-    productId: ['0x0403', '0x6001'],
-    protocol: 'stk500v1'
   },
-  */
+  1000);
 };
