@@ -24,7 +24,7 @@ app.on('ready', function(){
 function openWindow(){
   mainWindow = new BrowserWindow({
     width: 400,
-    height: (process.platform =="win32")?350:320,
+    height:  (process.platform=="win32")?350:320,
     resizable: false, frame: true,
     //type:"dock",
     //'auto-hide-menu-bar': true,
@@ -34,5 +34,5 @@ function openWindow(){
   mainWindow.loadURL(`file://${__dirname}/views/index.html`);
   mainWindow.focus();
   mainWindow.on("will-navigate", function(e) { e.preventDefault() });
-  mainWindow.openDevTools();
+  //mainWindow.openDevTools();
 };
