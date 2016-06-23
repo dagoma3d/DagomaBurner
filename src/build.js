@@ -6,9 +6,14 @@ var path = require('path');
 var sh = require('shelljs');
 
 var appVersion = pkgjson.version
-  , electronPackager = '.\\node_modules\\.bin\\electron-packager'
   , electronVersion = '1.2.3'
   , icon = 'icon.icns';
+
+var electronPackager;
+if(os.platform() == "win32")
+  electronPackager = '.\\node_modules\\.bin\\electron-packager';
+else
+  electronPackager = './node_modules/.bin/electron-packager';
 
 var archs = ['ia32', 'x64'];
 
@@ -45,7 +50,7 @@ function pack (plat, arch) {
 
   for(var i in cmds){
     console.log(cmds[i]);
-    sh.exec(cmds[i]); 
+    sh.exec(cmds[i]);
   }
 
 }
