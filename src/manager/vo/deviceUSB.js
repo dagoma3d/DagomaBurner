@@ -16,7 +16,7 @@ var DeviceClassUSB = function(portName, uid, manufacturer){
 
   this.parent = new AbstractDeviceClass(portName.split("/dev/").join(""), this);
 	this.portName = portName;
-  this.baudRate = 115200;
+  this.baudRate = 250000;
 	this.uid = uid;
 	this.serial = null;
   this.isDagoma = false;
@@ -53,7 +53,6 @@ DeviceClassUSB.prototype.open = function (){
   }
 
   that.serial.open(function (error){
-    console.log("error", error, that.portName);
     that.serialPortOpenHandler(error);
     that.resetPort();
   });
@@ -71,6 +70,7 @@ DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
     }
 
     that.ready = true;
+    console.log("serialPortOpenHandler");
 
     that.serial.on('data', function(data){
       that.serialPortDataHandler(data);
@@ -81,8 +81,8 @@ DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
 DeviceClassUSB.prototype.serialPortDataHandler = function (pData) {
   var that = this;
   var lineData = pData.toString();
+  console.log(lineData);
   /*data += pData;
-  console.log(pData);
   while(that.parseData()){
     console.log("coucou");
   };
