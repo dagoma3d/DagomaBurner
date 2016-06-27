@@ -11,12 +11,7 @@ module.exports = function(device, file, type, callback){
   if(device == null)
     return callback(false);
 
-
-  device.send("G28\n\r");
-  callback(true);
-  return;
-
-  console.log("burn to ", device.portName);
+  console.log("burn to ", device);
 
   var board = "mega";
   device.isBuilding = true;

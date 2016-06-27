@@ -51,7 +51,7 @@ var FirmwareControllerClass = function(oPortSelectorController){
 
   $btn.on("click", function(){
     $("#globalLoader").show();
-    new CodeBuilder(portSelectorController.selectedDevice, file.path, $('select#type').val(), function(success){
+    new CodeBuilder(portSelectorController.selectedDevice(), file.path, $('select#type').val(), function(success){
       $("#globalLoader").hide();
       if(success)
         alert("Success");
