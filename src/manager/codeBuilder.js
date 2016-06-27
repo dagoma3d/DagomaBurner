@@ -10,6 +10,12 @@ var EventEmitter = require('events').EventEmitter,
 module.exports = function(device, file, type, callback){
   if(device == null)
     return callback(false);
+
+
+  device.send("G28\n\r");
+  callback(true);
+  return;
+
   console.log("burn to ", device.portName);
 
   var board = "mega";

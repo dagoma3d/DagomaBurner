@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Dagoma Configurator</title>
+    <title>Dagoma Doctor</title>
     <link type="text/css" rel="stylesheet" href="../static/vendors/materialize/css/materialize.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="../static/css/index.css" media="screen,projection"/>
   </head>
@@ -55,25 +55,63 @@
         </div>
       </div>
     </div>
-    <div id="bodyContainer">
+    <div id="navbar" class="row">
+      <div class="col s8">
+        <ul class="tabs">
+          <li class="tab col s3"><a href="#firmware">Firmware</a></li>
+          <li class="tab col s3"><a class="active" href="#diagnostic">Diagnostique</a></li>
+        </ul>
+        <a id="close" href="#" class="close tooltipped" data-position="bottom" data-delay="50" data-tooltip="Close App"><i class="mdi-navigation-close"></i></a>
+      </div>
+    </div>
+    <div id="tabsContainer">
       <form>
-        <label>Choose your COM port</label>
+        <label>Choisissez le port s&eacute;rie de votre imprimante</label>
         <select id="com" class="browser-default">
-          <option value="" disabled="disabled" selected="selected">Choose your COM port</option>
+          <option value="" disabled="disabled" selected="selected">Choisissez le port s&eacute;rie de votre imprimante</option>
         </select>
-        <label>Choose the board's type</label>
-        <select id="type" class="browser-default">
-          <option value="" disabled="disabled" selected="selected">Choose the board's type</option>
-          <option value="melzi">Melzi</option>
-          <option value="mega">MKS</option>
-        </select>
-        <div id="dragBox">
-          <div class="drag">Drag and drop HEX file here</div>
-          <div class="file hide">
-            <p class="fileName">File.hex</p><a id="burn" class="btn">Burn</a>
+      </form>
+      <div id="firmware" class="col s12">
+        <form>
+          <label>Choisissez le type de carte de votre imprimante</label>
+          <select id="type" class="browser-default">
+            <option value="" disabled="disabled" selected="selected">Choisissez le type de carte de votre imprimante</option>
+            <option value="melzi">Melzi</option>
+            <option value="mega">MKS</option>
+          </select>
+          <div id="dragBox">
+            <div class="drag">Glissez/D&eacute;posez le fichier .hex du firmware</div>
+            <div class="file hide">
+              <p class="fileName">File.hex</p><a id="burn" class="btn">Flasher</a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div id="diagnostic" class="col s12">
+        <div id="modalZoffset" class="modal modal-fixed-footer">
+          <div class="modal-content">
+            <h4>Z-Offset</h4>
+            <p>Placez une feuille entre la buse et le plateau.</p>
+            <p>dessendez la buse &agrave; l'aide des boutons ci-contre pour venir pincer la feuille</p>
+            <p class="center"><a id="zp01" class="btn">Z+01</a><a id="zp1" class="btn">Z+1</a><a id="zp10" class="btn">Z+10</a></p>
+            <p class="center"><a id="zm01" class="btn">Z-01</a><a id="zm1" class="btn">Z-1</a><a id="zm10" class="btn">Z-10</a></p>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">La feuille est pinc&eacute;e</a>
           </div>
         </div>
-      </form>
+        <p><a id="home" class="btn">Home</a><a id="zoffset" class="btn">Z-Offset</a></p>
+        <p>
+          <a id="zp01" class="btn">Z+01</a>
+          <a id="zp1" class="btn">Z+1</a>
+          <a id="zp10" class="btn">Z+10</a>
+        </p>
+        <p>
+          <a id="zm01" class="btn">Z-01</a>
+          <a id="zm1" class="btn">Z-1</a>
+          <a id="zm10" class="btn">Z-10</a>
+        </p>
+      </div>
     </div>
     <script type="text/javascript">
       window.$ = window.jQuery = require("../static/vendors/jquery/jquery-2.1.4.min.js");

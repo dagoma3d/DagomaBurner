@@ -2,6 +2,9 @@
 
 var _root = __dirname + "/../";
 var DeviceManager = require(_root+"manager/devices.js");
+var FirmwareController = require(_root+"controllers/firmware.js");
+var PortSelectorController = require(_root+"controllers/portSelector.js");
+var DiagnosticController = require(_root+"controllers/diagnostic.js");
 var CodeBuilder = require(_root+"manager/codeBuilder.js");
 
 const {remote} = require('electron');
@@ -128,85 +131,14 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 ( function( $ ) {
-  $("#printConfig").hide();
+  var portSelectorController = new PortSelectorController()
+  var firmwareController = new FirmwareController(portSelectorController);
+  var diagnosticController = new DiagnosticController(portSelectorController);
+
+  $("#navbar a.close").click(function(){
+    remote.getCurrentWindow().close();
+  });
+
   $("#globalLoader").hide();
 
-  DeviceManager.on("add", function(device){
-    updateDeviceList(device);
-  });
-
-  DeviceManager.on("remove", function(device){
-    console.log("remove", device);
-    removeDeviceList(device);
-  });
-
-  var $dropZone = $("html");
-  var $dragZone = $(".drag");
-  var $btn = $("#burn");
-  var hasFile = false;
-  var file;
-  var fileName;
-  var counter = 0;
-
-  $dropZone.on("dragenter", function (e) {
-    counter++;
-  });
-
-  $dropZone.on("dragover", function (e) {
-    $dragZone.removeClass("hide");
-    $dragZone.addClass("hover");
-    $(".file").addClass("hide");
-    return false;
-  });
-
-  $dropZone.on("dragleave", function (e) {
-    counter--;
-    if (counter === 0) {
-      $dragZone.removeClass("hover");
-      if(hasFile){
-        $(".file").removeClass("hide");
-        $dragZone.addClass("hide");
-      }
-    }
-    return false;
-  });
-
-  $dropZone.on("drop", function(e){
-    e.preventDefault();
-
-    counter = 0;
-    $dragZone.removeClass("hover");
-
-    file = e.originalEvent.dataTransfer.files[0];
-    fileName = file.name;
-    var fileNameSplit = fileName.split(".");
-    if(fileNameSplit[fileNameSplit.length-1] == "hex"){
-      hasFile = true;
-      $(".file .fileName").text(fileName);
-      $(".file").removeClass("hide");
-      $dragZone.addClass("hide");
-    }
-
-  });
-
-  $btn.on("click", function(){
-    $("#globalLoader").show();
-    new CodeBuilder(DeviceManager.readyDevices[$('select#com').val()], file.path, $('select#type').val(), function(success){
-      $("#globalLoader").hide();
-      if(success)
-        alert("Success");
-      else
-        alert("Error");
-    });
-  })
-
 } )( window.jQuery );
-
-function updateDeviceList(device){
-  device.$select = $('<option val="'+device.portName+'">'+device.portName+'</option>');
-  $('select#com').append(device.$select);
-}
-
-function removeDeviceList(device){
-  device.$select.remove();
-}

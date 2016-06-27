@@ -7,7 +7,7 @@ html{
   background-image: url("../images/logo.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: top left;
+  background-position: bottom left;
 	-webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -17,23 +17,44 @@ html{
   cursor: default;}
 
 a, button{
-  cursor: pointer;
-}
+  cursor: pointer;}
 
 html.loader{
-	background-image:none;
-}
+	background-image:none;}
 
 body{
 	position: relative;
-  -webkit-app-region: drag;
-  margin-left: 100px;
-  margin-top: 10px;
-  width: 280px;}
+  -webkit-app-region: drag;}
+
+#navbar{
+  background-color: #e19531;}
+
+  #navbar a.close{
+    position: absolute;
+    width: 60px;
+    height: 50px;
+    color: white;
+    line-height: 50px;
+    top: 0px;
+    right: 0px;
+    text-align: center;
+    font-size: 30;}
+
+  #tabsContainer{
+    margin: 0px 10px 10px 100px;}
+
+  .tabs{
+    background-color : transparent;}
+
+    .tabs .tab a{
+      color:white;}
+
+    .tabs .indicator{
+      background-color:black;}
 
 #dragBox{
   width: 100%;
-  height: 146px;
+  height: 201px;
   border: 1px dashed grey;
   margin-top: 10px;
 }
@@ -45,7 +66,7 @@ body{
 	background-color: rgba(255,255,255, 0.9);
 	position: relative;
   text-align: center;
-  padding-top: 118px;
+  padding-top: 148px;
 }
 
 .drag.hover{
@@ -60,14 +81,14 @@ body{
 .fileName{
 	font-weight: bold;
 	text-align: center;
-	margin-top: 40px;
+	margin-top: 80px;
 }
 
 #burn{
   margin-left: 100px;
 	position: absolute;
-	bottom: 37px;
-	right: 10px;
+	bottom: 19px;
+	right: 20px;
 	background-color: #e19531;
 }
 
@@ -75,6 +96,10 @@ body{
   font-size: 1.5rem;
   text-align: center;
   margin-top: 40%;
+}
+
+#diagnostic a{
+  margin:5px;
 }
 
 h1{
@@ -107,6 +132,6 @@ p{
 
 	z-index: 2;
 	background-color: rgba(255,255,255, 0.9);
-	padding-top: 130px;
+	padding-top: 210px;
 	text-align: center;
 }

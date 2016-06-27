@@ -81,6 +81,7 @@ DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
 DeviceClassUSB.prototype.serialPortDataHandler = function (pData) {
   var that = this;
   var lineData = pData.toString();
+  that.lastSerialLine = lineData;
   console.log(lineData);
   /*data += pData;
   while(that.parseData()){
