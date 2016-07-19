@@ -105,7 +105,7 @@ DiagnosticControllerClass.prototype.waitForOK = function (callback) {
   var _data;
 
   var dataHandler = function(data){
-    if(data == "OK"){
+    if(data.toLowerCase() == "ok"){
       that.portSelector.selectedDevice().removeListener("receive", dataHandler);
       if(callback){
         return callback(_data);
@@ -117,5 +117,13 @@ DiagnosticControllerClass.prototype.waitForOK = function (callback) {
 
   that.portSelector.selectedDevice().on("receive", dataHandler);
 };
+
+function convertToHex(str) {
+    var hex = '';
+    for(var i=0;i<str.length;i++) {
+        hex += ''+str.charCodeAt(i).toString(16);
+    }
+    return hex;
+}
 
 module.exports = DiagnosticControllerClass;

@@ -1,3 +1,5 @@
+Pour rebuild SerialPort sur windows, suivre le tuto sur le github de serialport pour installer tous les compilateurs qu'il faut
+
 From : http://meow.noopkat.com/using-node-serialport-in-an-electron-app/
 
 Make sure you're on NodeJS version 4.0 or higher. (non, ça marche pas en 5.0 apparement)
