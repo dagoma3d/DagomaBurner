@@ -6,17 +6,36 @@
 version="$(jq -r '.version' src/package.json)"
 versionUnderscore=${version//./_}
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${version}" "./build/electron-v1.1.3-darwin-x64/DagomaBurner.app/Contents/Info.plist"
-/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${version}" "./build/electron-v1.1.3-darwin-x64/DagomaBurner.app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${version}" "./build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${version}" "./build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Info.plist"
 
 
-# Windows
-#asar pack src/ app.asar
-#cp app.asar ./build/electron-v0.36.4-win32-x64/resources/
+############ Windows ############
+echo "Build Windows"
+rm -rf build/DagomaDoctor-win32-x64/resources/app/
+cp -R src/ build/DagomaDoctor-win32-x64/resources/app
+rm -rf build/DagomaDoctor-win32-x64/resources/app/node_modules
+cp -R build/modules/win/node_modules/ build/DagomaDoctor-win32-x64/resources/app/node_modules
+asar pack build/DagomaDoctor-win32-x64/resources/app/ build/DagomaDoctor-win32-x64/resources/app.asar
+rm -rf build/DagomaDoctor-win32-x64/resources/app/
 
-#cp -R "./build/electron-v0.36.4-win32-x64" "./build/DagomaBurner ${versionUnderscore}"
+############ Mac ############
+echo "Build Mac"
+rm -rf build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/
+cp -R src/ build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/
+rm -rf build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/node_modules
+cp -R build/modules/mac/node_modules/ build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/node_modules
+asar pack build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/ build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app.asar
+rm -rf build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/
 
-# MAC
-asar pack src/ app.asar
-cp app.asar "./build/electron-v1.1.3-darwin-x64/DagomaBurner.app/Contents/Resources/"
-cp -R "./build/electron-v1.1.3-darwin-x64/DagomaBurner.app" "./build/DagomaBurner ${versionUnderscore}.app"
+############ Linux ############
+echo "Build Linux"
+rm -rf build/DagomaDoctor-linux-x64/resources/app/
+cp -R src/ build/DagomaDoctor-linux-x64/resources/app
+rm -rf build/DagomaDoctor-linux-x64/resources/app/node_modules
+cp -R build/modules/linux/node_modules/ build/DagomaDoctor-linux-x64/resources/app/node_modules
+asar pack build/DagomaDoctor-linux-x64/resources/app/ build/DagomaDoctor-linux-x64/resources/app.asar
+rm -rf build/DagomaDoctor-linux-x64/resources/app/
+tar -czf build/DagomaDoctor-linux-x64.tar.gz build/DagomaDoctor-linux-x64
+
+echo "Build Finished"

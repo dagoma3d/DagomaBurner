@@ -28,11 +28,13 @@ function openWindow(){
     resizable: false, frame: false,
     //type:"dock",
     //'auto-hide-menu-bar': true,
+    title: "DagomaDoctor",
     'use-content-size': true,
+    "icon":`file://${__dirname}/icon.ico`
   });
   //mainWindow.loadUrl('file://' + __dirname + '/views/SerialMonitorWindow.jade');
   mainWindow.loadURL(`file://${__dirname}/views/index.html`);
   mainWindow.focus();
   mainWindow.on("will-navigate", function(e) { e.preventDefault() });
-  mainWindow.openDevTools();
+  //mainWindow.openDevTools();
 };
