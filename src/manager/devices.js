@@ -73,15 +73,20 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
 
     device.on("ready", function(device){
       that.readyDevicesHandler(device);
-      that.emit("add", device);
+    });
+
+    that.emit("add", device);
+
+    device.on("open", function(device){
+      that.emit("open", device);
     });
 
     device.on("change", function(device){
       that.emit("change", device);
     });
 
-    device.on("isDagoma", function(device){
-      that.emit("isDagoma", device);
+    device.on("printerFound", function(device){
+      that.emit("printerFound", device);
     });
 
     device.on("delete", function(device){
@@ -89,7 +94,7 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
       that.deletePortHandler(device);
     });
 
-    device.open();
+    //device.open();
 }
 
 DeviceManagerClass.prototype.deletePortHandler = function(device){

@@ -1,3 +1,6 @@
+*{
+  white-space-collapse: discard;}
+
 body, html{
 	overflow: hidden;
 	width: 100%;
@@ -7,7 +10,7 @@ html{
   background-image: url("../images/logo.png");
   background-size: auto;
   background-repeat: no-repeat;
-  background-position: bottom left;
+  background-position: 0px 90px;
 	-webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -15,6 +18,12 @@ html{
   -ms-user-select: none;
   user-select: none;
   cursor: default;}
+
+#version{
+  position: fixed;
+  bottom: 1px;
+  color: #DDD;
+  left: 6px;}
 
 a, button{
   cursor: pointer;}
@@ -25,6 +34,13 @@ html.loader{
 body{
 	position: relative;
   -webkit-app-region: drag;}
+
+a, select, button{
+  -webkit-app-region: no-drag;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+}
 
 #navbar{
   background-color: #e19531;}
@@ -44,13 +60,32 @@ body{
     margin: 0px 10px 10px 100px;}
 
   .tabs{
-    background-color : transparent;}
+    background-color : transparent;
+    overflow: hidden;}
 
     .tabs .tab a{
       color:white;}
 
     .tabs .indicator{
       background-color:black;}
+
+    .tabs .tabDiagnostique span{
+      position: absolute;
+      right: 10px;
+      padding: 0;
+      line-height: 28px;
+      font-weight: 100;
+      text-transform: lowercase;}
+
+#comSelector{
+  margin-bottom: 10px;}
+
+  #comSelector p{
+    display: none;
+    margin: 5px;
+    color: #999;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #CCC;}
 
 #dragBox{
   width: 100%;
@@ -75,20 +110,27 @@ body{
 
 .file{
 	padding: 10px;
-	width: 100%;
+  width: 100%;
+  position: relative;
+  height: 200px;
 }
 
 .fileName{
 	font-weight: bold;
-	text-align: center;
-	margin-top: 80px;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  overflow-wrap: break-word;
+  -webkit-transform: translateY(-50%);
+  width: 80%;
+  margin: auto;
 }
 
 #burn{
   margin-left: 100px;
 	position: absolute;
-	bottom: 19px;
-	right: 20px;
+  bottom: 10px;
+  right: 10px;
 	background-color: #e19531;
 }
 
@@ -98,9 +140,97 @@ body{
   margin-top: 40%;
 }
 
+.disabled{
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+#diagnostic{
+  margin-top:40px;
+}
+
 #diagnostic a{
   margin:5px;
+  background-color: #4d5254;
 }
+
+#diagnostic .modal-action{
+  background-color: #ff8242;}
+
+#diagnostic .modal-content{
+  overflow-y: hidden;}
+
+#diagnostic table{
+  margin-left: 30px;
+  width: 210px;
+  float: left;
+  margin-right: 16px;
+  border-right: 1px solid #CCC;}
+
+
+  #diagnostic .modal-content table{
+    margin-left: 80px;
+    margin-top: 20px;
+    border: 0px;}
+
+  #diagnostic .modal-content table td{
+    width: 70px!important;
+    padding-bottom: 5px!important;}
+
+  #diagnostic table.position td{
+    text-align: center;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+    width: 42px;}
+
+    #diagnostic table.position td a{
+      width: 40px;
+      text-align: center;
+      padding: 0px;
+      margin: 1px;}
+
+    #diagnostic table.position td.colZ{
+      padding-left: 20px;}
+
+    #diagnostic table.position a.colZ{
+      margin-left: 20px;}
+
+    #diagnostic table.position .speedControl{
+      margin-top: 20px;
+      width: 100%;
+      background-color: #4d5254;
+      height: 42px;
+      line-height: 42px;
+      text-align: center;
+      color: white;
+      border-radius: 2px;}
+
+      #diagnostic table.position .speedControl a{
+        display: block;
+        background: transparent;
+        margin: 0px;
+        padding: 0px;
+        float: left;
+        width: 25%;
+        border-radius: 0px;
+        color: white;
+        border-left: 1px solid white;}
+
+      #diagnostic table.position .speedControl a:first-child{
+        border-left: 0px;}
+
+      #diagnostic table.position .speedControl a.selected{
+        box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+        background-color: #ff8242;
+        border-radius:2px;
+        }
+
+      #diagnostic #stopMotors{
+        background-color: red;
+        width: 100%;
+        margin: 10px 0px;}
+
 
 h1{
   font-size: 1.5rem;

@@ -8,6 +8,12 @@ var FirmwareControllerClass = function(oPortSelectorController){
   var counter = 0;
   var portSelectorController = oPortSelectorController;
 
+  $dragZone.addClass("disabled");
+
+  $('select#type').on("change", function(e){
+    $dragZone.removeClass("disabled");
+  });
+
   $dropZone.on("dragenter", function (e) {
     counter++;
   });
@@ -38,13 +44,15 @@ var FirmwareControllerClass = function(oPortSelectorController){
     $dragZone.removeClass("hover");
 
     file = e.originalEvent.dataTransfer.files[0];
-    fileName = file.name;
-    var fileNameSplit = fileName.split(".");
-    if(fileNameSplit[fileNameSplit.length-1] == "hex"){
-      hasFile = true;
-      $(".file .fileName").text(fileName);
-      $(".file").removeClass("hide");
-      $dragZone.addClass("hide");
+    if(file){
+      fileName = file.name;
+      var fileNameSplit = fileName.split(".");
+      if(fileNameSplit[fileNameSplit.length-1] == "hex"){
+        hasFile = true;
+        $(".file .fileName").text(fileName);
+        $(".file").removeClass("hide");
+        $dragZone.addClass("hide");
+      }
     }
 
   });

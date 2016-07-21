@@ -1,8 +1,15 @@
 var lodash = require("lodash");
+var DeviceManager = require(_root+"manager/devices.js");
 
 var DiagnosticControllerClass = function(oPortSelectorController){
   var that = this;
   that.portSelector = oPortSelectorController;
+
+  DeviceManager.on("printerFound", function(device){
+    that.sendGCodeAndGetResponse("M105", false, function(response){
+      console.log(response);
+    });
+  })
 
   $('.modal-trigger').leanModal();
 
@@ -14,12 +21,46 @@ var DiagnosticControllerClass = function(oPortSelectorController){
   that.addButtonGCode("#zm01", ["G91", "G0 Z-0.1"], false);
   that.addButtonGCode("#zm1", ["G91", "G0 Z-1"], false);
   that.addButtonGCode("#zm10", ["G91", "G0 Z-10"], false);
+  that.addButtonGCode("#stopMotors", ["M18"], false);
+
+
+  $("#diagnostic .speedControl a").click(function(){
+    $("#diagnostic .speedControl a").removeClass("selected");
+    $(this).addClass("selected");
+  });
+
+  $("#diagnostic .btnPosition").click(function(){
+    var gcode = "G0 ";
+    switch ($(this)[0].id) {
+      case "xp":
+        gcode += "X";
+        break;
+      case "xm":
+        gcode += "X-";
+        break;
+      case "yp":
+        gcode += "Y";
+        break;
+      case "ym":
+        gcode += "Y-";
+        break;
+      case "zp":
+        gcode += "Z";
+        break;
+      case "zm":
+        gcode += "Z-";
+        break;
+    }
+
+    gcode += $("#diagnostic .speedControl .selected").text();
+
+    that.sendGCodes(["G91", gcode], false);
+  });
 
   $("#diagnostic #zoffset").click(function(){
       that.sendGCodes([
         "M851 Z-4",
         "G28",
-        /*"M109 S180",*/
         "G91",
         "G0 Z5",
       ],
@@ -102,19 +143,21 @@ DiagnosticControllerClass.prototype.sendGCodeRecursive = function (gCodes, callb
 
 DiagnosticControllerClass.prototype.waitForOK = function (callback) {
   var that = this;
-  var _data;
+  var _data = "";
 
   var dataHandler = function(data){
-    if(data.toLowerCase() == "ok"){
+    _data += data;
+
+    if(data.toLowerCase().indexOf("ok") >= 0){
       that.portSelector.selectedDevice().removeListener("receive", dataHandler);
       if(callback){
         return callback(_data);
       }
     }
 
-    _data += data;
   };
 
+  that.portSelector.selectedDevice().removeListener("receive", dataHandler);
   that.portSelector.selectedDevice().on("receive", dataHandler);
 };
 

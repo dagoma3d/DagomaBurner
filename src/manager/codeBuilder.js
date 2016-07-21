@@ -51,7 +51,7 @@ module.exports = function(device, file, type, callback){
         callback(true/*, result.message*/);
       }
       device.isBuilding = false;
-      setTimeout(function(){device.resume()}, 1000);
+      setTimeout(function(){device.open()}, 1000);
     });
 
   },

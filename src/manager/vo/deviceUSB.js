@@ -19,7 +19,7 @@ var DeviceClassUSB = function(portName, uid, manufacturer){
   this.baudRate = 250000;
 	this.uid = uid;
 	this.serial = null;
-  this.isDagoma = false;
+  this.printerFound = false;
 };
 
 util.inherits(DeviceClassUSB, EventEmitter);
@@ -38,6 +38,8 @@ DeviceClassUSB.prototype.open = function (){
   var that = this;
   that.parent.open();
 
+  that.emit("open", that);
+
   if(that.serial == null){
     //console.log("openSerial?", that.baudRate);
     that.serial = new SerialPort(that.portName, {
@@ -53,8 +55,8 @@ DeviceClassUSB.prototype.open = function (){
   }
 
   that.serial.open(function (error){
-    that.serialPortOpenHandler(error);
     that.resetPort();
+    that.serialPortOpenHandler(error);
   });
 }
 
@@ -108,11 +110,14 @@ DeviceClassUSB.prototype.parseData = function(){
 
   if(lineData.charCodeAt(0) == 13)
     lineData = lineData.substr(1);
-
+  /*
+  if(lineData.indexOf("start")==0 && that.hasStarted == false)
+    that.hasStarted == true;
+  */
   //console.log(lineData);
-  if(lineData.indexOf("echo:")==0 && that.isDagoma==false){
-    that.emit("isDagoma", that);
-    that.isDagoma = true;
+  if(lineData.indexOf("echo:SD")==0 && that.printerFound==false){
+    that.emit("printerFound", that);
+    that.printerFound = true;
   }
   //console.log(lineData.charCodeAt(0), lineData.charCodeAt(1));
   /*
@@ -158,10 +163,8 @@ DeviceClassUSB.prototype.endsWith = function(topic, suffix) {
 DeviceClassUSB.prototype.resetPort = function () {
   var that = this;
 
-  if(!that.serial)
-    return;
-
-  return;
+  //if(!that.serial)
+  //  return;
 
   that.serial.set({
     rts: true,
@@ -223,8 +226,8 @@ DeviceClassUSB.prototype.delete = function(){
 
 DeviceClassUSB.prototype.close = function(force){
   var that = this;
-  if(that.isNRFGateway && force == false)
-    return;
+
+  that.printerFound = false;
 
   //that.ready = false;
   that.parent.close();
