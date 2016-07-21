@@ -12,17 +12,17 @@ const {Menu, MenuItem} = remote;
 
 var template = [
   {
-    label: 'Dagoma Burner',
+    label: 'Dagoma Doctor',
     submenu: [
       {
-        label: 'Dagoma Burner',
+        label: 'Dagoma Doctor',
         selector: 'orderFrontStandardAboutPanel:'
       },
       {
         type: 'separator'
       },
       {
-        label: 'Hide Dagoma Burner',
+        label: 'Hide Dagoma Doctor',
         accelerator: 'Command+H',
         selector: 'hide:'
       },
@@ -139,6 +139,10 @@ Menu.setApplicationMenu(menu);
     remote.getCurrentWindow().close();
   });
 
+  $('select').material_select();
+
   $("#globalLoader").hide();
+
+  $("#version").text("V"+require(_root+"package.json").version);
 
 } )( window.jQuery );
