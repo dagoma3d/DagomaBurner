@@ -30,7 +30,7 @@ function openWindow(){
     //'auto-hide-menu-bar': true,
     title: "DagomaDoctor",
     'use-content-size': true,
-    "icon":`file://${__dirname}/icon.ico`
+    //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
   });
   //mainWindow.loadUrl('file://' + __dirname + '/views/SerialMonitorWindow.jade');
   mainWindow.loadURL(`file://${__dirname}/views/index.html`);
