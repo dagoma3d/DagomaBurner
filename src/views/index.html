@@ -57,10 +57,11 @@
       </div>
     </div>
     <div id="navbar" class="row">
-      <div class="col s10">
+      <div class="col s11">
         <ul class="tabs">
-          <li class="tab "><a class="active" href="#firmware">Firmware</a></li>
+          <li class="tab"><a class="active" href="#firmware">Firmware</a></li>
           <li class="tab tabDiagnostique"><a href="#diagnostic">Diagnostic<span>beta</span></a></li>
+          <!--li class="tab"><a href="#print">Print<span>alpha</span></a></li-->
         </ul>
         <a id="close" href="#" class="close tooltipped" data-position="bottom" data-delay="50" data-tooltip="Close App"><i class="mdi-navigation-close"></i></a>
       </div>
@@ -162,8 +163,23 @@
           </table>
           <p>
             <a id="zoffset" class="btn">Z-Offset</a>
+            <a id="graissezAxe" class="btn">Graissez les axes</a>
           </p>
         </div>
+        <!--div id="print" class="col s12">
+            <div class="file-field input-field">
+              <div class="btn">
+                <span>G-code</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Sélectionnez un fichier g-code à imprimer">
+              </div>
+            </div>
+            <div>
+              <a id="burn" class="btn">imprimer</a>
+            </div>
+        </div-->
       </div>
     </div>
     <div id="version">

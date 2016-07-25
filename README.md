@@ -15,3 +15,13 @@ rm -rf node_modules && npm install
 ### Start
 
 npm start
+
+
+### TODO :
+
+- graisser les axes,
+- test de premiere couche
+- m119 pour l'état des endstops
+- m114 position que marlin pense être
+- m115 l'UUID,...
+-

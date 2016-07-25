@@ -69,13 +69,14 @@ a, select, button{
     .tabs .indicator{
       background-color:black;}
 
-    .tabs .tabDiagnostique span{
-      position: absolute;
-      right: 10px;
+    .tabs span{
+      position: relative;
+      left: 3px;
       padding: 0;
-      line-height: 28px;
+      bottom: 10px;
       font-weight: 100;
-      text-transform: lowercase;}
+      text-transform: lowercase;
+      font-size: 0.7em;}
 
 #comSelector{
   margin-bottom: 10px;}
