@@ -15,10 +15,10 @@ var DeviceClassUSB = function(portName, uid, manufacturer){
   EventEmitter.call(this);
 
   this.parent = new AbstractDeviceClass(portName.split("/dev/").join(""), this);
-	this.portName = portName;
+  this.portName = portName;
   this.baudRate = 250000;
-	this.uid = uid;
-	this.serial = null;
+  this.uid = uid;
+  this.serial = null;
   this.printerFound = false;
 };
 

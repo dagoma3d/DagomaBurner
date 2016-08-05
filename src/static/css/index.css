@@ -57,7 +57,7 @@ a, select, button{
     font-size: 30;}
 
   #tabsContainer{
-    margin: 0px 10px 10px 100px;}
+    margin: 0px 0px 10px 100px;}
 
   .tabs{
     background-color : transparent;
@@ -79,7 +79,8 @@ a, select, button{
       font-size: 0.7em;}
 
 #comSelector{
-  margin-bottom: 10px;}
+  margin-bottom: 10px;
+  margin-right: 10px;}
 
   #comSelector p{
     display: none;
@@ -162,7 +163,7 @@ a, select, button{
   overflow-y: hidden;}
 
 #diagnostic table{
-  margin-left: 30px;
+  margin-left: 20px;
   width: 210px;
   float: left;
   margin-right: 16px;
