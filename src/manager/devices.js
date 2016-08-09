@@ -111,6 +111,18 @@ DeviceManagerClass.prototype.readyDevicesHandler = function(device){
   that.readyDevices[device.portName] = device;
 }
 
+DeviceManagerClass.prototype.setSelectedDevice = function(device){
+  var that = this
+  that.selectedDevice = device;
+  that.emit("deviceSelect", that.selectedDevice);
+}
+
+DeviceManagerClass.prototype.getSelectedDevice = function(device){
+  var that = this
+  return that.selectedDevice;
+}
+
+
 DeviceManagerClass.instance = null;
 
 DeviceManagerClass.getInstance = function(){

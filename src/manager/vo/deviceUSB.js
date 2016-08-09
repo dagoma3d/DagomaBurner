@@ -115,7 +115,7 @@ DeviceClassUSB.prototype.parseData = function(){
     that.hasStarted == true;
   */
   //console.log(lineData);
-  if(lineData.indexOf("echo:SD")==0 && that.printerFound==false){
+  if(lineData.indexOf("echo:Marlin")==0 && that.printerFound==false){
     that.emit("printerFound", that);
     that.printerFound = true;
   }

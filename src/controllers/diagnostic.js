@@ -1,5 +1,10 @@
+var _root = __dirname + "/../";
+
 var lodash = require("lodash");
 var DeviceManager = require(_root+"manager/devices.js");
+var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
+var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
+var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
 
 var DiagnosticControllerClass = function(oPortSelectorController){
   var that = this;
@@ -7,22 +12,22 @@ var DiagnosticControllerClass = function(oPortSelectorController){
   that.needToGoUp = true;
 
   DeviceManager.on("printerFound", function(device){
-    that.sendGCodes(["M105"], false, function(response){
+    GCodeSender.send(["M105"], false, function(response){
       console.log("M105", response);
     });
   })
 
   $('.modal-trigger').leanModal();
 
-  that.addButtonGCode("#home", ["G28"], true);
+  GCodeSender.addButtonGCode("#home", ["G28"], true);
 
-  that.addButtonGCode("#zp01", ["G91", "G0 Z0.1"], false);
-  that.addButtonGCode("#zp1", ["G91", "G0 Z1"], false);
-  that.addButtonGCode("#zp10", ["G91", "G0 Z10"], false);
-  that.addButtonGCode("#zm01", ["G91", "G0 Z-0.1"], false);
-  that.addButtonGCode("#zm1", ["G91", "G0 Z-1"], false);
-  that.addButtonGCode("#zm10", ["G91", "G0 Z-10"], false);
-  that.addButtonGCode("#stopMotors", ["M18"], false);
+  GCodeSender.addButtonGCode("#zp01", ["G91", "G0 Z0.1"], false);
+  GCodeSender.addButtonGCode("#zp1", ["G91", "G0 Z1"], false);
+  GCodeSender.addButtonGCode("#zp10", ["G91", "G0 Z10"], false);
+  GCodeSender.addButtonGCode("#zm01", ["G91", "G0 Z-0.1"], false);
+  GCodeSender.addButtonGCode("#zm1", ["G91", "G0 Z-1"], false);
+  GCodeSender.addButtonGCode("#zm10", ["G91", "G0 Z-10"], false);
+  GCodeSender.addButtonGCode("#stopMotors", ["M18"], false);
 
 
   $("#diagnostic .speedControl a").click(function(){
@@ -55,16 +60,13 @@ var DiagnosticControllerClass = function(oPortSelectorController){
 
     gcode += $("#diagnostic .speedControl .selected").text();
 
-    that.sendGCodes(["G91", gcode], false);
+    GCodeSender.send(["G91", gcode], false);
   });
 
   $("#diagnostic #spirale").click(function(){
       that.needToStop = false;
 
-      that.sendGCodes([
-        //"G28",
-        //"G29",
-        //"G90",
+      GCodeSender.send([
         "G28 X Y",
         "M106 S160",
         "M109 S180",
@@ -73,7 +75,7 @@ var DiagnosticControllerClass = function(oPortSelectorController){
       ],
       true,
       function(){
-        that.sendGCodes([
+        GCodeSender.send([
           "M114",
         ],
         true,
@@ -87,7 +89,7 @@ var DiagnosticControllerClass = function(oPortSelectorController){
           console.log("ok", regex, centerx, centery, zOffset);
           that.z = initialZ;
 
-          that.sendGCodes([
+          GCodeSender.send([
             "G29; Detailed Z-Probe",
             "G90; Set to absolute positioning if not",
             "G1 X100 Y200 Z5 F3000",
@@ -112,7 +114,7 @@ var DiagnosticControllerClass = function(oPortSelectorController){
             var b = sep / (2 * Math.PI);
             var phi = r / b;
             var x,y;
-            var volume = dist * 0.2 * 0.4// (à ajuster)
+            var volume = dist * 0.2 * 0.8;// (à ajuster)
             var e = volume/(Math.pow(1.75/2, 2)*Math.PI);
 
             function finishPrint(){
@@ -120,7 +122,7 @@ var DiagnosticControllerClass = function(oPortSelectorController){
               zOffset = zOffset.toFixed( 2 );
               console.log("zOffset", zOffset);
 
-              that.sendGCodes([
+              GCodeSender.send([
                 "M104 S0     ;extruder heater off",
                 "M106 S255     ;start fan full power",
                 "M140 S0      ;heated bed heater off (if you have it)",
@@ -149,7 +151,7 @@ var DiagnosticControllerClass = function(oPortSelectorController){
               y = r * Math.sin(phi) + centery;
               var gcode = "G0 Z"+that.z+" X"+x+" Y"+y+" E"+(e*it)+" F1000"
 
-              that.sendGCodes([gcode],
+              GCodeSender.send([gcode],
                 false,
                 function(){
                   doIteration();
@@ -161,18 +163,50 @@ var DiagnosticControllerClass = function(oPortSelectorController){
       });
   });
 
+  $("#diagnostic #pastille").click(function(){
+    GCodeParser(_root+"/pastille.g", function(datas){
+      GCodePrinter.print(datas, true, false, 50, 50, 0, function(){
+        GCodePrinter.print(datas, false, false, 70, 50, 0, function(){
+          GCodePrinter.print(datas, false, false, 90, 50, 0, function(){
+            GCodePrinter.print(datas, false, false, 110, 50, 0, function(){
+              GCodePrinter.print(datas, false, false, 130, 50, 0, function(){
+                GCodePrinter.print(datas, false, false, 130, 70, 0, function(){
+                  GCodePrinter.print(datas, false, false, 110, 70, 0, function(){
+                    GCodePrinter.print(datas, false, false, 90, 70, 0, function(){
+                      GCodePrinter.print(datas, false, false, 70, 70, 0, function(){
+                        GCodePrinter.print(datas, false, false, 50, 70, 0, function(){
+                          GCodePrinter.print(datas, false, false, 50, 90, 0, function(){
+                            GCodePrinter.print(datas, false, true, 70, 90, 0, function(){
+
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
   $("#diagnostic #monter").click(function(){
       that.z += 0.1;
+      GCodePrinter.insert(["G91", "G0 Z1", "G90"]);
   });
   $("#diagnostic #descendre").click(function(){
       that.z -= 0.1;
+      GCodePrinter.insert(["G91", "G0 Z-1", "G90"]);
   });
   $("#diagnostic #stop").click(function(){
       that.needToStop = true;
   });
 
   $("#diagnostic #zoffset").click(function(){
-      that.sendGCodes([
+      GCodeSender.send([
         "M851 Z-4",
         "G28",
         "G91",
@@ -183,12 +217,12 @@ var DiagnosticControllerClass = function(oPortSelectorController){
         $('#modalZoffset').openModal({
           dismissible:false,
           complete: function(){
-            that.sendGCodes(["M114"], true, function(response){
+            GCodeSender.send(["M114"], true, function(response){
               var zoffset = +(response.split("Z:")[1].split(" ")[0]);
               console.log(zoffset);
               zoffset = -4+zoffset;
               zoffset = zoffset.toFixed( 2 );
-              that.sendGCodes([
+              GCodeSender.send([
                 "M851 Z"+zoffset,
                 "M500",
                 "G28",
@@ -205,62 +239,6 @@ var DiagnosticControllerClass = function(oPortSelectorController){
       })
   });
 
-};
-
-DiagnosticControllerClass.prototype.addButtonGCode = function (id, gCodes, showLoader, callback) {
-  var that = this;
-
-  $("#diagnostic "+id).click(function(){
-    that.sendGCodes(gCodes, showLoader, callback);
-  });
-};
-
-DiagnosticControllerClass.prototype.sendGCodes = function (gCodes, showLoader, callback) {
-  var that = this;
-
-  if(showLoader)
-    $("#globalLoader").show();
-  that.sendGCodeRecursive(lodash.clone(gCodes), function(result){
-    if(showLoader)
-      $("#globalLoader").hide();
-    if(callback)
-      callback(result);
-  }, "");
-};
-
-DiagnosticControllerClass.prototype.sendGCodeRecursive = function (gCodes, callback, result) {
-  var that = this;
-
-  if(gCodes.length == 0){
-    return callback(result);
-  }
-  var gCode = gCodes.shift();
-  that.portSelector.selectedDevice().send(gCode+"\r\n");
-  that.waitForOK(function(response){
-    that.sendGCodeRecursive(gCodes, callback, result+response);
-  });
-};
-
-
-
-DiagnosticControllerClass.prototype.waitForOK = function (callback) {
-  var that = this;
-  var _data = "";
-
-  var dataHandler = function(data){
-    _data += data;
-
-    if(data.toLowerCase().indexOf("ok") >= 0){
-      that.portSelector.selectedDevice().removeListener("receive", dataHandler);
-      if(callback){
-        return callback(_data);
-      }
-    }
-
-  };
-
-  that.portSelector.selectedDevice().removeListener("receive", dataHandler);
-  that.portSelector.selectedDevice().on("receive", dataHandler);
 };
 
 function convertToHex(str) {
