@@ -5,68 +5,140 @@ var DeviceManager = require(_root+"manager/devices.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var lodash = require("lodash");
 
-var GCodePrinterClass = function(){}
+var GCodePrinterClass = function(){
+  this.sendExtruderOffset = false;
+  this.forceStop = false;
+}
 
-GCodePrinterClass.prototype.print = function (datas, printStart, printEnd, offsetX, offsetY, offsetZ, callback){
+GCodePrinterClass.prototype.print = function (datas, printStart, printEnd, offsetX, offsetY, offsetZ, maxDistance, callback){
   var that = this;
   that.device = DeviceManager.getSelectedDevice();
   that.datas = lodash.clone(datas);
   that.offsetX = offsetX;
   that.offsetY = offsetY;
   that.offsetZ = offsetZ;
-  that.absoluteMode = true;
   that.printStart = printStart;
   that.printEnd = printEnd;
-  that.sendExtruderOffset = false;
+  if(maxDistance)
+    that.maxDistance = maxDistance;
+  else
+    that.maxDistance = null;
+
+  if(that.maxDistance){
+    var newDatas = [];
+    var lastX = -1, lastY = -1, lastE = -1;
+    var currentX = -1, currentY = -1, currentE = -1;
+    var deltaX = 0, deltaY = 0, deltaE = 0;
+    var distXY = 0, distX = 0, distY = 0, distE = 0;
+    var numberDeltaXY = 0;
+    var matchX = null, matchY = null, matchE = null;
+    var currentLine = null;
+
+    for(var i in that.datas){
+      currentLine = that.datas[i];
+      matchX = currentLine.match(/X(\d+.?\d*)/i)
+      if(matchX) currentX = parseFloat(matchX[1]);
+
+      matchY = currentLine.match(/Y(\d+.?\d*)/i)
+      if(matchY) currentY = parseFloat(matchY[1]);
+
+      matchE = currentLine.match(/E(\d+.?\d*)/i)
+      if(matchE) currentE = parseFloat(matchE[1]);
+
+      if(lastX > -1 && matchE){ // si on a déjà eu des coordonées de X
+        distX = currentX-lastX;
+        distY = currentY-lastY;
+        distE = currentE-lastE;
+        distXY =  Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2));
+        //console.log("distXY", distXY);
+        //console.log("distX", distX/that.maxDistance);
+        //console.log("distY", distY/that.maxDistance);
+        //console.log("numberDeltaXY",numberDeltaXY);
+        if(distXY > that.maxDistance){
+          numberDeltaXY = Math.ceil(distXY/that.maxDistance);
+          //console.log("numberDeltaXY", numberDeltaXY);
+          for(var j=1; j<numberDeltaXY; j++){
+            var x = (lastX+(j*(distX/numberDeltaXY)));
+            var y = (lastY+(j*(distY/numberDeltaXY)));
+            var e = (lastE+(j*(distE/numberDeltaXY)));
+            newDatas.push("G0 X"+x+" Y"+y+" E"+e+";D");
+          }
+        }
+      }
+
+      lastX = currentX;
+      lastY = currentY;
+      lastE = currentE;
+      newDatas.push(currentLine);
+    }
+    that.datas = newDatas;
+    console.log("newDatas", newDatas);
+    //return;
+  }
+
 
   that.initPrint(function(){
-    //Donner les offsets que si on est en G90 et pas en G91
-    //Mettre un G92 E{value} avant la premiere ligne d'extrusion du gcode
     that.printDatas(function(){
-      that.finishPrint(function(){
+      if(!that.printEnd){
         if(callback)
+            callback();
+        return;
+      }else{
+        that.finishPrint(function(){
+          if(callback)
           callback();
-      });
+        });
+      }
     });
   });
 };
 
 GCodePrinterClass.prototype.printDatas = function (callback) {
   var that = this;
-   if(that.insertDatas != null){
-     GCodeSender.send(that.insertDatas, false, function(){
-       that.printDatas(callback);
-     });
-     that.insertDatas = null;
-   }else{
-     if(that.datas.length == 0){
-       return callback();
-     }
-     var gCode = that.datas.shift();
-     gCode = that.addOffset(gCode);
+  if(that.forceStop){
+    that.forceStop = false;
+    if(this.forceStopCallback)
+        this.forceStopCallback();
+    return;
+  }
 
-     var match = gCode.match(/(F\d+)/i)
-     if(match)
-        that.currentSpeed = match[0];
+  if(that.insertDatas != null){
+    GCodeSender.send(that.insertDatas, false, function(result){
+      if(that.insertDatasCallback)
+        that.insertDatasCallback(result);
+      that.printDatas(callback);
+    });
+    that.insertDatas = null;
+  }else{
+    if(that.datas.length == 0){
+      return callback();
+    }
+    var gCode = that.datas.shift();
+    gCode = that.addOffset(gCode);
 
-     if(!that.sendExtruderOffset){
-       var match = gCode.match(/(E\d+.\d+)/i)
-       if(match){
-         gCode = ["G92 "+match[1], gCode];
-         that.sendExtruderOffset = true;
-       }else{
-         gCode = [gCode];
-       }
-     }else{
-       gCode = [gCode];
-     }
 
-     //gCode.push("G90","G90","G90","G90");
+    var match = gCode.match(/(F\d+)/i)
+    if(match)
+      that.currentSpeed = match[0];
 
-     GCodeSender.send(gCode, false, function(){
-       that.printDatas(callback);
-     });
-   }
+    if(!that.sendExtruderOffset){
+      var match = gCode.match(/(E\d+.\d+)/i)
+      if(match){
+        gCode = ["G92 "+match[1], gCode];
+        that.sendExtruderOffset = true;
+      }else{
+        gCode = [gCode];
+      }
+    }else{
+      gCode = [gCode];
+    }
+
+    //gCode.push("G90","G90","G90","G90");
+
+    GCodeSender.send(gCode, false, function(){
+      that.printDatas(callback);
+    });
+  }
 };
 
 GCodePrinterClass.prototype.addOffset = function (gCode) {
@@ -87,8 +159,14 @@ GCodePrinterClass.prototype.addOffset = function (gCode) {
   return gCode;
 };
 
-GCodePrinterClass.prototype.insert = function (aDatas) {
+GCodePrinterClass.prototype.stop = function (callback) {
+  this.forceStop = true;
+  this.forceStopCallback = callback;
+};
+
+GCodePrinterClass.prototype.insert = function (aDatas, callback) {
   this.insertDatas = aDatas;
+  this.insertDatasCallback = callback;
 };
 
 GCodePrinterClass.prototype.initPrint = function (callback) {
@@ -107,14 +185,13 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
     "G1 X100 Y200 Z5 F3000",
     "G1 Z0",
     "M82 ;set extruder to absolute mode",
+    "G0 F3600.000000 Z0.260",
     "G92 E0 ;zero the extruded length",
-    "G1 F200 E3 ;extrude 10mm of feed stock",
+    "G1 X190 E20 F1000",
     "G92 E0 ;zero the extruded length again",
     "G1 F60",
-    "G1 Y190",
     "G90",
     "M106 S127.500000",
-    "G0 F3600.000000 Z0.260",
     //"M111 S25"
   ],
   false,
@@ -124,10 +201,6 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
 };
 
 GCodePrinterClass.prototype.finishPrint = function (callback) {
-  if(!this.printEnd){
-    return callback();
-  }
-
   GCodeSender.send([
     "M104 S0     ;extruder heater off",
     "M106 S255     ;start fan full power",
@@ -140,17 +213,10 @@ GCodePrinterClass.prototype.finishPrint = function (callback) {
   ],
   false,
   function(){
-    callback();
+    if(callback)
+      callback();
+    return;
   });
 };
 
-GCodePrinterClass.instance = null;
-
-GCodePrinterClass.getInstance = function(){
-    if(this.instance === null){
-        this.instance = new GCodePrinterClass();
-    }
-    return this.instance;
-}
-
-module.exports = GCodePrinterClass.getInstance();
+module.exports = GCodePrinterClass;

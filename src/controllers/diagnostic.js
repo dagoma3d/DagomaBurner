@@ -165,18 +165,19 @@ var DiagnosticControllerClass = function(oPortSelectorController){
 
   $("#diagnostic #pastille").click(function(){
     GCodeParser(_root+"/pastille.g", function(datas){
-      GCodePrinter.print(datas, true, false, 50, 50, 0, function(){
-        GCodePrinter.print(datas, false, false, 70, 50, 0, function(){
-          GCodePrinter.print(datas, false, false, 90, 50, 0, function(){
-            GCodePrinter.print(datas, false, false, 110, 50, 0, function(){
-              GCodePrinter.print(datas, false, false, 130, 50, 0, function(){
-                GCodePrinter.print(datas, false, false, 130, 70, 0, function(){
-                  GCodePrinter.print(datas, false, false, 110, 70, 0, function(){
-                    GCodePrinter.print(datas, false, false, 90, 70, 0, function(){
-                      GCodePrinter.print(datas, false, false, 70, 70, 0, function(){
-                        GCodePrinter.print(datas, false, false, 50, 70, 0, function(){
-                          GCodePrinter.print(datas, false, false, 50, 90, 0, function(){
-                            GCodePrinter.print(datas, false, true, 70, 90, 0, function(){
+      that.printer  = new GCodePrinter();
+      that.printer.print(datas, true, false, 50, 50, 0, 0.5, function(){
+        that.printer.print(datas, false, false, 70, 50, 0, 0.5, function(){
+          that.printer.print(datas, false, false, 90, 50, 0, 0.5, function(){
+            that.printer.print(datas, false, false, 110, 50, 0, 0.5, function(){
+              that.printer.print(datas, false, false, 130, 50, 0, 0.5, function(){
+                that.printer.print(datas, false, false, 130, 70, 0, 0.5, function(){
+                  that.printer.print(datas, false, false, 110, 70, 0, 0.5, function(){
+                    that.printer.print(datas, false, false, 90, 70, 0, 0.5, function(){
+                      that.printer.print(datas, false, false, 70, 70, 0, 0.5, function(){
+                        that.printer.print(datas, false, false, 50, 70, 0, 0.5, function(){
+                          that.printer.print(datas, false, false, 50, 90, 0, 0.5, function(){
+                            that.printer.print(datas, false, true, 70, 90, 0, 0.5, function(){
 
                             });
                           });
@@ -195,19 +196,53 @@ var DiagnosticControllerClass = function(oPortSelectorController){
 
   $("#diagnostic #monter").click(function(){
       that.z += 0.1;
-      GCodePrinter.insert(["G91", "G0 Z1", "G90"]);
+      if(that.printer)
+        that.printer.insert(["G91", "G0 Z0.1", "G90"]);
   });
   $("#diagnostic #descendre").click(function(){
       that.z -= 0.1;
-      GCodePrinter.insert(["G91", "G0 Z-1", "G90"]);
+      if(that.printer)
+        that.printer.insert(["G91", "G0 Z-0.1", "G90"]);
   });
   $("#diagnostic #stop").click(function(){
       that.needToStop = true;
+      if(that.printer){
+        that.printer.stop(function(){
+          GCodeSender.send([
+            "M114",
+            "M503",
+            "G90",
+            "G90",
+          ],
+          true,
+          function(response){
+            var regex = /X:(\d+.\d+) Y:(\d+.\d+) Z:(\d+.\d+)/.exec(response);
+            var currentZ = -parseFloat(regex[3]);
+            var regex = /M851 Z(-?\d+.\d+)/.exec(response);
+            var currentZOffset = parseFloat(regex[1]);
+            console.log(regex);
+            var newZOffset = currentZOffset - 0.26 - currentZ;
+
+            console.log("response M114 M503", "currentZ", currentZ, "currentZOffset", currentZOffset, "newZOffset", newZOffset);
+
+            GCodeSender.send([
+              "M851 Z"+newZOffset,
+              "M500"
+            ],
+            true,
+            function(){
+              that.printer.finishPrint(function(){
+                alert("z-offset réglé à : "+newZOffset );
+              });
+            })
+          });
+        });
+      }
   });
 
   $("#diagnostic #zoffset").click(function(){
       GCodeSender.send([
-        "M851 Z-4",
+        "M851 Z-7", //Not -4 but -7 for the new V2
         "G28",
         "G91",
         "G0 Z5"
