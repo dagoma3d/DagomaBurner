@@ -5,7 +5,7 @@ var DeviceManager = require(_root+"manager/devices.js");
 var FirmwareController = require(_root+"controllers/firmware.js");
 var PortSelectorController = require(_root+"controllers/portSelector.js");
 var DiagnosticController = require(_root+"controllers/diagnostic.js");
-var CodeBuilder = require(_root+"manager/codeBuilder.js");
+var NavManager = require(_root+"manager/NavManager.js");
 
 const {remote} = require('electron');
 const {Menu, MenuItem} = remote;
@@ -131,7 +131,13 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 ( function( $ ) {
-  var portSelectorController = new PortSelectorController()
+  NavManager.setContainer($("#pageContainer"));
+  NavManager.setPage("home")
+  $("#navHome").on("click", function(){
+    NavManager.setPage("home")
+  });
+  $("#globalLoader").hide();
+  /*var portSelectorController = new PortSelectorController()
   var firmwareController = new FirmwareController(portSelectorController);
   var diagnosticController = new DiagnosticController(portSelectorController);
 
@@ -143,6 +149,7 @@ Menu.setApplicationMenu(menu);
 
   $("#globalLoader").hide();
 
+  */
   $("#version").text("V"+require(_root+"package.json").version);
 
 } )( window.jQuery );

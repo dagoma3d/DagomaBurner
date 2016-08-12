@@ -35,17 +35,16 @@ body{
 	position: relative;
   -webkit-app-region: drag;}
 
-a, select, button{
+a, select, button, input, label{
   -webkit-app-region: no-drag;
   -webkit-user-select: none;
-  -webkit-user-drag: none;
-
+  /*-webkit-user-drag: none;*/
 }
 
 #navbar{
   background-color: #e19531;}
 
-  #navbar a.close{
+  #navbar a#navClose{
     position: absolute;
     width: 60px;
     height: 50px;
@@ -56,39 +55,153 @@ a, select, button{
     text-align: center;
     font-size: 30;}
 
-  #tabsContainer{
-    margin: 0px 0px 10px 100px;}
+  #navbar a#navHome{
+    position: absolute;
+    width: 60px;
+    height: 50px;
+    color: white;
+    line-height: 50px;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    font-size: 30;}
 
-  .tabs{
-    background-color : transparent;
+  h1{
+    margin: 0px;
+    line-height: 50px;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+#pageContainer{
+  margin: 0px 0px 10px 100px;}
+
+.port{
+  color:red;
+}
+
+.value{
+  color:red;
+}
+
+.serverMessage{
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+#globalLoader{
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+
+	z-index: 2;
+	background-color: rgba(255,255,255, 0.9);
+	padding-top: 210px;
+	text-align: center;
+}
+
+
+/*
+************************************************************************
+***************************** HOME *************************************
+************************************************************************
+*/
+
+#home{
+  margin: 50px 20px 0px;}
+
+#home .link{
+  margin: 25px 0px;
+  position: relative;}
+
+  #home a{
+    width: 320px;
+    height: 70px;
+    margin: 0px;
+    text-transform: inherit;
+    padding: 0px 20px;
     overflow: hidden;}
 
-    .tabs .tab a{
-      color:white;}
+    #home img{
+      position:absolute;
+      left: 290px;
+      bottom: 30px;
+      z-index: 2;}
 
-    .tabs .indicator{
-      background-color:black;}
+    #home #firmware img{
+      bottom: 0px;}
 
-    .tabs span{
-      position: relative;
-      left: 3px;
-      padding: 0;
-      bottom: 10px;
-      font-weight: 100;
-      text-transform: lowercase;
-      font-size: 0.7em;}
+    #home #sav img{
+      bottom: auto;
+      top: 35px;
+      left: 270px;}
 
-#comSelector{
-  margin-bottom: 10px;
-  margin-right: 10px;}
+    #home a h5{
+      font-size: 19px;
+      vertical-align: middle;
+      font-weight: 300;
+      margin: 17px 0px;}
 
-  #comSelector p{
-    display: none;
-    margin: 5px;
-    color: #999;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #CCC;}
+      #home #firmware a h5{
+        margin: 7px 0px;}
 
+      #home a h5 p {
+        font-size: 13px;
+        margin: 0px;}
+
+/*
+************************************************************************
+************************************************************************
+************************************************************************
+*/
+
+.zoffset #next{
+  position: absolute;
+  bottom: 30px;
+  right: 30px;}
+
+.zoffset{
+  font-size: 18px;
+  margin: 0px 30px 0px 20px;}
+
+  #zoffsetPreparation .thanksToPrepare{
+    margin-bottom: 0px;}
+
+  #zoffsetPreparation form{
+    margin-top: 10px;}
+
+  #zoffsetPreparation ul{
+    padding-left: 30px;
+    margin: 0px;}
+
+    #zoffsetPreparation ul [type="checkbox"] + label{
+      margin-bottom: 5px;
+      font-size: 18px;}
+
+    #zoffsetPreparation ul li{
+      list-style-type: none;}
+
+  #zoffsetConnection img{
+    margin-bottom: 20px;
+    margin-left: 20px;}
+
+    #zoffsetConnection #comSelector{
+      margin-bottom: 10px;
+      margin-right: 10px;
+      font-size: 14px;}
+
+      #zoffsetConnection #comSelector p{
+        display: none;
+        margin: 5px;
+        color: #999;
+        padding-bottom: 5px;}
+
+
+/*
 #dragBox{
   width: 100%;
   height: 201px;
@@ -233,37 +346,4 @@ a, select, button{
         width: 100%;
         margin: 10px 0px;}
 
-
-h1{
-  font-size: 1.5rem;
-}
-
-.port{
-  color:red;
-}
-
-.value{
-  color:red;
-}
-
-p{
-  margin: 0;
-}
-
-.serverMessage{
-  margin-top: 20px;
-  font-weight: bold;
-}
-
-#globalLoader{
-	position: fixed;
-	top: 0px;
-	bottom: 0px;
-	left: 0px;
-	right: 0px;
-
-	z-index: 2;
-	background-color: rgba(255,255,255, 0.9);
-	padding-top: 210px;
-	text-align: center;
-}
+*/

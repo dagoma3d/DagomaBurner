@@ -57,18 +57,12 @@
       </div>
     </div>
     <div id="navbar" class="row">
-      <div class="col s11">
-        <ul class="tabs">
-          <li class="tab"><a class="active" href="#firmware">Firmware</a></li>
-          <li class="tab tabDiagnostique"><a href="#diagnostic">Diagnostic<span>beta</span></a></li>
-          <!--li class="tab"><a href="#print">Print<span>alpha</span></a></li-->
-        </ul>
-        <a id="close" href="#" class="close tooltipped" data-position="bottom" data-delay="50" data-tooltip="Close App"><i class="mdi-navigation-close"></i></a>
-      </div>
+      <a id="navHome" href="#" class="home tooltipped" data-position="bottom" data-delay="50" data-tooltip="Home"><i class="mdi-action-home"></i></a>
+      <h1>Dagoma Doctor</h1>
+      <a id="navClose" href="#" class="close tooltipped" data-position="bottom" data-delay="50" data-tooltip="Close App"><i class="mdi-navigation-close"></i></a>
     </div>
-    <div id="tabsContainer">
-      <div id="comSelector">
-        <!--label>Choisissez le port s&eacute;rie de votre imprimante</label-->
+    <div id="pageContainer">
+      <!--div id="comSelector">
         <select id="com" class="browser-default">
           <option value="" disabled="disabled" selected="selected">Choisissez le port s&eacute;rie de votre imprimante</option>
         </select>
@@ -77,7 +71,6 @@
       <div class="tabsContent disabled">
         <div id="firmware" class="col s12">
           <form>
-            <!--label>Choisissez le type de carte de votre imprimante</label-->
             <select id="type" class="browser-default">
               <option value="" disabled="disabled" selected="selected">Choisissez le type de carte de votre imprimante</option>
               <option value="melzi">Melzi</option>
@@ -113,8 +106,6 @@
                   <td><a id="zm10" class="btn"><i class="material-icons">expand_more</i></a></td>
                 </tr>
               </table>
-              <!--p class="center"><a id="zp01" class="btn">+0,1mm</a><a id="zp1" class="btn">+1mm</a><a id="zp10" class="btn">+10mm</a></p>
-              <p class="center"><a id="zm01" class="btn">-0,1mm</a><a id="zm1" class="btn">-1mm</a><a id="zm10" class="btn">-10mm</a></p-->
             </div>
             <div class="modal-footer">
               <a href="#!" class="modal-action modal-close waves-effect waves-green btn">La feuille est pinc&eacute;e</a>
@@ -155,11 +146,6 @@
                 </div>
               </td>
             </tr>
-            <!--tr class="row">
-              <td colspan="4">
-                <a id="stopMotors" class="btn">Arr&ecirc;t des moteurs</a>
-              </td>
-            </tr-->
           </table>
           <p>
             <a id="zoffset" class="btn">Z-Offset</a>
@@ -170,21 +156,7 @@
             <a id="pastille" class="btn">Pastille</a>
           </p>
         </div>
-        <!--div id="print" class="col s12">
-            <div class="file-field input-field">
-              <div class="btn">
-                <span>G-code</span>
-                <input type="file">
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Sélectionnez un fichier g-code à imprimer">
-              </div>
-            </div>
-            <div>
-              <a id="burn" class="btn">imprimer</a>
-            </div>
-        </div-->
-      </div>
+      </div-->
     </div>
     <div id="version">
     </div>

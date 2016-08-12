@@ -1,10 +1,41 @@
-var root = __dirname + "/../";
-var DeviceManager = require(_root+"manager/devices.js");
+"use strict";
 
-var PortSelectorControllerClass = function($ref){
+var _root = __dirname + "/../../";
+
+var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
+var NavManager = require(_root+"manager/NavManager.js");
+
+var ZoffsetPrinterConnectionClass = function ZoffsetPrinterConnectionClass(){
+  this.content = null;
+}
+
+ZoffsetPrinterConnectionClass.prototype.load = function (callback) {
   var that = this;
+  if(that.content)
+    return callback();
+
+  ViewLoader("zoffset/printerConnection", function(content){
+    that.content = $(content);
+    that.initView();
+    if(callback){
+      callback();
+    }
+  });
+};
+
+ZoffsetPrinterConnectionClass.prototype.initView = function () {
+  var that = this;
+  that.content.find("#next").on("click", function(){
+    if(that.found3DPrinter)
+      NavManager.setPage("zoffset/placeTarget");
+  });
+
   that.selectedDevice = null;
-  that.textBox = $("#comSelector p");
+  that.textBox = that.content.find("#comSelector p");
+
+  for (var device in DeviceManager.devices) {
+    that.updateDeviceList(DeviceManager.devices[device]);
+  }
 
   DeviceManager.on("add", function(device){
     that.updateDeviceList(device);
@@ -14,11 +45,11 @@ var PortSelectorControllerClass = function($ref){
     that.removeDeviceList(device);
   });
 
-  $("select#com").on("change", function(event){
+  that.content.find("select#com").on("change", function(event){
     if(that.selectedDevice != null){
       that.selectedDevice.close();
     }
-    that.selectedDevice = DeviceManager.devices[$('select#com').val()];
+    that.selectedDevice = DeviceManager.devices[that.content.find('select#com').val()];
     DeviceManager.setSelectedDevice(that.selectedDevice);
 
     //$(".tabsContent").removeClass("disabled");
@@ -27,13 +58,13 @@ var PortSelectorControllerClass = function($ref){
 
   DeviceManager.on("open", function(device){
     that.openDevice();
-  })
+  });
 };
 
-PortSelectorControllerClass.prototype.openDevice = function () {
+ZoffsetPrinterConnectionClass.prototype.openDevice = function () {
   var that = this;
   var timeOut3DPrinterSearch;
-  $(".tabsContent").addClass("disabled");
+  that.content.find("#next").addClass("disabled");
 
   that.textBox.show();
   that.textBox.text("Ouverture du port "+that.selectedDevice.name+"...");
@@ -43,14 +74,16 @@ PortSelectorControllerClass.prototype.openDevice = function () {
     that.textBox.text("Aucune imprimante detectée sur ce port !");
     that.selectedDevice.removeListener("ready", deviceReady);
     that.selectedDevice.removeListener("printerFound", printerFound);
-    $(".tabsContent").removeClass("disabled");
+    that.content.find("#next").addClass("disabled");
   }
 
   function printerFound(){
     no3DPrinterFound();
     that.textBox.text("Imprimante detectée");
     that.selectedDevice.removeListener("printerFound", printerFound);
+    that.content.find("#next").removeClass("disabled");
     //$('select#type').val("melzi");
+    that.found3DPrinter = true;
   }
 
   function deviceReady(){
@@ -69,15 +102,20 @@ PortSelectorControllerClass.prototype.openDevice = function () {
     that.selectedDevice.on("ready", deviceReady);
 };
 
-PortSelectorControllerClass.prototype.updateDeviceList = function(device){
+ZoffsetPrinterConnectionClass.prototype.updateDeviceList = function(device){
   var that = this;
   device.$select = $('<option val="'+device.portName+'">'+device.portName+'</option>');
-  $('select#com').append(device.$select);
-  $('select').material_select();
+  that.content.find('select#com').append(device.$select);
+  that.content.find('select').material_select();
 }
 
-PortSelectorControllerClass.prototype.removeDeviceList = function(device){
+ZoffsetPrinterConnectionClass.prototype.removeDeviceList = function(device){
   device.$select.remove();
 }
 
-module.exports = PortSelectorControllerClass;
+
+ZoffsetPrinterConnectionClass.prototype.dispose = function () {
+
+};
+
+module.exports = ZoffsetPrinterConnectionClass;
