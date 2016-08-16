@@ -75,9 +75,8 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
       that.readyDevicesHandler(device);
     });
 
-    that.emit("add", device);
-
     device.on("open", function(device){
+      console.log("DeviceManagerClass open");
       that.emit("open", device);
     });
 
@@ -94,6 +93,7 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
       that.deletePortHandler(device);
     });
 
+    that.emit("add", device);
     //device.open();
 }
 

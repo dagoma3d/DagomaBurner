@@ -140,7 +140,7 @@ Menu.setApplicationMenu(menu);
   /*var portSelectorController = new PortSelectorController()
   var firmwareController = new FirmwareController(portSelectorController);
   var diagnosticController = new DiagnosticController(portSelectorController);
-
+  */
   $("#navbar a.close").click(function(){
     remote.getCurrentWindow().close();
   });
@@ -149,7 +149,6 @@ Menu.setApplicationMenu(menu);
 
   $("#globalLoader").hide();
 
-  */
   $("#version").text("V"+require(_root+"package.json").version);
 
 } )( window.jQuery );

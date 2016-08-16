@@ -16,7 +16,7 @@ ZoffsetSetJumperClass.prototype.load = function (callback) {
   if(that.content)
     return callback();
 
-  ViewLoader("zoffset/setJumper", function(content){
+  ViewLoader("zoffset/2_setJumper", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -28,9 +28,13 @@ ZoffsetSetJumperClass.prototype.load = function (callback) {
 ZoffsetSetJumperClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    NavManager.setPage("zoffset/printerConnection")
+    NavManager.setPage("zoffset/3_printerConnection")
   });
 }
+
+ZoffsetSetJumperClass.prototype.show = function () {
+
+};
 
 ZoffsetSetJumperClass.prototype.dispose = function () {
 

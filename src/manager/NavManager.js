@@ -24,6 +24,7 @@ NavManagerClass.prototype.setPage = function (page) {
   that.page = new (require(_root+"pages/"+page+".js"))();
   that.page.load(function(){
     that.container.append(that.page.content);
+    that.page.show();
   });
 };
 

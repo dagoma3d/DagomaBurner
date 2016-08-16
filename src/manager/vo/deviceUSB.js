@@ -36,6 +36,10 @@ DeviceClassUSB.prototype.destroy = function (){
 
 DeviceClassUSB.prototype.open = function (){
   var that = this;
+  that.ready = false;
+  that.printerFound = false;
+
+  that.close();
   that.parent.open();
 
   that.emit("open", that);
@@ -63,7 +67,8 @@ DeviceClassUSB.prototype.open = function (){
 DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
   var that = this;
 
-  if ( error ){
+  if ( error && error != "Error: Port is already open"){
+    console.error("error", error);
     //that.delete();
   }else{
     if(!that.ready){
@@ -72,11 +77,9 @@ DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
     }
 
     that.ready = true;
-    console.log("serialPortOpenHandler");
 
-    that.serial.on('data', function(data){
-      that.serialPortDataHandler(data);
-    });
+    that.serialDataListener = that.serialPortDataHandler.bind(that);
+    that.serial.on('data', that.serialDataListener);
   }
 }
 
@@ -116,6 +119,7 @@ DeviceClassUSB.prototype.parseData = function(){
   */
   //console.log(lineData);
   if(lineData.indexOf("echo:Marlin")==0 && that.printerFound==false){
+    console.log("printerFound");
     that.emit("printerFound", that);
     that.printerFound = true;
   }
@@ -232,8 +236,11 @@ DeviceClassUSB.prototype.close = function(force){
   //that.ready = false;
   that.parent.close();
 
+
   if(that.serial != null){
     clearInterval(that.interval);
+    that.serial.removeListener('data', that.serialDataListener);
+
     try{
       that.serial.close();
     }catch(e){

@@ -14,7 +14,7 @@ ZoffsetPrinterConnectionClass.prototype.load = function (callback) {
   if(that.content)
     return callback();
 
-  ViewLoader("zoffset/printerConnection", function(content){
+  ViewLoader("zoffset/3_printerConnection", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -27,18 +27,21 @@ ZoffsetPrinterConnectionClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
     if(that.found3DPrinter)
-      NavManager.setPage("zoffset/placeTarget");
+      NavManager.setPage("zoffset/4_placeTarget");
   });
-
-  that.selectedDevice = null;
-  that.textBox = that.content.find("#comSelector p");
-
-  for (var device in DeviceManager.devices) {
-    that.updateDeviceList(DeviceManager.devices[device]);
-  }
 
   DeviceManager.on("add", function(device){
     that.updateDeviceList(device);
+    that.content.find('select#com').val(device.portName);
+
+    if(that.selectedDevice != null){
+      that.selectedDevice.close();
+    }
+    that.selectedDevice = DeviceManager.devices[that.content.find('select#com').val()];
+    DeviceManager.setSelectedDevice(that.selectedDevice);
+
+    //$(".tabsContent").removeClass("disabled");
+    that.selectedDevice.open();
   });
 
   DeviceManager.on("remove", function(device){
@@ -57,14 +60,27 @@ ZoffsetPrinterConnectionClass.prototype.initView = function () {
   });
 
   DeviceManager.on("open", function(device){
+    console.log("ok open");
     that.openDevice();
   });
+};
+
+ZoffsetPrinterConnectionClass.prototype.show = function () {
+  var that = this;
+  that.selectedDevice = null;
+  that.textBox = that.content.find("#comSelector p");
+
+  for (var device in DeviceManager.devices) {
+    that.updateDeviceList(DeviceManager.devices[device]);
+  }
+
+  that.content.find("#next").hide();
 };
 
 ZoffsetPrinterConnectionClass.prototype.openDevice = function () {
   var that = this;
   var timeOut3DPrinterSearch;
-  that.content.find("#next").addClass("disabled");
+  that.content.find("#next").hide();
 
   that.textBox.show();
   that.textBox.text("Ouverture du port "+that.selectedDevice.name+"...");
@@ -74,14 +90,14 @@ ZoffsetPrinterConnectionClass.prototype.openDevice = function () {
     that.textBox.text("Aucune imprimante detectée sur ce port !");
     that.selectedDevice.removeListener("ready", deviceReady);
     that.selectedDevice.removeListener("printerFound", printerFound);
-    that.content.find("#next").addClass("disabled");
+    that.content.find("#next").hide();
   }
 
   function printerFound(){
     no3DPrinterFound();
     that.textBox.text("Imprimante detectée");
     that.selectedDevice.removeListener("printerFound", printerFound);
-    that.content.find("#next").removeClass("disabled");
+    that.content.find("#next").show();
     //$('select#type').val("melzi");
     that.found3DPrinter = true;
   }

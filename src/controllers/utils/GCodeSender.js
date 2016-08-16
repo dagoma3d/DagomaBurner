@@ -4,6 +4,8 @@ var _root = __dirname + "/../../";
 var DeviceManager = require(_root+"manager/devices.js");
 var lodash = require("lodash");
 
+var awaitForAck = false;
+
 var GCodeSenderClass = function GCodeSenderClass(){
 
 }
@@ -65,6 +67,12 @@ GCodeSenderClass.prototype.sendGcode = function (gCode, callback) {
 GCodeSenderClass.prototype.waitForOK = function (callback) {
   var that = this;
   var _data = "";
+
+  if(!awaitForAck){
+    return setTimeout(function () {
+      callback(_data);
+    }, 100);
+  }
 
   var dataHandler = function(data){
     _data += data;

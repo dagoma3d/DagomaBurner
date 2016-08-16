@@ -14,7 +14,7 @@ ZoffsetPreparationClass.prototype.load = function (callback) {
   if(that.content)
     return callback();
 
-  ViewLoader("zoffset/preparation", function(content){
+  ViewLoader("zoffset/1_preparation", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -26,10 +26,13 @@ ZoffsetPreparationClass.prototype.load = function (callback) {
 ZoffsetPreparationClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    NavManager.setPage("zoffset/setJumper")
+    NavManager.setPage("zoffset/2_setJumper")
   });
 };
 
+ZoffsetPreparationClass.prototype.show = function () {
+
+};
 
 ZoffsetPreparationClass.prototype.dispose = function () {
 

@@ -26,10 +26,14 @@ HomePageClass.prototype.load = function (callback) {
 HomePageClass.prototype.initView = function () {
   var that = this;
   that.content.find("#configure").on("click", function(){
-    NavManager.setPage("zoffset/preparation")
+    NavManager.setPage("zoffset/1_preparation")
+    //NavManager.setPage("zoffset/7_TestPrinting");
   });
 };
 
+HomePageClass.prototype.show = function () {
+
+};
 
 HomePageClass.prototype.dispose = function () {
 
