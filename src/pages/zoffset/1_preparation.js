@@ -31,7 +31,29 @@ ZoffsetPreparationClass.prototype.initView = function () {
 };
 
 ZoffsetPreparationClass.prototype.show = function () {
+  var that = this;
+  that.count = 0;
+  that.content.find("#next").hide();
+  that.content.find(":checkbox").change(function(){
+    that.checkCheckbox();
+  });
+};
 
+ZoffsetPreparationClass.prototype.checkCheckbox = function () {
+  var that = this;
+  that.count = 0;
+  that.content.find(":checkbox").each(function(){
+    if($(this).is(':checked')){
+      that.count++;
+    }else{
+      that.count--;
+    }
+    if(that.count == 6){
+      that.content.find("#next").show();
+    }else{
+      that.content.find("#next").hide();
+    }
+  });
 };
 
 ZoffsetPreparationClass.prototype.dispose = function () {

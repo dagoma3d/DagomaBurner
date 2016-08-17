@@ -11,7 +11,6 @@ var HomePageClass = function HomePageClass(){
 
 HomePageClass.prototype.load = function (callback) {
   var that = this;
-
   if(that.content)
     return callback();
 

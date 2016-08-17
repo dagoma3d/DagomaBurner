@@ -32,11 +32,16 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
     GCodeSender.send(["M114"], false, function(response){
-      var zoffset = +(response.split("Z:")[1].split(" ")[0]);
-      console.log(zoffset);
-      zoffset = -7+zoffset;
-      zoffset = zoffset.toFixed( 2 );
+      var zoffset;
+      if(response){
+        zoffset = +(response.split("Z:")[1].split(" ")[0]);
+        zoffset = -7+zoffset;
+        zoffset = zoffset.toFixed( 2 );
+      }
+
       GCodeSender.send([
+        "G91;",
+        "G0 F3600.000000 Z10",
         "M851 Z"+zoffset,
         "M500"],
         false,

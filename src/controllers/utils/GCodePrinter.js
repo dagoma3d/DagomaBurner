@@ -177,6 +177,7 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
   }
 
   GCodeSender.send([
+    "G90;",
     "G28 X Y",
     "M106 S160",
     "M109 S180",
@@ -184,7 +185,7 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
     "G28",
     "G29; Detailed Z-Probe",
     "G90; Set to absolute positioning if not",
-    "G1 X100 Y200 Z8 F3000",
+    "G1 X100 Y200 Z5 F3000",
     "G1 Z0",
     "M82 ;set extruder to absolute mode",
     "G0 F3600.000000 Z0.260",

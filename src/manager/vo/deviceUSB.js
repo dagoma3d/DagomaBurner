@@ -20,6 +20,8 @@ var DeviceClassUSB = function(portName, uid, manufacturer){
   this.uid = uid;
   this.serial = null;
   this.printerFound = false;
+
+  this.serialDataListener = this.serialPortDataHandler.bind(this);
 };
 
 util.inherits(DeviceClassUSB, EventEmitter);
@@ -77,8 +79,6 @@ DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
     }
 
     that.ready = true;
-
-    that.serialDataListener = that.serialPortDataHandler.bind(that);
     that.serial.on('data', that.serialDataListener);
   }
 }
@@ -239,7 +239,8 @@ DeviceClassUSB.prototype.close = function(force){
 
   if(that.serial != null){
     clearInterval(that.interval);
-    that.serial.removeListener('data', that.serialDataListener);
+    if(that.serialDataListener)
+      that.serial.removeListener('data', that.serialDataListener);
 
     try{
       that.serial.close();

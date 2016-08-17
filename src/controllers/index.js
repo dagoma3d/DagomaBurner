@@ -5,6 +5,7 @@ var DeviceManager = require(_root+"manager/devices.js");
 var FirmwareController = require(_root+"controllers/firmware.js");
 var PortSelectorController = require(_root+"controllers/portSelector.js");
 var NavManager = require(_root+"manager/NavManager.js");
+var ModalManager = require(_root+"manager/modalManager.js");
 
 const {remote} = require('electron');
 const {Menu, MenuItem} = remote;
@@ -131,11 +132,20 @@ Menu.setApplicationMenu(menu);
 
 ( function( $ ) {
   NavManager.setContainer($("#pageContainer"));
-  NavManager.setPage("home")
+  NavManager.setPage("home");
   $("#navHome").on("click", function(){
     NavManager.setPage("home")
   });
-  $("#globalLoader").hide();
+
+  DeviceManager.on("remove", function(device){
+    if(device == DeviceManager.selectedDevice){
+      ModalManager.hideLoader();
+      NavManager.setPage("home");
+      ModalManager.alert("D&eacute;connexion", "Votre imprimante s'est d&eacute;connect&eacute;e!");
+    }
+  })
+
+
   /*var portSelectorController = new PortSelectorController()
   var firmwareController = new FirmwareController(portSelectorController);
   var diagnosticController = new DiagnosticController(portSelectorController);
@@ -146,7 +156,7 @@ Menu.setApplicationMenu(menu);
 
   $('select').material_select();
 
-  $("#globalLoader").hide();
+  ModalManager.hideLoader();
 
   $("#version").text("V"+require(_root+"package.json").version);
 

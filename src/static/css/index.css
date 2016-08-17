@@ -253,8 +253,8 @@ iframe{
     display: block;}
 
   #zoffsetTestPrintStart p{
-    margin-top: 50px;
-    margin-bottom: 30px;}
+    margin-top: 0px;
+    margin-bottom: 20px;}
 
 
 #zoffsetTestPrinting{
@@ -282,7 +282,7 @@ iframe{
     margin-bottom: 10px;
     background-position-x: -70px;
     background-size: cover;
-    opacity: 0.9;
+    opacity: 0.85;
     padding: 0;}
 
     #zoffsetTestPrinting .zOffsetImage p{
@@ -300,10 +300,14 @@ iframe{
       background-image: url("../images/zOffsetDown.jpg");}
 
     #zoffsetTestPrinting #zOffsetOK{
-      background-image: url("../images/zOffsetOK.jpg");}
+      background-image: url("../images/zOffsetOk.jpg");
+      border: 5px solid green;}
 
     #zoffsetTestPrinting #zOffsetUp{
       background-image: url("../images/zOffsetUp.jpg");}
+
+#zoffsetSave p.green-text{
+  margin-top: 80px;}
 
 
 /*

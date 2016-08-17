@@ -11,6 +11,7 @@ var SerialPort = SerialPortLib.SerialPort;
 var DeviceUSB = require(root+"manager/vo/deviceUSB.js");
 var DeviceTest = require(root+"manager/vo/deviceTest.js");
 //var DeviceWifi = require(root+"models/vo/deviceWifi.js");
+var NavManager = require(_root+"manager/NavManager.js");
 
 var DeviceManagerClass = function DeviceManagerClass(){
   EventEmitter.call(this);
