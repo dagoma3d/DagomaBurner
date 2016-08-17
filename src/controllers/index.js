@@ -4,7 +4,6 @@ var _root = __dirname + "/../";
 var DeviceManager = require(_root+"manager/devices.js");
 var FirmwareController = require(_root+"controllers/firmware.js");
 var PortSelectorController = require(_root+"controllers/portSelector.js");
-var DiagnosticController = require(_root+"controllers/diagnostic.js");
 var NavManager = require(_root+"manager/NavManager.js");
 
 const {remote} = require('electron');

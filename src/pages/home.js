@@ -29,6 +29,11 @@ HomePageClass.prototype.initView = function () {
     NavManager.setPage("zoffset/1_preparation")
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
+
+  that.content.find("#sav").on("click", function(){
+    NavManager.setPage("diagnostic")
+    //NavManager.setPage("zoffset/7_TestPrinting");
+  });
 };
 
 HomePageClass.prototype.show = function () {

@@ -258,7 +258,10 @@ iframe{
 
 
 #zoffsetTestPrinting{
-    margin:0px;}
+    margin: 0px 16px 0 0;}
+
+  #zoffsetTestPrinting #start{
+    display: block;}
 
   #zoffsetTestPrinting iframe{
     margin-right: 20px;}
@@ -301,6 +304,13 @@ iframe{
 
     #zoffsetTestPrinting #zOffsetUp{
       background-image: url("../images/zOffsetUp.jpg");}
+
+
+/*
+************************************************************************
+************************************************************************
+************************************************************************
+*/
 
 /*
 #dragBox{
@@ -360,6 +370,14 @@ iframe{
   opacity: 0.1;
   pointer-events: none;
 }
+*/
+
+/*
+************************************************************************
+************************************************************************
+************************************************************************
+*/
+
 
 #diagnostic{
   margin-top:40px;
@@ -446,5 +464,3 @@ iframe{
         background-color: red;
         width: 100%;
         margin: 10px 0px;}
-
-*/

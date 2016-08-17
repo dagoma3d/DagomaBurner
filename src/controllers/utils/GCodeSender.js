@@ -4,7 +4,7 @@ var _root = __dirname + "/../../";
 var DeviceManager = require(_root+"manager/devices.js");
 var lodash = require("lodash");
 
-var awaitForAck = false;
+var awaitForAck = true;
 
 var GCodeSenderClass = function GCodeSenderClass(){
 
@@ -49,12 +49,10 @@ GCodeSenderClass.prototype.sendRecursive = function (gCodes, callback, result) {
 
 GCodeSenderClass.prototype.sendGcode = function (gCode, callback) {
   var that = this;
-  console.log("sendGcode");
   if(that.forceStop){
     that.forceStop = false;
     return;
   }
-  console.log("sendGcode", gCode);
 
   DeviceManager.getSelectedDevice().send(gCode+"\r\n");
   that.waitForOK(function(response){

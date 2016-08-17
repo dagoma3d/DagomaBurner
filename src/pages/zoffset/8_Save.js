@@ -46,9 +46,11 @@ ZoffsetSaveClass.prototype.show = function () {
     "G90"],
     false,
     function(response){
+      console.log("response", response);
       var currentZ, currentZOffset;
-      var regex = /X:(\d+.\d+) Y:(\d+.\d+) Z:(\d+.\d+)/.exec(response);
-      if(regex && regex.length>3)
+      var regex = /X:(\d+.\d+) Y:(\d+.\d+) Z:(-?\d+.\d+)/.exec(response);
+      console.log("regex", regex);
+      if(regex && regex.length>=3)
         currentZ = -parseFloat(regex[3]);
       var regex = /M851 Z(-?\d+.\d+)/.exec(response);
       if(regex && regex.length>1)
@@ -67,7 +69,7 @@ ZoffsetSaveClass.prototype.show = function () {
         that.printer.finishPrint(function(){
           ModalManager.hideLoader();
           that.content.show();
-          that.content.find("zOffsetValue").text(newZOffset);
+          that.content.find("#zOffsetValue").text(newZOffset.toFixed(2));
         });
       })
     });

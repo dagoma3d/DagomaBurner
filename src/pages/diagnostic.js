@@ -1,14 +1,40 @@
+"use strict";
+
 var _root = __dirname + "/../";
 
+var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
+var NavManager = require(_root+"manager/NavManager.js");
 var lodash = require("lodash");
 var DeviceManager = require(_root+"manager/devices.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
 
-var DiagnosticControllerClass = function(oPortSelectorController){
+var DiagnosticPageClass = function DiagnosticPageClass(){
+  this.content = null;
+}
+
+DiagnosticPageClass.prototype.load = function (callback) {
   var that = this;
-  that.portSelector = oPortSelectorController;
+  if(that.content)
+    return callback();
+
+  ViewLoader("diagnostic", function(content){
+    that.content = $(content);
+    that.initView();
+    if(callback){
+      callback();
+    }
+  });
+};
+
+DiagnosticPageClass.prototype.initView = function () {
+
+};
+
+DiagnosticPageClass.prototype.show = function () {
+  var that = this;
+
   that.needToGoUp = true;
 
   DeviceManager.on("printerFound", function(device){
@@ -59,6 +85,7 @@ var DiagnosticControllerClass = function(oPortSelectorController){
     }
 
     gcode += $("#diagnostic .speedControl .selected").text();
+    gcode += " F6000";
 
     GCodeSender.send(["G91", gcode], false);
   });
@@ -273,15 +300,10 @@ var DiagnosticControllerClass = function(oPortSelectorController){
         });
       })
   });
+};
+
+DiagnosticPageClass.prototype.dispose = function () {
 
 };
 
-function convertToHex(str) {
-    var hex = '';
-    for(var i=0;i<str.length;i++) {
-        hex += ''+str.charCodeAt(i).toString(16);
-    }
-    return hex;
-}
-
-module.exports = DiagnosticControllerClass;
+module.exports = DiagnosticPageClass;

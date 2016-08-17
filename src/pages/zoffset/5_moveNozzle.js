@@ -31,7 +31,20 @@ ZoffsetMoveNozzleClass.prototype.load = function (callback) {
 ZoffsetMoveNozzleClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    NavManager.setPage("zoffset/6_TestPrintStart")
+    GCodeSender.send(["M114"], false, function(response){
+      var zoffset = +(response.split("Z:")[1].split(" ")[0]);
+      console.log(zoffset);
+      zoffset = -7+zoffset;
+      zoffset = zoffset.toFixed( 2 );
+      GCodeSender.send([
+        "M851 Z"+zoffset,
+        "M500"],
+        false,
+        function(){
+          //alert("z-offset réglé à : "+zoffset );
+          NavManager.setPage("zoffset/6_TestPrintStart")
+        });
+      });
   });
 
   that.moveEnabled = true;
@@ -54,14 +67,14 @@ ZoffsetMoveNozzleClass.prototype.addButton = function (button, callback) {
     that.pressTimer = window.setTimeout(function() {
       that.pressInterval = window.setInterval(function() {
         callback();
-      },200);
-    },500);
+      },100);
+    },100);
     if(that.moveEnabled){
       callback();
       that.moveEnabled = false;
       window.setTimeout(function() {
         that.moveEnabled = true;
-      },500);
+      },100);
     }
     return false;
   });

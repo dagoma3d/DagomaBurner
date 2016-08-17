@@ -1,0 +1,72 @@
+<div id="diagnostic" class="col s12">
+  <div id="modalZoffset" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <p>Placez une feuille entre la buse et le plateau.</p>
+      <p>Descendez la buse &agrave; l'aide des boutons ci-contre pour pincer la feuille</p>
+      <table class="position">
+        <tr class="row">
+          <td><a id="zp01" class="btn"><i class="material-icons">expand_less</i></a></td>
+          <td><a id="zp1" class="btn"><i class="material-icons">expand_less</i></a></td>
+          <td><a id="zp10" class="btn"><i class="material-icons">expand_less</i></a></td>
+        </tr>
+        <tr class="row">
+          <td>0,1mm</td>
+          <td>1mm</td>
+          <td>10mm</td>
+        </tr>
+        <tr class="row">
+          <td><a id="zm01" class="btn"><i class="material-icons">expand_more</i></a></td>
+          <td><a id="zm1" class="btn"><i class="material-icons">expand_more</i></a></td>
+          <td><a id="zm10" class="btn"><i class="material-icons">expand_more</i></a></td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">La feuille est pinc&eacute;e</a>
+    </div>
+  </div>
+  <table class="position">
+    <tr class="row">
+      <td></td>
+      <td>X/Y</td>
+      <td></td>
+      <td class="colZ">Z</td>
+    </tr>
+    <tr class="row">
+      <td></td>
+      <td><a id="yp" class="btn btnPosition"><i class="material-icons">expand_less</i></a></td>
+      <td></td>
+      <td><a id="zp" class="btn btnPosition colZ"><i class="material-icons">expand_less</i></a></td>
+    </tr>
+    <tr class="row">
+      <td><a id="xm" class="btn btnPosition"><i class="material-icons">chevron_left</i></a></td>
+      <td><a id="home" class="btn"><i class="material-icons">home</i></a></td>
+      <td><a id="xp" class="btn btnPosition"><i class="material-icons">chevron_right</i></a></td>
+      <td><a id="home" class="btn colZ"><i class="material-icons">home</i></a></td>
+    </tr>
+    <tr class="row">
+      <td></td>
+      <td><a id="ym" class="btn btnPosition"><i class="material-icons">expand_more</i></a></td>
+      <td></td>
+      <td><a id="zm" class="btn colZ btnPosition"><i class="material-icons">expand_more</i></a></td>
+    </tr>
+    <tr class="row">
+      <td colspan="4">
+        <div class="speedControl">
+            <a id="s01" class="btnRadio">0.1</a>
+            <a id="s1" class="btnRadio selected">1</a>
+            <a id="s10" class="btnRadio">10</a>
+            <a id="s100" class="btnRadio">100</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <p>
+    <a id="zoffset" class="btn">Z-Offset</a>
+    <a id="spirale" class="btn">Spirale</a>
+    <a id="monter" class="btn">Monter</a>
+    <a id="descendre" class="btn">Descendre</a>
+    <a id="stop" class="btn">Stop</a>
+    <a id="pastille" class="btn">Pastille</a>
+  </p>
+</div>

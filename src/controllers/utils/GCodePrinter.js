@@ -8,6 +8,8 @@ var lodash = require("lodash");
 var GCodePrinterClass = function(){
   this.sendExtruderOffset = false;
   this.forceStop = false;
+  this.printStart = true;
+  this.printEnd = true;
 }
 
 GCodePrinterClass.prototype.print = function (datas, printStart, printEnd, offsetX, offsetY, offsetZ, maxDistance, callback){
@@ -182,7 +184,7 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
     "G28",
     "G29; Detailed Z-Probe",
     "G90; Set to absolute positioning if not",
-    "G1 X100 Y200 Z5 F3000",
+    "G1 X100 Y200 Z8 F3000",
     "G1 Z0",
     "M82 ;set extruder to absolute mode",
     "G0 F3600.000000 Z0.260",
