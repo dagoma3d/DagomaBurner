@@ -22,6 +22,10 @@ ${PLISTBUDDY} -c "Set :CFBundleShortVersionString ${version}" "./build/DagomaDoc
 ${PLISTBUDDY} -c "Set :CFBundleVersion ${version}" "./build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Info.plist"
 fi
 
+echo "[INFO] Cleaning all previous generated zip archive..."
+rm -f build/*.zip
+rm -f build/*.tar.gz
+
 ############ Windows ############
 echo "[INFO] Building Windows ..."
 rm -rf build/DagomaDoctor-win32-x64/resources/app/
@@ -30,6 +34,8 @@ rm -rf build/DagomaDoctor-win32-x64/resources/app/node_modules
 cp -R build/modules/win/node_modules/ build/DagomaDoctor-win32-x64/resources/app/node_modules
 ${ASAR} pack build/DagomaDoctor-win32-x64/resources/app/ build/DagomaDoctor-win32-x64/resources/app.asar
 rm -rf build/DagomaDoctor-win32-x64/resources/app/
+bash -c "cd build && zip -y -r DagomaDoctor-win32-x64.zip DagomaDoctor-win32-x64 > /dev/null"
+echo "[INFO] Built: build/DagomaDoctor-win32-x64.zip"
 
 ############ Mac ############
 echo "[INFO] Building Mac ..."
@@ -39,6 +45,8 @@ rm -rf build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/nod
 cp -R build/modules/mac/node_modules/ build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/node_modules
 ${ASAR} pack build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/ build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app.asar
 rm -rf build/DagomaDoctor-darwin-x64/DagomaDoctor.app/Contents/Resources/app/
+bash -c "cd build && zip -y -r DagomaDoctor-darwin-x64.zip DagomaDoctor-darwin-x64 > /dev/null"
+echo "[INFO] Built: build/DagomaDoctor-darwin-x64.zip"
 
 ############ Linux ############
 echo "[INFO] Building Linux ..."
@@ -49,5 +57,7 @@ cp -R build/modules/linux/node_modules/ build/DagomaDoctor-linux-x64/resources/a
 ${ASAR} pack build/DagomaDoctor-linux-x64/resources/app/ build/DagomaDoctor-linux-x64/resources/app.asar
 rm -rf build/DagomaDoctor-linux-x64/resources/app/
 tar -czf build/DagomaDoctor-linux-x64.tar.gz -C build/ DagomaDoctor-linux-x64
+bash -c "cd build && zip -y -r DagomaDoctor-linux-x64.zip DagomaDoctor-linux-x64.tar.gz > /dev/null"
+echo "[INFO] Built: build/DagomaDoctor-linux-x64.zip"
 
 echo "[INFO] Build Finished ..."
