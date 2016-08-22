@@ -1,0 +1,13 @@
+{
+  "name": "DagomaDoctor-BuildProject",
+  "version": "0.0.0",
+  "author": "Dagoma",
+  "private": true,
+  "dependencies": {
+    "electron-packager": "^7.7.0",
+    "jq": "^1.7.2",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {}
+}
