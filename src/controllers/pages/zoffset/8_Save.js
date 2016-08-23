@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -76,7 +76,7 @@ ZoffsetSaveClass.prototype.show = function () {
 };
 
 ZoffsetSaveClass.prototype.dispose = function () {
-
+  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetSaveClass;

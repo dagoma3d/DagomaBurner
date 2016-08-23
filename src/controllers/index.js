@@ -131,6 +131,13 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 ( function( $ ) {
+  const shell = require('electron').shell;
+
+  $(document).on('click', 'a[href^="http"]', function(event) {
+      event.preventDefault();
+      shell.openExternal(this.href);
+  });
+
   NavManager.setContainer($("#pageContainer"));
   NavManager.setPage("home");
   $("#navHome").on("click", function(){
@@ -138,13 +145,36 @@ Menu.setApplicationMenu(menu);
   });
 
   DeviceManager.on("remove", function(device){
-    if(device == DeviceManager.selectedDevice){
+    if(device == DeviceManager.selectedDevice && NavManager.currentPage != "zoffset/3_printerConnection"){
       ModalManager.hideLoader();
       NavManager.setPage("home");
       ModalManager.alert("D&eacute;connexion", "Votre imprimante s'est d&eacute;connect&eacute;e!");
     }
   })
 
+  var timeOutWelcome = setTimeout(function(){
+    $("#welcome").fadeOut(1000)
+  }, 4000);
+
+  $("#welcome").on("click", function(){
+    clearTimeout(timeOutWelcome);
+    $("#welcome").fadeOut(100);
+  });
+
+  var $dropZone = $("html");
+
+  $dropZone.on("dragover", function (e) {
+    return false;
+  });
+
+  $dropZone.on("dragleave", function (e) {
+    return false;
+  });
+
+  $dropZone.on("drop", function(e){
+    if(NavManager.currentPage != "firmware/4_firmware")
+      e.preventDefault();
+  });
 
   /*var portSelectorController = new PortSelectorController()
   var firmwareController = new FirmwareController(portSelectorController);

@@ -21,7 +21,7 @@ var DeviceManagerClass = function DeviceManagerClass(){
   this.readyDevices = {};
 
   this.resetPort();
-  this.interval = setInterval(function(){that.resetPort()}, 3000);
+  this.interval = setInterval(function(){that.resetPort()}, 1000);
                                         //portName, pnpId, manufacturer, typeId, version, shieldID, shieldVersion, shieldVariant
 
   //that.createDevice("test2", new DeviceTest("test2", 20, "Sikwi", 2,1,1,1));
@@ -61,8 +61,7 @@ DeviceManagerClass.prototype.resetPort = function(){
       });
 
       if(found == false){
-        if(that.devices[port].isTest == false)
-          that.devices[port].delete();
+        that.devices[port].delete();
       }
     }
   });

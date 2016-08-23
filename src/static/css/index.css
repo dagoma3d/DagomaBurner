@@ -19,6 +19,20 @@ html{
   user-select: none;
   cursor: default;}
 
+#welcome{
+  position: absolute;
+  z-index: 10;
+  top: 0px;
+  background-color: #e19531;
+  bottom: 0px;
+  padding: 60px 50px;
+  font-size: 26px;
+  text-align: center;
+  color: white;}
+
+  #welcome p{
+    margin: 0px;}
+
 #version{
   position: fixed;
   bottom: 1px;
@@ -65,6 +79,17 @@ a, select, button, input, label{
     left: 0px;
     text-align: center;
     font-size: 30;}
+
+    #navbar a#navBack{
+      position: absolute;
+      width: 60px;
+      height: 50px;
+      color: white;
+      line-height: 50px;
+      top: 0px;
+      left: 60px;
+      text-align: center;
+      font-size: 30;}
 
   h1{
     margin: 0px;
@@ -182,7 +207,7 @@ a, select, button, input, label{
     margin-top: 10px;}
 
   #zoffsetPreparation ul{
-    padding-left: 30px;
+    padding-left: 7px;
     margin: 0px;}
 
     #zoffsetPreparation ul [type="checkbox"] + label{
@@ -192,30 +217,65 @@ a, select, button, input, label{
     #zoffsetPreparation ul li{
       list-style-type: none;}
 
-  #zoffsetConnection img{
-    margin-bottom: 20px;
-    margin-left: 20px;}
+    #zoffsetPreparation [type="checkbox"].filled-in:checked + label:after {
+      border: 2px solid #e19531;
+      background-color: #e19531;}
 
-    #zoffsetConnection p{
-      margin-bottom: 0px;}
+#zoffsetConnection iframe{
+  margin-bottom: 30px;
+  margin-top: 40px;}
 
-    #zoffsetConnection #comSelector{
-      margin-bottom: 10px;
-      margin-right: 10px;
-      font-size: 14px;}
+#zoffsetConnection img{
+  margin-bottom: 20px;
+  margin-left: 20px;}
 
-      #zoffsetConnection #comSelector p{
-        display: none;
-        margin: 5px;
-        color: #999;
-        padding-bottom: 5px;}
+  #zoffsetConnection p{
+    margin-bottom: 0px;}
 
-#zoffsetSetJumper {
+  #zoffsetConnection #comSelector{
+    margin-bottom: 10px;
+    margin-right: 10px;
+    font-size: 14px;}
+
+    #zoffsetConnection #comSelector p{
+      display: none;
+      margin: 5px;
+      color: #999;
+      padding-bottom: 5px;}
+
+#zoffsetSetJumper, #zoffsetSetJumper_melzi {
   font-size: 15px;
   margin: 0px 30px 0px 20px;}
 
-  #zoffsetSetJumper iframe{
+  #zoffsetSetJumper_melzi  iframe{
     margin-left: 0px;}
+
+    #zoffsetSetJumper a{
+      display: block;
+      height: 140px;
+      margin-bottom: 10px;
+      padding: 0;
+      text-align: right;}
+
+    #zoffsetSetJumper a#melzi{
+      text-align: center;}
+
+      #zoffsetSetJumper a#melzi span{
+        line-height: 70px;
+        margin: 0px;}
+
+      #zoffsetSetJumper a img{
+        z-index: -1;
+        position: absolute;
+        left: 0px;}
+
+      #zoffsetSetJumper a span{
+        color: white;
+        font-size: 30px;
+        margin: 0px 70px;
+        line-height: 140px;
+        text-shadow: 1px 1px 2px grey;}
+
 
 iframe{
   border: 0px;
@@ -270,41 +330,46 @@ iframe{
     right: 10px;
     bottom: 10px;}
 
-  #zoffsetTestPrinting.ready .zOffsetImage{
-    height: 200px;}
+  #zoffsetTestPrinting.ready .zOffsetButton{
+    height: 210px;}
 
-  #zoffsetTestPrinting .zOffsetImage{
-    width: 125px;
-    height: 260px;
-    overflow: hidden;
-    float: left;
-    margin-left: 2px;
-    margin-bottom: 10px;
-    background-position-x: -70px;
-    background-size: cover;
-    opacity: 0.85;
-    padding: 0;}
+    #zoffsetTestPrinting.ready .zOffsetButton img{
+      height: 165px;
+      right: 60px}
 
-    #zoffsetTestPrinting .zOffsetImage p{
-      line-height: initial;
-      font-size: 16px;
-      position: absolute;
-      bottom: 0px;
-      padding: 5px;
-      margin: 0px;}
+    #zoffsetTestPrinting.ready .zOffsetButton p{
+      top: 110px}
 
-    #zoffsetTestPrinting .zOffsetImage:hover{
-      opacity: 1;}
+    #zoffsetTestPrinting .zOffsetButton{
+      width: 126px;
+      overflow-x: hidden;
+      float: left;
+      height: 250px;
+      margin-right: 2px;
+      position: relative;
+      transition: height 1s;}
 
-    #zoffsetTestPrinting #zOffsetDown{
-      background-image: url("../images/zOffsetDown.jpg");}
+      #zoffsetTestPrinting .zOffsetButton p{
+        position: absolute;
+        top: 160px;
+        width: 100%;
+        text-align: center;
+        color: white;
+        transition: top 1s;}
 
-    #zoffsetTestPrinting #zOffsetOK{
-      background-image: url("../images/zOffsetOk.jpg");
-      border: 5px solid green;}
+      #zoffsetTestPrinting .zOffsetButton img{
+        position: relative;
+        right: 80px;
+        height: 212px;
+        margin-bottom: 2px;
+        transition: height 1s, right 1s;}
 
-    #zoffsetTestPrinting #zOffsetUp{
-      background-image: url("../images/zOffsetUp.jpg");}
+      #zoffsetTestPrinting .zOffsetButton a{
+        padding: 0px;
+        width: 100%;
+        font-size: 13px}
+
+
 
 #zoffsetSave p.green-text{
   margin-top: 80px;}
@@ -316,10 +381,10 @@ iframe{
 ************************************************************************
 */
 
-/*
+
 #dragBox{
   width: 100%;
-  height: 201px;
+  height: 330px;
   border: 1px dashed grey;
   margin-top: 10px;
 }
@@ -331,7 +396,7 @@ iframe{
 	background-color: rgba(255,255,255, 0.9);
 	position: relative;
   text-align: center;
-  padding-top: 148px;
+  padding-top: 268px;
 }
 
 .drag.hover{
@@ -342,8 +407,7 @@ iframe{
 	padding: 10px;
   width: 100%;
   position: relative;
-  height: 200px;
-}
+  height: 330px;}
 
 .fileName{
 	font-weight: bold;
@@ -357,11 +421,12 @@ iframe{
 }
 
 #burn{
-  margin-left: 100px;
-	position: absolute;
+  /* margin-left: 100px; */
+  position: absolute;
   bottom: 10px;
   right: 10px;
-	background-color: #e19531;
+  left: 10px;
+  background-color: #e19531;
 }
 
 #errorMessage{
@@ -369,12 +434,6 @@ iframe{
   text-align: center;
   margin-top: 40%;
 }
-
-.disabled{
-  opacity: 0.1;
-  pointer-events: none;
-}
-*/
 
 /*
 ************************************************************************

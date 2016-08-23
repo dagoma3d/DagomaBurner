@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -54,7 +54,7 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
 
   that.moveEnabled = true;
 
-  that.content.mouseup(function(){
+  that.content.mouseup(function(e){
     clearTimeout(that.pressTimer);
     clearInterval(that.pressInterval);
     return false;
@@ -62,12 +62,17 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
 
   that.addButton("#zp", that.moveUp);
   that.addButton("#zm", that.moveDown);
+
+  $("#navBack").show();
+  $("#navBack").on("click", function(){
+    NavManager.setPage("zoffset/4_placeTarget");
+  });
 };
 
 ZoffsetMoveNozzleClass.prototype.addButton = function (button, callback) {
   var that = this;
 
-  that.content.find(button).mousedown(function(){
+  that.content.find(button)[0].addEventListener("mousedown", function(e){
     that.content.find("#next").show();
     that.pressTimer = window.setTimeout(function() {
       that.pressInterval = window.setInterval(function() {
@@ -101,7 +106,7 @@ ZoffsetMoveNozzleClass.prototype.moveDown = function () {
 };
 
 ZoffsetMoveNozzleClass.prototype.dispose = function () {
-
+  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetMoveNozzleClass;

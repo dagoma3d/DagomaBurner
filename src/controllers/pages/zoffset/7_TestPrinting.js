@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -64,7 +64,7 @@ ZoffsetTestPrintingClass.prototype.initView = function () {
 ZoffsetTestPrintingClass.prototype.addButton = function (button, callback) {
   var that = this;
 
-  that.content.find(button).mousedown(function(){
+  that.content.find(button)[0].addEventListener("mousedown", function(e){
     that.pressTimer = window.setTimeout(function() {
       that.pressInterval = window.setInterval(function() {
         callback();
@@ -112,7 +112,7 @@ ZoffsetTestPrintingClass.prototype.printRecursive = function () {
 };
 
 ZoffsetTestPrintingClass.prototype.dispose = function () {
-
+  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetTestPrintingClass;

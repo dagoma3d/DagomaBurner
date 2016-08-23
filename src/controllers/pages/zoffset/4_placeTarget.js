@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -33,6 +33,11 @@ ZoffsetPlaceTargetClass.prototype.initView = function () {
   that.content.find("#next").on("click", function(){
     NavManager.setPage("zoffset/5_moveNozzle")
   });
+
+  $("#navBack").show();
+  $("#navBack").on("click", function(){
+    NavManager.setPage("zoffset/3_printerConnection");
+  });
 };
 
 ZoffsetPlaceTargetClass.prototype.show = function () {
@@ -55,7 +60,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
 
 
 ZoffsetPlaceTargetClass.prototype.dispose = function () {
-
+  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetPlaceTargetClass;

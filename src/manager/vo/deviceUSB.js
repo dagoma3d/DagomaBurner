@@ -71,7 +71,7 @@ DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
 
   if ( error && error != "Error: Port is already open"){
     console.error("error", error);
-    //that.delete();
+    that.delete();
   }else{
     if(!that.ready){
       that.emit("ready", that);

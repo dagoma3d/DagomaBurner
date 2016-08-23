@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -48,7 +48,7 @@ ZoffsetPreparationClass.prototype.checkCheckbox = function () {
     }else{
       that.count--;
     }
-    if(that.count == 6){
+    if(that.count == 5){
       that.content.find("#next").show();
     }else{
       that.content.find("#next").hide();

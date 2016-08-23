@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -35,6 +35,8 @@ ZoffsetPrinterConnectionClass.prototype.initView = function () {
       NavManager.setPage("zoffset/4_placeTarget");
   });
 
+  //that.content.find('select#com').hide();
+
 
   that.content.find("select#com").on("change", function(event){
     if(that.selectedDevice != null){
@@ -50,10 +52,17 @@ ZoffsetPrinterConnectionClass.prototype.initView = function () {
   DeviceManager.on("add", that.deviceManagerAddListener);
   DeviceManager.on("remove", that.deviceManagerRemoveListener);
   DeviceManager.on("open", that.deviceManagerOpenListener);
+
+  $("#navBack").show();
+  $("#navBack").on("click", function(){
+    NavManager.setPage("zoffset/2_setJumper");
+  });
 };
 
 ZoffsetPrinterConnectionClass.prototype.deviceManagerRemoveHandler = function(device){
   this.removeDeviceList(device);
+  this.textBox.hide();
+  this.content.find("#next").hide();
 }
 
 ZoffsetPrinterConnectionClass.prototype.deviceManagerOpenHandler = function(device){
@@ -148,6 +157,8 @@ ZoffsetPrinterConnectionClass.prototype.dispose = function () {
   DeviceManager.removeListener("add", this.deviceManagerAddListener);
   DeviceManager.removeListener("open", this.deviceManagerOpenListener);
   DeviceManager.removeListener("remove", this.deviceManagerRemoveListener);
+
+  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetPrinterConnectionClass;

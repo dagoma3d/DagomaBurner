@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../";
+var _root = __dirname + "/../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -28,6 +28,11 @@ HomePageClass.prototype.initView = function () {
   var that = this;
   that.content.find("#configure").on("click", function(){
     NavManager.setPage("zoffset/1_preparation")
+    //NavManager.setPage("zoffset/7_TestPrinting");
+  });
+
+  that.content.find("#firmware").on("click", function(){
+    NavManager.setPage("firmware/1_preparation")
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 
