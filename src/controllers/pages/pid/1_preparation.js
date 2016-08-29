@@ -26,7 +26,7 @@ PIDPreparationClass.prototype.load = function (callback) {
 PIDPreparationClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    window.pageAfterDeviceSelection = "pid/4_firmware";
+    window.pageAfterDeviceSelection = "pid/4_PID";
     NavManager.setPage("selectPrinter/1_selectPrinter");
   });
 };
