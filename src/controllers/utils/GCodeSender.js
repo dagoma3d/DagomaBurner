@@ -4,7 +4,7 @@ var _root = __dirname + "/../../";
 var DeviceManager = require(_root+"manager/devices.js");
 var lodash = require("lodash");
 
-var awaitForAck = false;
+var awaitForAck = true;
 
 var GCodeSenderClass = function GCodeSenderClass(){
 
