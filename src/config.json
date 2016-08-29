@@ -3,7 +3,7 @@
     "type":{
       "D200":{
         "name":"Discovery200",
-        "bootloader":"disco"
+        "bootloader":"melzi"
       },
       "D200V2":{
         "name":"DiscoVeryEasy200",
