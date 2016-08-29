@@ -64,9 +64,6 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
   that.addButton("#zm", that.moveDown);
 
   $("#navBack").show();
-  $("#navBack").on("click", function(){
-    NavManager.setPage("zoffset/4_placeTarget");
-  });
 };
 
 ZoffsetMoveNozzleClass.prototype.addButton = function (button, callback) {
@@ -106,7 +103,6 @@ ZoffsetMoveNozzleClass.prototype.moveDown = function () {
 };
 
 ZoffsetMoveNozzleClass.prototype.dispose = function () {
-  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetMoveNozzleClass;

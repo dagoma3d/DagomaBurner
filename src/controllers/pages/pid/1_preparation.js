@@ -5,16 +5,16 @@ var _root = __dirname + "/../../../";
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
 
-var ZoffsetPreparationClass = function ZoffsetPreparationClass(){
+var PIDPreparationClass = function PIDPreparationClass(){
   this.content = null;
 }
 
-ZoffsetPreparationClass.prototype.load = function (callback) {
+PIDPreparationClass.prototype.load = function (callback) {
   var that = this;
   if(that.content)
     return callback();
 
-  ViewLoader("zoffset/1_preparation", function(content){
+  ViewLoader("pid/1_preparation", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -23,15 +23,15 @@ ZoffsetPreparationClass.prototype.load = function (callback) {
   });
 };
 
-ZoffsetPreparationClass.prototype.initView = function () {
+PIDPreparationClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    window.pageAfterDeviceSelection = "zoffset/4_placeTarget";
+    window.pageAfterDeviceSelection = "pid/4_firmware";
     NavManager.setPage("selectPrinter/1_selectPrinter");
   });
 };
 
-ZoffsetPreparationClass.prototype.show = function () {
+PIDPreparationClass.prototype.show = function () {
   var that = this;
   that.count = 0;
   that.content.find("#next").hide();
@@ -40,7 +40,7 @@ ZoffsetPreparationClass.prototype.show = function () {
   });
 };
 
-ZoffsetPreparationClass.prototype.checkCheckbox = function () {
+PIDPreparationClass.prototype.checkCheckbox = function () {
   var that = this;
   that.count = 0;
   that.content.find(":checkbox").each(function(){
@@ -49,7 +49,7 @@ ZoffsetPreparationClass.prototype.checkCheckbox = function () {
     }else{
       that.count--;
     }
-    if(that.count == 5){
+    if(that.count == 2){
       that.content.find("#next").show();
     }else{
       that.content.find("#next").hide();
@@ -57,8 +57,8 @@ ZoffsetPreparationClass.prototype.checkCheckbox = function () {
   });
 };
 
-ZoffsetPreparationClass.prototype.dispose = function () {
+PIDPreparationClass.prototype.dispose = function () {
 
 };
 
-module.exports = ZoffsetPreparationClass;
+module.exports = PIDPreparationClass;

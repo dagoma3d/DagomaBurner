@@ -1,0 +1,18 @@
+{
+  "printer":{
+    "type":{
+      "D200":{
+        "name":"Discovery200",
+        "bootloader":"disco"
+      },
+      "D200V2":{
+        "name":"DiscoVeryEasy200",
+        "bootloader":"mega"
+      },
+      "E350":{
+        "name":"Explorer350",
+        "bootloader":"mega"
+      }
+    }
+  }
+}

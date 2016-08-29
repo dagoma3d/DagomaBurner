@@ -5,7 +5,7 @@ var _root = __dirname + "/../../../";
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
 
-var ZoffsetPrinterConnectionClass = function ZoffsetPrinterConnectionClass(){
+var PrinterConnectionClass = function PrinterConnectionClass(){
   this.content = null;
 
   this.deviceManagerAddListener = this.deviceManagerAddHandler.bind(this);
@@ -14,12 +14,12 @@ var ZoffsetPrinterConnectionClass = function ZoffsetPrinterConnectionClass(){
 
 }
 
-ZoffsetPrinterConnectionClass.prototype.load = function (callback) {
+PrinterConnectionClass.prototype.load = function (callback) {
   var that = this;
   if(that.content)
     return callback();
 
-  ViewLoader("zoffset/3_printerConnection", function(content){
+  ViewLoader("selectPrinter/3_printerConnection", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -28,15 +28,15 @@ ZoffsetPrinterConnectionClass.prototype.load = function (callback) {
   });
 };
 
-ZoffsetPrinterConnectionClass.prototype.initView = function () {
+PrinterConnectionClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    if(that.found3DPrinter)
-      NavManager.setPage("zoffset/4_placeTarget");
+    that.selectedDevice.validate = true;
+    console.log("window.pageAfterDeviceSelection", window.pageAfterDeviceSelection);
+    NavManager.setPage(window.pageAfterDeviceSelection);
   });
 
   //that.content.find('select#com').hide();
-
 
   that.content.find("select#com").on("change", function(event){
     if(that.selectedDevice != null){
@@ -54,23 +54,20 @@ ZoffsetPrinterConnectionClass.prototype.initView = function () {
   DeviceManager.on("open", that.deviceManagerOpenListener);
 
   $("#navBack").show();
-  $("#navBack").on("click", function(){
-    NavManager.setPage("zoffset/2_setJumper");
-  });
 };
 
-ZoffsetPrinterConnectionClass.prototype.deviceManagerRemoveHandler = function(device){
+PrinterConnectionClass.prototype.deviceManagerRemoveHandler = function(device){
   this.removeDeviceList(device);
   this.textBox.hide();
   this.content.find("#next").hide();
 }
 
-ZoffsetPrinterConnectionClass.prototype.deviceManagerOpenHandler = function(device){
+PrinterConnectionClass.prototype.deviceManagerOpenHandler = function(device){
   this.openDevice();
 }
 
 
-ZoffsetPrinterConnectionClass.prototype.deviceManagerAddHandler = function(device){
+PrinterConnectionClass.prototype.deviceManagerAddHandler = function(device){
   var that = this;
   that.updateDeviceList(device);
   that.content.find('select#com').val(device.portName);
@@ -85,7 +82,7 @@ ZoffsetPrinterConnectionClass.prototype.deviceManagerAddHandler = function(devic
   that.selectedDevice.open();
 }
 
-ZoffsetPrinterConnectionClass.prototype.show = function () {
+PrinterConnectionClass.prototype.show = function () {
   var that = this;
   that.selectedDevice = null;
   that.textBox = that.content.find("#comSelector p");
@@ -97,7 +94,7 @@ ZoffsetPrinterConnectionClass.prototype.show = function () {
   that.content.find("#next").hide();
 };
 
-ZoffsetPrinterConnectionClass.prototype.openDevice = function () {
+PrinterConnectionClass.prototype.openDevice = function () {
   var that = this;
   var timeOut3DPrinterSearch;
   that.content.find("#next").hide();
@@ -128,8 +125,10 @@ ZoffsetPrinterConnectionClass.prototype.openDevice = function () {
 
     that.selectedDevice.removeListener("ready", deviceReady);
     timeOut3DPrinterSearch = setTimeout(function(){
-      no3DPrinterFound();
-    }, 30000);
+      //TODO: treat when no printer is discovered
+      //no3DPrinterFound();
+      printerFound();
+    }, 10000);
     that.selectedDevice.on("printerFound", printerFound);
   }
 
@@ -141,24 +140,22 @@ ZoffsetPrinterConnectionClass.prototype.openDevice = function () {
   }
 };
 
-ZoffsetPrinterConnectionClass.prototype.updateDeviceList = function(device){
+PrinterConnectionClass.prototype.updateDeviceList = function(device){
   var that = this;
   device.$select = $('<option val="'+device.portName+'">'+device.portName+'</option>');
   that.content.find('select#com').append(device.$select);
   that.content.find('select').material_select();
 }
 
-ZoffsetPrinterConnectionClass.prototype.removeDeviceList = function(device){
+PrinterConnectionClass.prototype.removeDeviceList = function(device){
   device.$select.remove();
 }
 
 
-ZoffsetPrinterConnectionClass.prototype.dispose = function () {
+PrinterConnectionClass.prototype.dispose = function () {
   DeviceManager.removeListener("add", this.deviceManagerAddListener);
   DeviceManager.removeListener("open", this.deviceManagerOpenListener);
   DeviceManager.removeListener("remove", this.deviceManagerRemoveListener);
-
-  $("#navBack").off("click");
 };
 
-module.exports = ZoffsetPrinterConnectionClass;
+module.exports = PrinterConnectionClass;

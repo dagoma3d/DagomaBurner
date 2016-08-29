@@ -1,6 +1,13 @@
 *{
   white-space-collapse: discard;}
 
+
+.orange{
+  background-color: #ff8242 !important;}
+
+.orange-text{
+  color: #ff8242 !important;}
+
 body, html{
 	overflow: hidden;
 	width: 100%;
@@ -72,28 +79,28 @@ a, select, button, input, label{
   #navbar a#navHome{
     position: absolute;
     width: 60px;
-    height: 50px;
+    height: 60px;
     color: white;
-    line-height: 50px;
+    line-height: 60px;
     top: 0px;
-    left: 0px;
+    right: 0px;
     text-align: center;
     font-size: 30;}
 
     #navbar a#navBack{
       position: absolute;
       width: 60px;
-      height: 50px;
+      height: 60px;
       color: white;
-      line-height: 50px;
+      line-height: 60px;
       top: 0px;
-      left: 60px;
+      right: 60px;
       text-align: center;
       font-size: 30;}
 
   h1{
     margin: 0px;
-    line-height: 50px;
+    line-height: 60px;
     text-align: center;
     color: white;
     font-size: 1.5rem;
@@ -101,7 +108,7 @@ a, select, button, input, label{
   }
 
 #pageContainer{
-  margin: 0px 0px 10px 100px;}
+  margin: 0px 00px 10px 100px;}
 
 .port{
   color:red;
@@ -143,47 +150,141 @@ a, select, button, input, label{
 ************************************************************************
 */
 
-#home{
+.buttonList{
   margin: 50px 20px 0px;}
 
-#home .link{
+.buttonList .link{
   margin: 25px 0px;
   position: relative;}
 
-  #home a{
-    width: 320px;
+  .buttonList a{
+    width: 350px;
     height: 70px;
     margin: 0px;
     text-transform: inherit;
     padding: 0px 20px;
     overflow: hidden;}
 
-    #home img{
+    .buttonList img{
       position:absolute;
       left: 290px;
       bottom: 30px;
       z-index: 2;}
 
-    #home #firmware img{
+    .buttonList #firmware img{
       bottom: 0px;}
 
-    #home #sav img{
+    .buttonList #sav img{
       bottom: auto;
-      top: 35px;
-      left: 270px;}
+      top: 25px;
+      left: 290px;}
 
-    #home a h5{
+    .buttonList a h5{
       font-size: 19px;
       vertical-align: middle;
       font-weight: 300;
-      margin: 17px 0px;}
+      margin: 26px 0px;}
 
-      #home #firmware a h5{
-        margin: 7px 0px;}
+      .buttonList #firmware a h5{
+        margin: 16px 0px;}
 
-      #home a h5 p {
-        font-size: 13px;
+      .buttonList a h5 p {
+        font-size: 15px;
         margin: 0px;}
+
+.explication{
+  font-size: 18px;}
+
+  .explication #start{
+    display: block;
+    position: absolute;
+    left: 100px;
+    right: 20px;
+    bottom: 20px;}
+
+  .explication p{
+    margin-top: 0px;
+    margin-bottom: 20px;}
+
+.buttonListExpendable .collapsible{
+  box-shadow: none;
+  border: none;}
+
+  .buttonListExpendable .collapsible .collapsible-header{
+    box-shadow: none;
+    border: none;}
+
+    .buttonListExpendable .collapsible .collapsible-body{
+      border: none;
+      position: relative;
+      width: 350px;
+      height: 150px;}
+
+      .buttonListExpendable .collapsible .collapsible-body p{
+        margin: 0px;
+        color: #e19531;
+        font-size: 16px;
+        padding: 10px 20px;}
+
+        .buttonListExpendable .collapsible .collapsible-body p span.pro{
+          font-size: 12px;
+          color: #999999;}
+
+        .buttonListExpendable .collapsible .collapsible-body p span.exemple{
+          font-size: 12px;}
+
+      .buttonListExpendable .collapsible .collapsible-body .next{
+        position: absolute;
+        top: 82px;
+        right: 0px;}
+
+    .buttonListExpendable .collapsible .collapsible-header{
+      position: relative;}
+
+    .buttonListExpendable .collapsible .collapsible-header a{
+      width: 90%;
+      margin-top: 20px;
+      margin-bottom: 20px;}
+
+    .buttonListExpendable .collapsible .collapsible-header img{
+      position: absolute;
+      top: 6px;
+      right: 20px;
+      z-index: 2;}
+
+    .buttonListExpendable .collapsible .collapsible-header.active img{
+      -webkit-filter: grayscale(1);
+    }
+
+
+    .buttonListExpendable .collapsible .collapsible-header.active a{
+      background-color: #DFDFDF !important;
+      box-shadow: none;
+      color: #9F9F9F !important;
+      margin-bottom: 10px;}
+
+/*
+************************************************************************
+************************************************************************
+************************************************************************
+*/
+
+#home a{
+  width: 320px;}
+
+.selectPrinter p{
+  font-size: 20px;
+  }
+
+  .selectPrinter a{
+    width: 188px;
+    height: 140px;
+    margin: 0px 3px 6px 0px;
+    line-height: 29px;
+    padding: 10px 0px;}
+
+  .selectPrinter a img{
+    height: 103px;}
 
 /*
 ************************************************************************
@@ -198,7 +299,7 @@ a, select, button, input, label{
 
 .zoffset{
   font-size: 18px;
-  margin: 0px 30px 0px 20px;}
+  margin: 0px 20px 0px 20px;}
 
   #zoffsetPreparation .thanksToPrepare{
     margin-bottom: 0px;}
@@ -527,3 +628,32 @@ iframe{
         background-color: red;
         width: 100%;
         margin: 10px 0px;}
+
+#dagoExperts {
+  margin-right: 20px;}
+
+  #dagoExperts h2{
+    font-size: 31px;
+    text-align: center;
+    margin: 0px 0px 11px 0px;}
+
+    #dagoExperts a#hero{
+      height: 80px;
+      line-height: 30px;
+      padding: 10px;
+      font-size: 20px;
+      margin: 0px;}
+
+    #dagoExperts footer {
+      width: 280px;
+      position: absolute;
+      bottom: 10px;}
+
+      #dagoExperts footer  p {
+        margin: 6px 0px;}
+
+    #dagoExperts img {
+      height: 120px;
+      position: absolute;
+      bottom: 15px;
+      right: 5px;}

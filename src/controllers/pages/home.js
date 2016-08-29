@@ -27,17 +27,17 @@ HomePageClass.prototype.load = function (callback) {
 HomePageClass.prototype.initView = function () {
   var that = this;
   that.content.find("#configure").on("click", function(){
-    NavManager.setPage("zoffset/1_preparation")
+    NavManager.setPage("configuration");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 
   that.content.find("#firmware").on("click", function(){
-    NavManager.setPage("firmware/1_preparation")
+    NavManager.setPage("firmware/1_preparation");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 
   that.content.find("#sav").on("click", function(){
-    NavManager.setPage("diagnostic")
+    NavManager.setPage("dagoExperts");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 };

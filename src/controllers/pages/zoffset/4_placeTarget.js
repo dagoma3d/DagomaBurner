@@ -35,9 +35,6 @@ ZoffsetPlaceTargetClass.prototype.initView = function () {
   });
 
   $("#navBack").show();
-  $("#navBack").on("click", function(){
-    NavManager.setPage("zoffset/3_printerConnection");
-  });
 };
 
 ZoffsetPlaceTargetClass.prototype.show = function () {
@@ -60,7 +57,6 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
 
 
 ZoffsetPlaceTargetClass.prototype.dispose = function () {
-  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetPlaceTargetClass;

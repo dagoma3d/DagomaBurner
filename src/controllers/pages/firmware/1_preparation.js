@@ -26,7 +26,8 @@ ZoffsetPreparationClass.prototype.load = function (callback) {
 ZoffsetPreparationClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    NavManager.setPage("firmware/2_setJumper")
+    window.pageAfterDeviceSelection = "firmware/4_firmware";
+    NavManager.setPage("selectPrinter/1_selectPrinter");
   });
 };
 

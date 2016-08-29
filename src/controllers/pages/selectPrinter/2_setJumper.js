@@ -16,7 +16,7 @@ ZoffsetSetJumperMelziClass.prototype.load = function (callback) {
   if(that.content)
     return callback();
 
-  ViewLoader("firmware/2_setJumper_melzi", function(content){
+  ViewLoader("selectPrinter/2_setJumper", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -29,13 +29,10 @@ ZoffsetSetJumperMelziClass.prototype.initView = function () {
 
   var that = this;
   that.content.find("#next").on("click", function(){
-    NavManager.setPage("firmware/3_printerConnection")
+    NavManager.setPage("selectPrinter/3_printerConnection")
   });
 
   $("#navBack").show();
-  $("#navBack").on("click", function(){
-    NavManager.setPage("firmware/2_setJumper")
-  });
 }
 
 ZoffsetSetJumperMelziClass.prototype.show = function () {
@@ -43,7 +40,6 @@ ZoffsetSetJumperMelziClass.prototype.show = function () {
 };
 
 ZoffsetSetJumperMelziClass.prototype.dispose = function () {
-  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetSetJumperMelziClass;

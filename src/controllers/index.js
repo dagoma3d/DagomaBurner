@@ -133,7 +133,7 @@ Menu.setApplicationMenu(menu);
 ( function( $ ) {
   const shell = require('electron').shell;
 
-  $(document).on('click', 'a[href^="http"]', function(event) {
+  $(document).on('click', 'a[href^="http"], a[href^="mailto:"]', function(event) {
       event.preventDefault();
       shell.openExternal(this.href);
   });
@@ -143,12 +143,19 @@ Menu.setApplicationMenu(menu);
   $("#navHome").on("click", function(){
     NavManager.setPage("home")
   });
+  $("#navBack").on("click", function(){
+    NavManager.back();
+  });
 
   DeviceManager.on("remove", function(device){
-    if(device == DeviceManager.selectedDevice && NavManager.currentPage != "zoffset/3_printerConnection"){
-      ModalManager.hideLoader();
-      NavManager.setPage("home");
-      ModalManager.alert("D&eacute;connexion", "Votre imprimante s'est d&eacute;connect&eacute;e!");
+    if(device == DeviceManager.selectedDevice){
+      DeviceManager.selectedDevice = null;
+
+      if(NavManager.currentPage != "zoffset/3_printerConnection" && NavManager.currentPage != "home "){
+        ModalManager.hideLoader();
+        NavManager.setPage("home");
+        ModalManager.alert("D&eacute;connexion", "Votre imprimante s'est d&eacute;connect&eacute;e!");
+      }
     }
   })
 

@@ -35,7 +35,6 @@ ZoffsetTestPrintStartClass.prototype.show = function () {
 };
 
 ZoffsetTestPrintStartClass.prototype.dispose = function () {
-  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetTestPrintStartClass;

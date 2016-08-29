@@ -76,7 +76,6 @@ ZoffsetSaveClass.prototype.show = function () {
 };
 
 ZoffsetSaveClass.prototype.dispose = function () {
-  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetSaveClass;

@@ -112,7 +112,6 @@ ZoffsetTestPrintingClass.prototype.printRecursive = function () {
 };
 
 ZoffsetTestPrintingClass.prototype.dispose = function () {
-  $("#navBack").off("click");
 };
 
 module.exports = ZoffsetTestPrintingClass;

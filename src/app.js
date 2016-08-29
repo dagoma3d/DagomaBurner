@@ -24,12 +24,13 @@ app.on('ready', function(){
 function openWindow(){
   mainWindow = new BrowserWindow({
     width: 500,
-    height:  (process.platform=="win32")?450:420,
-    resizable: false, frame: false,
+    height:  (process.platform=="win32")?460:430,
+    resizable: false,
     //type:"dock",
     //'auto-hide-menu-bar': true,
     title: "DagomaDoctor",
-    'use-content-size': true,
+    titleBarStyle: 'hidden',
+    //'use-content-size': true,
     //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
   });
   //mainWindow.loadUrl('file://' + __dirname + '/views/SerialMonitorWindow.jade');

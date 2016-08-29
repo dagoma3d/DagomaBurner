@@ -8,11 +8,11 @@ var ModalManager = require(_root+"manager/modalManager.js");
 var CodeBuilder = require(_root+"manager/codeBuilder.js");
 
 
-var FirmwareFirmwareClass = function FirmwareFirmwareClass(){
+var ZoffsetSaveClass = function ZoffsetSaveClass(){
   this.content = null;
 }
 
-FirmwareFirmwareClass.prototype.load = function (callback) {
+ZoffsetSaveClass.prototype.load = function (callback) {
   var that = this;
   if(that.content)
     return callback();
@@ -26,14 +26,14 @@ FirmwareFirmwareClass.prototype.load = function (callback) {
   });
 };
 
-FirmwareFirmwareClass.prototype.initView = function () {
+ZoffsetSaveClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
     NavManager.setPage("home");
   });
 };
 
-FirmwareFirmwareClass.prototype.show = function () {
+ZoffsetSaveClass.prototype.show = function () {
   var that = this;
 
   var $dropZone = $("html");
@@ -61,8 +61,8 @@ FirmwareFirmwareClass.prototype.show = function () {
 
   $btn.on("click", function(){
     ModalManager.showLoader("le firmware est en train d'être uploadé sur la carte ")
-    console.log("window.printer", window.printer);
-    new CodeBuilder(DeviceManager.getSelectedDevice(), file.path, window.printer.bootloader, function(success){
+    console.log("window.boardType", window.boardType);
+    new CodeBuilder(DeviceManager.getSelectedDevice(), file.path, window.boardType, function(success){
       ModalManager.hideLoader();
       if(success)
         ModalManager.alert("Succès", "Votre imprimante s'est bien mise à jour");
@@ -74,7 +74,7 @@ FirmwareFirmwareClass.prototype.show = function () {
 
 };
 
-FirmwareFirmwareClass.prototype.dispose = function () {
+ZoffsetSaveClass.prototype.dispose = function () {
 };
 
-module.exports = FirmwareFirmwareClass;
+module.exports = ZoffsetSaveClass;
