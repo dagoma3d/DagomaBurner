@@ -5,9 +5,9 @@
     <key>BuildMachineOSBuild</key>
     <string>15E65</string>
     <key>CFBundleIdentifier</key>
-    <string>com.electron.dagomadoctor.helper</string>
+    <string>com.electron.dagoma.helper</string>
     <key>CFBundleName</key>
-    <string>DagomaDoctor</string>
+    <string>Dagoma</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>DTSDKBuild</key>
@@ -23,8 +23,8 @@
     <key>NSSupportsAutomaticGraphicsSwitching</key>
     <true/>
     <key>CFBundleDisplayName</key>
-    <string>DagomaDoctor Helper</string>
+    <string>Dagoma Helper</string>
     <key>CFBundleExecutable</key>
-    <string>DagomaDoctor Helper</string>
+    <string>Dagoma Helper</string>
   </dict>
 </plist>

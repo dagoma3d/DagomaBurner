@@ -5,13 +5,13 @@
     <key>BuildMachineOSBuild</key>
     <string>15E65</string>
     <key>CFBundleDisplayName</key>
-    <string>DagomaBurner Helper NP</string>
+    <string>Dagoma Helper EH</string>
     <key>CFBundleExecutable</key>
-    <string>DagomaBurner Helper NP</string>
+    <string>Dagoma Helper EH</string>
     <key>CFBundleIdentifier</key>
-    <string>com.electron.dagomaburner.helper.NP</string>
+    <string>com.electron.dagoma.helper.EH</string>
     <key>CFBundleName</key>
-    <string>DagomaBurner Helper NP</string>
+    <string>Dagoma Helper EH</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>DTSDKBuild</key>
