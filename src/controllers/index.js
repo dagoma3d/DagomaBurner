@@ -194,6 +194,8 @@ Menu.setApplicationMenu(menu);
   $('select').material_select();
 
   ModalManager.hideLoader();
+  //ModalManager.setProgress(50);
+
 
   $("#version").text("V"+require(_root+"package.json").version);
 

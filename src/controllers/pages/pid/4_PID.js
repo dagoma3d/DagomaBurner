@@ -85,7 +85,6 @@ PIDRunClass.prototype.deviceReceiveHandler = function (message) {
   var regex = /T:(\d+.?\d?)\s\/(\d+.?\d?)\s@:(\d+.?\d?)/
   var result = message.match(regex);
   if(result){
-    console.log("match", result);
     var current = +result[1];
     var target = +result[2];
     ModalManager.setProgress((current/200)*100);

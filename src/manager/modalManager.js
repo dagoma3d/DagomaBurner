@@ -23,13 +23,13 @@ ModalManagerClass.prototype.setLoaderTitle = function(title) {
     $("#globalLoader .description").hide();
   }else {
     $("#globalLoader .description").show();
-    $("#globalLoader .description").text(title);
+    $("#globalLoader .description .content").text(title);
   }
 }
 
 ModalManagerClass.prototype.setProgress = function (percent) {
-  $("#globalLoader .description").css( "background-image", "linear-gradient(to right, #DDDDDD "+percent+"%, #FFFFFF "+percent+"%" );//  background-image: linear-gradient(to bottom, #f1a165, #f36d0a);
-
+  $("#globalLoader .description").css( "background-image", "linear-gradient(to right, #e19531 "+percent+"%, #FFFFFF "+percent+"%" );
+  $("#globalLoader .description .content").css( "background-image", "linear-gradient(to right, #FFFFFF "+percent+"%, #e19531 "+percent+"%" );
 };
 
 ModalManagerClass.prototype.hideLoader = function() {

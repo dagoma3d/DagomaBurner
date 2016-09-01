@@ -130,7 +130,7 @@ a, select, button, input, label{
 	left: 0px;
 	right: 0px;
 
-	z-index: 2;
+	z-index: 10;
 	background-color: rgba(255,255,255, 0.9);
 	padding-top: 210px;
 	text-align: center;}
@@ -138,10 +138,14 @@ a, select, button, input, label{
   #globalLoader .description{
 		display: inline-block;
 		background: white;
-		padding: 5px;
 		border-radius: 5px;
 	  margin-top: 10px;
 	  color: #e19531;}
+
+    #globalLoader .description .content{
+      padding: 5px;
+      -webkit-background-clip: text;
+    	-webkit-text-fill-color: transparent;}
 
   #globalLoader img{
     width: 30px;
@@ -511,7 +515,6 @@ iframe{
   #firwareDrag #burn {
     background-color: #e19531;
     width: 100%;}
-
 /*
 #dragBox{
   width: 100%;
