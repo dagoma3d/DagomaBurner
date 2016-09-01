@@ -17,7 +17,7 @@ SelectPrinterClass.prototype.load = function (callback) {
     return callback();
 
   if(DeviceManager.selectedDevice && DeviceManager.selectedDevice.validate == true){
-    NavManager.setPage(window.pageAfterDeviceSelection);
+    return NavManager.setPage(window.pageAfterDeviceSelection);
   }
 
   ViewLoader("selectPrinter/1_selectPrinter", function(content){
