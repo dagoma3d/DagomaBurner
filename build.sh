@@ -27,15 +27,26 @@ rm -f build/*.zip
 rm -f build/*.tar.gz
 
 ############ Windows ############
-echo "[INFO] Building Windows ..."
-rm -rf build/Dagoma-x64/resources/app/
-cp -R src/ build/Dagoma-x64/resources/app
-rm -rf build/Dagoma-x64/resources/app/node_modules
-cp -R build/modules/win/node_modules/ build/Dagoma-x64/resources/app/node_modules
-${ASAR} pack build/Dagoma-x64/resources/app/ build/Dagoma-x64/resources/app.asar
-rm -rf build/Dagoma-x64/resources/app/
-bash -c "cd build && zip -y -r Dagoma-x64.zip Dagoma-x64 > /dev/null"
-echo "[INFO] Built: build/Dagoma-x64.zip"
+echo "[INFO] Building Windows ia32 ..."
+rm -rf build/Dagoma-win-ia32/resources/app/
+cp -R src/ build/Dagoma-win-ia32/resources/app
+rm -rf build/Dagoma-win-ia32/resources/app/node_modules
+cp -R build/modules/win-ia32/node_modules/ build/Dagoma-win-ia32/resources/app/node_modules
+${ASAR} pack build/Dagoma-win-ia32/resources/app/ build/Dagoma-win-ia32/resources/app.asar
+rm -rf build/Dagoma-win-ia32/resources/app/
+bash -c "cd build && zip -y -r Dagoma-win-ia32.zip Dagoma-win-ia32 > /dev/null"
+echo "[INFO] Built: build/Dagoma-win-ia32.zip"
+
+############ Windows ############
+echo "[INFO] Building Windows x64 ..."
+rm -rf build/Dagoma-win-x64/resources/app/
+cp -R src/ build/Dagoma-win-x64/resources/app
+rm -rf build/Dagoma-win-x64/resources/app/node_modules
+cp -R build/modules/win-x64/node_modules/ build/Dagoma-win-x64/resources/app/node_modules
+${ASAR} pack build/Dagoma-win-x64/resources/app/ build/Dagoma-win-x64/resources/app.asar
+rm -rf build/Dagoma-win-x64/resources/app/
+bash -c "cd build && zip -y -r Dagoma-win-x64.zip Dagoma-win-x64 > /dev/null"
+echo "[INFO] Built: build/Dagoma-win-x64.zip"
 
 ############ Mac ############
 echo "[INFO] Building Mac ..."
