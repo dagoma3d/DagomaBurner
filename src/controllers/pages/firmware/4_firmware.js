@@ -34,11 +34,34 @@ FirmwareFirmwareClass.prototype.initView = function () {
 };
 
 FirmwareFirmwareClass.prototype.show = function () {
-  var that = this;
+  var that = this,
+      file,
+      $btn;
 
+  $btn = that.content.find("#burn");
+  $btn.hide();
+
+  that.content.find('input[type=file]').change(function(e) {
+    file = this.files[0];
+    $btn.show();
+  });
+
+  $btn.on("click", function(){
+    ModalManager.showLoader("le firmware est en train d'être uploadé sur la carte ")
+    console.log("window.printer", window.printer);
+    new CodeBuilder(DeviceManager.getSelectedDevice(), file.path, window.printer.bootloader, function(success){
+      ModalManager.hideLoader();
+      if(success)
+        ModalManager.alert("Succès", "Votre imprimante s'est bien mise à jour");
+      else
+        ModalManager.alert("<span class=\"red\">Erreur!</span>", "La mise à jour à connu une erreur");
+      NavManager.setPage("home");
+    });
+  })
+
+  /*
   var $dropZone = $("html");
   var $dragZone = that.content.find(".drag");
-  var $btn = that.content.find("#burn");
   var file;
   var fileName;
   var counter = 0;
@@ -58,20 +81,7 @@ FirmwareFirmwareClass.prototype.show = function () {
       }
     }
   });
-
-  $btn.on("click", function(){
-    ModalManager.showLoader("le firmware est en train d'être uploadé sur la carte ")
-    console.log("window.printer", window.printer);
-    new CodeBuilder(DeviceManager.getSelectedDevice(), file.path, window.printer.bootloader, function(success){
-      ModalManager.hideLoader();
-      if(success)
-        ModalManager.alert("Succès", "Votre imprimante s'est bien mise à jour");
-      else
-        ModalManager.alert("<span class=\"red\">Erreur!</span>", "La mise à jour à connu une erreur");
-      NavManager.setPage("home");
-    });
-  })
-
+  */
 };
 
 FirmwareFirmwareClass.prototype.dispose = function () {
