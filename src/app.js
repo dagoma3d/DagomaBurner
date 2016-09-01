@@ -24,7 +24,7 @@ app.on('ready', function(){
 function openWindow(){
   mainWindow = new BrowserWindow({
     width: 500,
-    height:  (process.platform=="win32")?450:420,
+    height:  (process.platform=="win32")?460:430,
     resizable: false, frame: false,
     //type:"dock",
     //'auto-hide-menu-bar': true,

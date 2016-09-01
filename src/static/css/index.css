@@ -141,7 +141,17 @@ a, select, button, input, label{
 		padding: 5px;
 		border-radius: 5px;
 	  margin-top: 10px;
-	  color: #999;}
+	  color: #e19531;}
+
+  #globalLoader img{
+    width: 30px;
+    height: 30px;
+    animation: spin 2s infinite ease-in-out;}
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
 
 /*

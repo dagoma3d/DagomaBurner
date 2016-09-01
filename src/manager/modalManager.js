@@ -11,12 +11,14 @@ var ModalManagerClass = function(){
 util.inherits(ModalManagerClass, EventEmitter);
 
 ModalManagerClass.prototype.showLoader = function(title) {
+  this.setProgress(0);
   $("#globalLoader").show();
   $("html").addClass("loader");
   this.setLoaderTitle(title);
 }
 
 ModalManagerClass.prototype.setLoaderTitle = function(title) {
+  this.setProgress(0);
   if(title == undefined){
     $("#globalLoader .description").hide();
   }else {
@@ -24,6 +26,11 @@ ModalManagerClass.prototype.setLoaderTitle = function(title) {
     $("#globalLoader .description").text(title);
   }
 }
+
+ModalManagerClass.prototype.setProgress = function (percent) {
+  $("#globalLoader .description").css( "background-image", "linear-gradient(to right, #DDDDDD "+percent+"%, #FFFFFF "+percent+"%" );//  background-image: linear-gradient(to bottom, #f1a165, #f36d0a);
+
+};
 
 ModalManagerClass.prototype.hideLoader = function() {
   $("#globalLoader").hide();

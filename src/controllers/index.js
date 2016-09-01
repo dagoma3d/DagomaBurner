@@ -154,7 +154,7 @@ Menu.setApplicationMenu(menu);
       if(NavManager.currentPage != "zoffset/3_printerConnection" && NavManager.currentPage != "home "){
         ModalManager.hideLoader();
         NavManager.setPage("home");
-        ModalManager.alert("D&eacute;connexion", "Votre imprimante s'est d&eacute;connect&eacute;e!");
+        ModalManager.alert("Oups!", "Votre imprimante s'est d&eacute;connect&eacute;e!");
       }
     }
   })

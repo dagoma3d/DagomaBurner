@@ -14,6 +14,11 @@ NavManagerClass.prototype.setContainer = function ($container) {
 
 NavManagerClass.prototype.setPage = function (page) {
   var that = this;
+  if(page == that.currentPage){
+    console.warn("try to load the same page");
+    return;
+  }
+
   if(that.page){
     that.page.dispose();
   }

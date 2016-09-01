@@ -11,14 +11,17 @@ var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
 
 
-var ZoffsetSaveClass = function ZoffsetSaveClass(){
+var PIDRunClass = function PIDRunClass(){
   this.content = null;
 }
 
-ZoffsetSaveClass.prototype.load = function (callback) {
+PIDRunClass.prototype.load = function (callback) {
+
   var that = this;
   if(that.content)
     return callback();
+
+  this.deviceReceiveListener = this.deviceReceiveHandler.bind(this);
 
   ViewLoader("pid/4_PID", function(content){
     that.content = $(content);
@@ -29,42 +32,75 @@ ZoffsetSaveClass.prototype.load = function (callback) {
   });
 };
 
-ZoffsetSaveClass.prototype.initView = function () {
+PIDRunClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
     NavManager.setPage("home");
   });
 };
 
-ZoffsetSaveClass.prototype.show = function () {
+PIDRunClass.prototype.show = function () {
+  var that = this;
+
+  that.device = DeviceManager.selectedDevice;
+
+  that.device.on("receive", that.deviceReceiveListener);
+
+  that.content.hide();
+  ModalManager.showLoader("L'imprimante teste la chauffe de la buse");
   GCodeSender.send([
-    "M303 C8 S200 E0"],
+    "M106 S255",
+    ],
     false,
-    function(result){
-      var regex, resultKp, resultKi, resultKd;
-      regex = /Kp: (\d+.\d+.)/;
-      resultKp = result.match(regex)[1];
-
-      regex = /Ki: (\d+.\d+.)/;
-      resultKi = result.match(regex)[1];
-
-      regex = /Kd: (\d+.\d+.)/;
-      resultKd = result.match(regex)[1];
-
-      console.log("PID Result : ", resultKp, resultKi, resultKd);
+    function(){
       GCodeSender.send([
-        "M301 P"+resultKp+" I"+resultKi+" D"+resultKd+"",
-        "M500"],
+        "M303 C8 S200 E0"],
         false,
-        function(){
-          console.log("Saved")
+        function(result){
+          var regex, resultKp, resultKi, resultKd;
+          regex = /#define  DEFAULT_Kp (\d+\.\d+)/;
+          resultKp = +(result.match(regex)[1]);
+
+          regex = /#define  DEFAULT_Ki (\d+\.\d+)/;
+          resultKi = +(result.match(regex)[1]);
+
+          regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
+          resultKd = +(result.match(regex)[1]);
+
+          console.log("PID Result : ", resultKp, resultKi, resultKd);
+          GCodeSender.send([
+            "M301 P"+resultKp+" I"+resultKi+" D"+resultKd+"",
+            "M500"],
+            false,
+            function(){
+              console.log("Saved");
+              ModalManager.hideLoader("L'imprimante teste la chauffe de la buse");
+
+              that.content.find(".kp").text(resultKp)
+              that.content.find(".ki").text(resultKi)
+              that.content.find(".kd").text(resultKd);
+              that.content.show();
+            }
+          );
         }
       );
     }
   );
 };
 
-ZoffsetSaveClass.prototype.dispose = function () {
+PIDRunClass.prototype.deviceReceiveHandler = function (message) {
+  var regex = /T:(\d+.?\d?)\s\/(\d+.?\d?)\s@:(\d+.?\d?)/
+  var result = message.match(regex);
+  if(result){
+    console.log("match", result);
+    var current = +result[1];
+    var target = +result[2];
+    ModalManager.setProgress((current/200)*100);
+  }
 };
 
-module.exports = ZoffsetSaveClass;
+PIDRunClass.prototype.dispose = function () {
+  this.device.removeListener("receive", this.deviceReceiveListener);
+};
+
+module.exports = PIDRunClass;

@@ -11,6 +11,10 @@ var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
 
 var ZoffsetTestPrintingClass = function ZoffsetTestPrintingClass(){
   this.content = null;
+
+  this.deviceReceiveListener = this.deviceReceiveHandler.bind(this);
+
+
 }
 
 ZoffsetTestPrintingClass.prototype.load = function (callback) {
@@ -83,9 +87,16 @@ ZoffsetTestPrintingClass.prototype.addButton = function (button, callback) {
 
 ZoffsetTestPrintingClass.prototype.show = function () {
   var that = this;
+
+  this.device = DeviceManager.selectedDevice;
+  this.device.on("receive", that.deviceReceiveListener);
+  console.log("this.device", this.device);
+
   that.numberRound = 0;
   that.content.hide();
   that.content.find("#start").hide();
+
+  $("#navBack").hide();
 
   GCodeParser(_root+"/pastille.g", function(datas){
     that.roundDatas = datas;
@@ -111,7 +122,21 @@ ZoffsetTestPrintingClass.prototype.printRecursive = function () {
   that.numberRound++;
 };
 
+ZoffsetTestPrintingClass.prototype.deviceReceiveHandler = function (message) {
+  var regex = /T:(\d+.?\d?)\s\/(\d+.?\d?)\s@:(\d+.?\d?)/
+  var result = message.match(regex);
+  if(result){
+    var current = +result[1];
+    var target = +result[2];
+    ModalManager.setProgress((current/target)*100);
+  }
+};
+
 ZoffsetTestPrintingClass.prototype.dispose = function () {
+  console.log("this.device", this.device);
+  if(this.device){
+    this.device.removeListener("receive", this.deviceReceiveListener);
+  }
 };
 
 module.exports = ZoffsetTestPrintingClass;

@@ -36,7 +36,7 @@ PrinterConnectionClass.prototype.initView = function () {
     NavManager.setPage(window.pageAfterDeviceSelection);
   });
 
-  //that.content.find('select#com').hide();
+  that.content.find('select#com').hide();
 
   that.content.find("select#com").on("change", function(event){
     if(that.selectedDevice != null){
