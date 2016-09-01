@@ -56,7 +56,7 @@ body{
 	position: relative;
   -webkit-app-region: drag;}
 
-a, select, button, input, label{
+a, select, button, input, label, img{
   -webkit-app-region: no-drag;
   -webkit-user-select: none;
   /*-webkit-user-drag: none;*/
