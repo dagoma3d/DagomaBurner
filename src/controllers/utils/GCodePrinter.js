@@ -74,7 +74,7 @@ GCodePrinterClass.prototype.print = function (datas, printStart, printEnd, offse
       newDatas.push(currentLine);
     }
     that.datas = newDatas;
-    console.log("newDatas", newDatas);
+    //console.log("newDatas", newDatas);
     //return;
   }
 

@@ -49,39 +49,32 @@ PIDRunClass.prototype.show = function () {
   that.content.hide();
   ModalManager.showLoader("L'imprimante teste la chauffe de la buse");
   GCodeSender.send([
-    "M106 S255",
-    ],
+    "M303 C8 S200 E0"],
     false,
-    function(){
+    function(result){
+      var regex, resultKp, resultKi, resultKd;
+      regex = /#define  DEFAULT_Kp (\d+\.\d+)/;
+      resultKp = +(result.match(regex)[1]);
+
+      regex = /#define  DEFAULT_Ki (\d+\.\d+)/;
+      resultKi = +(result.match(regex)[1]);
+
+      regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
+      resultKd = +(result.match(regex)[1]);
+
+      console.log("PID Result : ", resultKp, resultKi, resultKd);
       GCodeSender.send([
-        "M303 C8 S200 E0"],
+        "M301 P"+resultKp+" I"+resultKi+" D"+resultKd+"",
+        "M500"],
         false,
-        function(result){
-          var regex, resultKp, resultKi, resultKd;
-          regex = /#define  DEFAULT_Kp (\d+\.\d+)/;
-          resultKp = +(result.match(regex)[1]);
+        function(){
+          console.log("Saved");
+          ModalManager.hideLoader("L'imprimante teste la chauffe de la buse");
 
-          regex = /#define  DEFAULT_Ki (\d+\.\d+)/;
-          resultKi = +(result.match(regex)[1]);
-
-          regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
-          resultKd = +(result.match(regex)[1]);
-
-          console.log("PID Result : ", resultKp, resultKi, resultKd);
-          GCodeSender.send([
-            "M301 P"+resultKp+" I"+resultKi+" D"+resultKd+"",
-            "M500"],
-            false,
-            function(){
-              console.log("Saved");
-              ModalManager.hideLoader("L'imprimante teste la chauffe de la buse");
-
-              that.content.find(".kp").text(resultKp)
-              that.content.find(".ki").text(resultKi)
-              that.content.find(".kd").text(resultKd);
-              that.content.show();
-            }
-          );
+          that.content.find(".kp").text(resultKp)
+          that.content.find(".ki").text(resultKi)
+          that.content.find(".kd").text(resultKd);
+          that.content.show();
         }
       );
     }
