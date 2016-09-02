@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "[INFO] Installing building tools ..."
-npm install
+npm install || exit 1
 
 #brew install jq
 
