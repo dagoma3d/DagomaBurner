@@ -4,6 +4,7 @@ var _root = __dirname + "/../";
 var ModalManager = require(_root+"manager/modalManager.js");
 
 const {remote} = require('electron');
+const {ipcRenderer} = require('electron');
 const {Menu, MenuItem} = remote;
 
 var template = [
@@ -129,5 +130,48 @@ Menu.setApplicationMenu(menu);
 ( function( $ ) {
 
   ModalManager.setProgress(0);
+  var $updateChoice = $("#updateChoice");
+  var $navbar = $("#navbar");
+
+  $updateChoice.hide();
+  $navbar.hide();
+
+  ipcRenderer.on("hasUpdate", function(event, message){
+    hasUpdate();
+  });
+
+  hasUpdate();
+
+  //ipcRenderer.send("updateAccept");
+
+  function hasUpdate(){
+    if(remote.getGlobal('state').ready){
+      if(remote.getGlobal('state').updateChecked){
+        if(remote.getGlobal('state').hasUpdate){
+          console.log("has new update");
+          ModalManager.hideLoader();
+          $updateChoice.show();
+          $navbar.show();
+        }
+      }
+    }
+  }
+
+
+  $("#btnUpdate").click(function(){
+    ipcRenderer.send("acceptUpdate");
+    ModalManager.showLoader("Mise &agrave; jours en cours");
+    ModalManager.setProgress(0);
+    $updateChoice.hide();
+    $navbar.hide();
+  })
+
+  $("#btnNext").click(function(){
+    ipcRenderer.send("discardUpdate");
+  })
+
+  $("#navbar a.close").click(function(){
+    ipcRenderer.send("discardUpdate");
+  });
 
 } )( window.jQuery );

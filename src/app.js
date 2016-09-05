@@ -1,61 +1,53 @@
-const ENABLE_AUTO_UPDATE = false;
+const ENABLE_AUTO_UPDATE = true;
+const UPDATE_URL = "http://localhost:8080/update.zip";
 
 
 const electron = require('electron');
 const {app} = electron;
 const {BrowserWindow} = electron;
 const {remote} = electron;
-const {ipcRenderer, shell} = electron;
+const {ipcMain, ipcRenderer, shell} = electron;
 
 const fs = require('fs');
-//const request = require('request');
+const unzip = require('unzip');
+const request = require('request');
 
 var that = this;
 var mainWindow = null,
-    updateWindow = null;
-
-var ready = false;
-var updateChecked = false;
+    updateWindow = null,
+    requestUpdate = null;
 
 var version = require("./package.json").version;
 var versionInAppData = false;
-/*
-try {
-  version = require(app.getPath("userData")+"/src/package.json").version;
-  versionInAppData = true;
-}
-catch (e) {
 
+global.state = {
+  ready : false,
+  hasUpdate : false,
+  requestUpdate : false,
+  hasUpdate : false
 }
-*/
-if(ENABLE_AUTO_UPDATE){
-  /*
-  request("http://dist.dagoma.fr/dagomapp/update?v="+version, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      console.log(body) // Show the HTML for the Google homepage.
-    }else{
-      console.log("response.statusCode", response.statusCode); // Show the HTML for the Google homepage.s
-    }
 
-    updateChecked = true;
+function checkCurrentVersionInData(){
+  try {
+    version = require(app.getPath("userData")+"/src/package.json").version;
+    versionInAppData = true;
+  }
+  catch (e) {
 
-    runApp();
-  })*/
-  runApp();
+  }
+  console.log("get version from appData", versionInAppData);
 }
-else{
-  updateChecked = true;
-  runApp();
-}
+
+checkForUpdate();
 
 //200
 //304
 function runApp(){
   console.log("finalversion : ", version);
-  if(ready && updateChecked){
+  if(global.state.ready && global.state.updateChecked){
     openWindow();
   }
-  else if(!updateChecked && !updateWindow){
+  else if(!global.state.updateChecked && !global.state.updateWindow){
     openUpdateWindow();
   }
 }
@@ -83,15 +75,15 @@ function openWindow(){
   }
   mainWindow.focus();
   mainWindow.on("will-navigate", function(e) { e.preventDefault() });
-  mainWindow.openDevTools();
-  //if(updateWindow)
-  //  updateWindow.close();
+  //mainWindow.openDevTools();
+  if(updateWindow)
+    updateWindow.close();
 };
 
 function openUpdateWindow(){
   updateWindow = new BrowserWindow({
     width: 300,
-    height:  (process.platform=="win32")?230:200,
+    height:  (process.platform=="win32")?280:250,
     resizable: false, frame: false,
     transparent:true,
     title: "Dagom'App",
@@ -108,7 +100,77 @@ function openUpdateWindow(){
   updateWindow.focus();
   updateWindow.on("will-navigate", function(e) { e.preventDefault() });
   //updateWindow.openDevTools();
+  updateWindow.webContents.on('did-finish-load', () => {
+    if(global.state.updateChecked && global.state.hasUpdate)
+      updateWindow.webContents.send('hasUpdate');
+  });
 };
+
+function checkForUpdate(){
+  if(ENABLE_AUTO_UPDATE){
+    var time = process.hrtime();
+
+    ipcMain.on("acceptUpdate", function(e){
+      console.log("getAcceptUpdate");
+      console.log("file://"+app.getPath("userData")+"/src.zip");
+      request
+        .get(UPDATE_URL)
+        .pipe(ws = fs.createWriteStream(app.getPath("userData")+"/src.zip"));
+
+      ws.on('finish', function() {
+        console.log("finish Auto Update");
+
+        fs
+          .createReadStream(app.getPath("userData")+"/src.zip")
+          .pipe(unzip.Extract({ path: app.getPath("userData")+"/" }))
+          .on('error', function(err) {
+              console.log("unzip error", err);
+
+              checkCurrentVersionInData();
+              global.state.updateChecked = true;
+              runApp();
+            })
+          .on('finish', function(err) {
+              console.log("unzip finish", err);
+              checkCurrentVersionInData();
+              global.state.updateChecked = true;
+              runApp();
+            });
+
+      });
+    });
+
+    ipcMain.on("discardUpdate", function(e){
+      console.log("getDiscardUpdate", e);
+
+      global.state.updateChecked = true;
+      runApp();
+    });
+
+    requestUpdate = request
+      .get(UPDATE_URL)
+      //.get("http://dist.dagoma.fr/dagomapp/update?v="+version)
+      .on('response', function(response) {
+
+        var diff = process.hrtime(time);
+        console.log(`Benchmark took ${(diff[0] * 1e9 + diff[1])/1e9} nanoseconds`);
+
+        if(response.statusCode == 200){
+          global.state.hasUpdate = true;
+          global.state.updateChecked = true;
+          console.log(response.headers['content-type']) // 'image/png'
+        }else{
+          global.state.updateChecked = true;
+          runApp();
+        }
+      });
+      //.pipe(request.put('http://mysite.com/img.png'))
+  }
+  else{
+    global.state.updateChecked = true;
+    runApp();
+  }
+}
 
 
 // Quit when all windows are closed.
@@ -121,6 +183,6 @@ app.on('activate-with-no-open-windows', function(){
 });
 
 app.on('ready', function(){
-  ready = true;
+  global.state.ready = true;
   runApp();
 });

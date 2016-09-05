@@ -23,7 +23,7 @@ ModalManagerClass.prototype.setLoaderTitle = function(title) {
     $("#globalLoader .description").hide();
   }else {
     $("#globalLoader .description").show();
-    $("#globalLoader .description .content").text(title);
+    $("#globalLoader .description .content").html(title);
   }
 }
 

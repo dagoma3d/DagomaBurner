@@ -157,6 +157,14 @@ a, select, button, input, label, img{
       100% { transform: rotate(360deg); }
     }
 
+
+/*
+************************************************************************
+***************************** UPDATE *************************************
+************************************************************************
+*/
+
+
 .update #globalLoader{
   padding-top: 70px;
   background: none;}
@@ -165,6 +173,28 @@ html.update{
   background-image: none;
 }
 
+.update p{
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  margin: 0px;}
+
+.update #updateChoice {
+  background: white;
+  width: 100%;
+  height: 100%;}
+
+.update #btnNext{
+  width: 90%;
+  margin: 0 5%;}
+
+
+.update #btnUpdate{
+  width: 90%;
+  margin: 5%;}
+
+.update #navbar{
+  margin-bottom: 0px;}
 /*
 ************************************************************************
 ***************************** HOME *************************************
