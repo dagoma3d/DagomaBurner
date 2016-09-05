@@ -7,7 +7,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Dagom'App</string>
 	<key>CFBundleExecutable</key>
-	<string>Dagom'App</string>
+	<string>DagomApp</string>
 	<key>CFBundleIconFile</key>
 	<string>electron.icns</string>
 	<key>CFBundleIdentifier</key>
