@@ -8,7 +8,7 @@ const {remote} = electron;
 const {ipcRenderer, shell} = electron;
 
 const fs = require('fs');
-const request = require('request');
+//const request = require('request');
 
 var that = this;
 var mainWindow = null,
@@ -29,7 +29,7 @@ catch (e) {
 }
 */
 if(ENABLE_AUTO_UPDATE){
-
+  /*
   request("http://dist.dagoma.fr/dagomapp/update?v="+version, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log(body) // Show the HTML for the Google homepage.
@@ -39,8 +39,9 @@ if(ENABLE_AUTO_UPDATE){
 
     updateChecked = true;
 
-    //runApp();
-  })
+    runApp();
+  })*/
+  runApp();
 }
 else{
   updateChecked = true;
@@ -77,8 +78,8 @@ function openWindow(){
     mainWindow.loadURL("file://"+app.getPath("userData")+"/src/views/index.html");
   }
   else {
-    console.log("getVersion in app folder", `file://${__dirname}/views/update.html`);
-    mainWindow.loadURL(`file://${__dirname}/views/update.html`);
+    console.log("getVersion in app folder", `file://${__dirname}/views/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/views/index.html`);
   }
   mainWindow.focus();
   mainWindow.on("will-navigate", function(e) { e.preventDefault() });
