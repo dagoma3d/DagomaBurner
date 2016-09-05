@@ -157,6 +157,13 @@ a, select, button, input, label, img{
       100% { transform: rotate(360deg); }
     }
 
+.update #globalLoader{
+  padding-top: 70px;
+  background: none;}
+
+html.update{
+  background-image: none;
+}
 
 /*
 ************************************************************************

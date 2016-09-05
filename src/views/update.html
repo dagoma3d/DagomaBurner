@@ -1,0 +1,28 @@
+<html class="update">
+  <head>
+    <title>Dagom'App</title>
+    <link type="text/css" rel="stylesheet" href="../static/vendors/materialize/css/googleMaterialIcon.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../static/vendors/materialize/css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../static/css/index.css" media="screen,projection"/>
+  </head>
+  <body>
+    <div id="globalLoader">
+      <div class="roundInternalLoader">
+        <img draggable="false" src="../static/images/logoLoader.png" alt="" />
+      </div>
+      <div class="z-depth-2 description">
+        <div class="content">
+          recherche de mise &agrave; jour
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      window.$ = window.jQuery = require("../static/vendors/jquery/jquery-2.1.4.min.js");
+      window.Hammer = require('../static/vendors/hammer/hammer.min.js');
+      document.jQuery = window.jQuery;
+    </script>
+
+    <script type="text/javascript" src="../static/vendors/materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="../controllers/update.js"></script>
+  </body>
+</html>
