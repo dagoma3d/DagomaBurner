@@ -4,14 +4,10 @@
   <dict>
     <key>BuildMachineOSBuild</key>
     <string>15E65</string>
-    <key>CFBundleDisplayName</key>
-    <string>Dagoma Helper EH</string>
-    <key>CFBundleExecutable</key>
-    <string>Dagoma Helper EH</string>
     <key>CFBundleIdentifier</key>
-    <string>com.electron.dagoma.helper.EH</string>
+    <string>com.electron.dagoma.helper</string>
     <key>CFBundleName</key>
-    <string>Dagoma Helper EH</string>
+    <string>DagomApp</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>DTSDKBuild</key>
@@ -26,5 +22,9 @@
     <true/>
     <key>NSSupportsAutomaticGraphicsSwitching</key>
     <true/>
+    <key>CFBundleDisplayName</key>
+    <string>DagomApp Helper</string>
+    <key>CFBundleExecutable</key>
+    <string>DagomApp Helper</string>
   </dict>
 </plist>
