@@ -1,7 +1,7 @@
 {
   "name": "DagomaDoctor-BuildProject",
   "version": "0.0.0",
-  "author": "Dagoma",
+  "author": "Dagom'App",
   "private": true,
   "dependencies": {
     "electron-packager": "^7.7.0",

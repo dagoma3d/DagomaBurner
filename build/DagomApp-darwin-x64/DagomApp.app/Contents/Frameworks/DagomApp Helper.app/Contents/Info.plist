@@ -7,7 +7,7 @@
     <key>CFBundleIdentifier</key>
     <string>com.electron.dagoma.helper</string>
     <key>CFBundleName</key>
-    <string>DagomApp</string>
+    <string>Dagom'App</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>DTSDKBuild</key>

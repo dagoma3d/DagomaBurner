@@ -1,8 +1,8 @@
 {
-  "name": "DagomaDoctor",
+  "name": "Dagom'App",
   "version": "0.2.7",
   "main": "app.js",
-  "description": "DagomaDoctor",
+  "description": "Dagom'App",
   "author": "Dagoma",
   "private": true,
   "dependencies": {

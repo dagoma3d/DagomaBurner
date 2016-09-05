@@ -5,9 +5,9 @@
 	<key>BuildMachineOSBuild</key>
 	<string>15E65</string>
 	<key>CFBundleDisplayName</key>
-	<string>DagomApp</string>
+	<string>Dagom'App</string>
 	<key>CFBundleExecutable</key>
-	<string>DagomApp</string>
+	<string>Dagom'App</string>
 	<key>CFBundleIconFile</key>
 	<string>electron.icns</string>
 	<key>CFBundleIdentifier</key>
