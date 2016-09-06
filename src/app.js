@@ -1,6 +1,4 @@
 const ENABLE_AUTO_UPDATE = true;
-const UPDATE_URL = "http://localhost:8080/update.zip";
-
 
 const electron = require('electron');
 const {app} = electron;
@@ -17,7 +15,7 @@ var mainWindow = null,
     updateWindow = null,
     requestUpdate = null;
 
-var version = require("./package.json").version;
+var updateUrl = require("./config.json").updateUrl;
 var versionInAppData = false;
 
 global.state = {
@@ -27,23 +25,13 @@ global.state = {
   hasUpdate : false
 }
 
-function checkCurrentVersionInData(){
-  try {
-    version = require(app.getPath("userData")+"/src/package.json").version;
-    versionInAppData = true;
-  }
-  catch (e) {
-
-  }
-  console.log("get version from appData", versionInAppData);
-}
+checkCurrentVersionInData();
 
 checkForUpdate();
 
 //200
 //304
 function runApp(){
-  console.log("finalversion : ", version);
   if(global.state.ready && global.state.updateChecked){
     openWindow();
   }
@@ -111,10 +99,9 @@ function checkForUpdate(){
     var time = process.hrtime();
 
     ipcMain.on("acceptUpdate", function(e){
-      console.log("getAcceptUpdate");
       console.log("file://"+app.getPath("userData")+"/src.zip");
       request
-        .get(UPDATE_URL)
+        .get(updateUrl)
         .pipe(ws = fs.createWriteStream(app.getPath("userData")+"/src.zip"));
 
       ws.on('finish', function() {
@@ -147,8 +134,15 @@ function checkForUpdate(){
       runApp();
     });
 
-    requestUpdate = request
-      .get(UPDATE_URL)
+    if(!updateUrl || updateUrl == "THE_UPDATE_URL"){
+      console.error("no update url");
+      global.state.updateChecked = true;
+      runApp();
+    }else{
+      console.log("updateUrl", updateUrl);
+
+      requestUpdate = request
+      .get(updateUrl)
       //.get("http://dist.dagoma.fr/dagomapp/update?v="+version)
       .on('response', function(response) {
 
@@ -164,6 +158,8 @@ function checkForUpdate(){
           runApp();
         }
       });
+    }
+
       //.pipe(request.put('http://mysite.com/img.png'))
   }
   else{
@@ -172,6 +168,16 @@ function checkForUpdate(){
   }
 }
 
+function checkCurrentVersionInData(){
+  try {
+    updateUrl = require(app.getPath("userData")+"/src/package.json").updateUrl;
+    versionInAppData = true;
+  }
+  catch (e) {
+
+  }
+  console.log("get version from appData", versionInAppData);
+}
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
