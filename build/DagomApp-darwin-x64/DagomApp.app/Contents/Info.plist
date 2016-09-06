@@ -9,9 +9,9 @@
 	<key>CFBundleExecutable</key>
 	<string>DagomApp</string>
 	<key>CFBundleIconFile</key>
-	<string>electron.icns</string>
+	<string>icon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.electron.DagomApp</string>
+	<string>com.dagoma.dagomapp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
