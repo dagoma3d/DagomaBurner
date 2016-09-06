@@ -8,7 +8,7 @@ var ModalManager = require(_root+"manager/modalManager.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
-
+var config = require(_root+"config.json");
 
 var ZoffsetMoveNozzleClass = function ZoffsetMoveNozzleClass(){
   this.content = null;
@@ -35,7 +35,7 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
       var zoffset;
       if(response){
         zoffset = +(response.split("Z:")[1].split(" ")[0]);
-        zoffset = -7+zoffset;
+        zoffset = -(config.initialZOffset)+zoffset;
         zoffset = zoffset.toFixed( 2 );
       }
 

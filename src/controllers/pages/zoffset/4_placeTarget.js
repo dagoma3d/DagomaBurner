@@ -4,6 +4,7 @@ var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
+var config = require(_root+"config.json");
 var ModalManager = require(_root+"manager/modalManager.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
@@ -43,7 +44,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
   that.content.hide();
   ModalManager.showLoader("L'imprimante est en mouvement");
   GCodeSender.send([
-    "M851 Z-7", //Not -4 but -7 for the new V2
+    "M851 Z-"+config.initialZOffset, //Not -4 but -10 for the new V2
     "G28",
     "G91",
     "G0 Z5"],

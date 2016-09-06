@@ -14,5 +14,7 @@
         "bootloader":"mega"
       }
     }
-  }
+  },
+  "initialZOffset":20,
+  "updateUrl":"THE_UPDATE_URL"
 }
