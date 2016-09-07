@@ -55,7 +55,7 @@ function openWindow(){
   //mainWindow.loadURL(`file://${__dirname}/views/index.html`);
   if(versionInAppData){
     console.log("getVersion in app data");
-    mainWindow.loadURL("file://"+app.getPath("userData")+"/src/views/index.html");
+    mainWindow.loadURL("file://"+app.getPath("userData")+"/app/views/index.html");
   }
   else {
     console.log("getVersion in app folder", `file://${__dirname}/views/index.html`);
@@ -80,7 +80,7 @@ function openUpdateWindow(){
   });
   //updateWindow.loadURL(`file://${__dirname}/views/index.html`);
   if(versionInAppData){
-    updateWindow.loadURL("file://"+app.getPath("userData")+"/src/views/update.html");
+    updateWindow.loadURL("file://"+app.getPath("userData")+"/app/views/update.html");
   }
   else {
     updateWindow.loadURL(`file://${__dirname}/views/update.html`);
@@ -99,16 +99,16 @@ function checkForUpdate(){
     var time = process.hrtime();
 
     ipcMain.on("acceptUpdate", function(e){
-      console.log("file://"+app.getPath("userData")+"/src.zip");
+      console.log("file://"+app.getPath("userData")+"/app.zip");
       request
         .get(updateUrl)
-        .pipe(ws = fs.createWriteStream(app.getPath("userData")+"/src.zip"));
+        .pipe(ws = fs.createWriteStream(app.getPath("userData")+"/app.zip"));
 
       ws.on('finish', function() {
         console.log("finish Auto Update");
 
         fs
-          .createReadStream(app.getPath("userData")+"/src.zip")
+          .createReadStream(app.getPath("userData")+"/app.zip")
           .pipe(unzip.Extract({ path: app.getPath("userData")+"/" }))
           .on('error', function(err) {
               console.log("unzip error", err);
@@ -170,7 +170,7 @@ function checkForUpdate(){
 
 function checkCurrentVersionInData(){
   try {
-    updateUrl = require(app.getPath("userData")+"/src/package.json").updateUrl;
+    updateUrl = require(app.getPath("userData")+"/app/package.json").updateUrl;
     versionInAppData = true;
   }
   catch (e) {

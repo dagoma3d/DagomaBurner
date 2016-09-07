@@ -53,6 +53,7 @@ fi
 echo "[INFO] Cleaning all previous generated zip archive..."
 rm -f build/*.zip
 rm -f build/*.tar.gz
+rm -f build/*.diff
 
 ############ Windows ############
 echo "[INFO] Building Windows ia32 ..."
