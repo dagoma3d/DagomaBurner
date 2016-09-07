@@ -13,7 +13,8 @@ apply_update_url_to_config() {
 		"[error] Need build code as second parameter"
 		exit 1
 	fi
-	UPDATE_URL="http://dist.dagoma.fr/update/zip/${APP_NAME}/${1}/${2}"
+	UPDATE_URL="http://dist.dagoma.fr/update/diff/${APP_NAME}/${1}/${2}"
+	git checkout src/config.json
 	sed -i "s#THE_UPDATE_URL#${UPDATE_URL}#" src/config.json
 }
 
@@ -64,6 +65,7 @@ rm -rf build/${APP_NAME}-win-ia32/resources/app/
 cp -R src/ build/${APP_NAME}-win-ia32/resources/app
 rm -rf build/${APP_NAME}-win-ia32/resources/app/node_modules
 cp -R build/modules/win-ia32/node_modules/ build/${APP_NAME}-win-ia32/resources/app/node_modules
+bash -c "cd build/${APP_NAME}-win-ia32/resources && zip -y -r ../../${APP_NAME}-win-ia32.diff app > /dev/null"
 ${ASAR} pack build/${APP_NAME}-win-ia32/resources/app/ build/${APP_NAME}-win-ia32/resources/app.asar
 rm -rf build/${APP_NAME}-win-ia32/resources/app/
 bash -c "cd build && zip -y -r ${APP_NAME}-win-ia32.zip ${APP_NAME}-win-ia32 > /dev/null"
@@ -80,6 +82,7 @@ rm -rf build/${APP_NAME}-win-x64/resources/app/
 cp -R src/ build/${APP_NAME}-win-x64/resources/app
 rm -rf build/${APP_NAME}-win-x64/resources/app/node_modules
 cp -R build/modules/win-x64/node_modules/ build/${APP_NAME}-win-x64/resources/app/node_modules
+bash -c "cd build/${APP_NAME}-win-x64/resources && zip -y -r ../../${APP_NAME}-win-x64.diff app > /dev/null"
 ${ASAR} pack build/${APP_NAME}-win-x64/resources/app/ build/${APP_NAME}-win-x64/resources/app.asar
 rm -rf build/${APP_NAME}-win-x64/resources/app/
 bash -c "cd build && zip -y -r ${APP_NAME}-win-x64.zip ${APP_NAME}-win-x64 > /dev/null"
@@ -96,6 +99,7 @@ rm -rf build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app/
 cp -R src/ build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app/
 rm -rf build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app/node_modules
 cp -R build/modules/mac/node_modules/ build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app/node_modules
+bash -c "cd build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources && zip -y -r ../../../../${APP_NAME}-darwin-x64.diff app > /dev/null"
 ${ASAR} pack build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app/ build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app.asar
 rm -rf build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app/
 bash -c "cd build && zip -y -r ${APP_NAME}-darwin-x64.zip ${APP_NAME}-darwin-x64 > /dev/null"
@@ -112,6 +116,7 @@ rm -rf build/${APP_NAME}-linux-x64/resources/app/
 cp -R src/ build/${APP_NAME}-linux-x64/resources/app
 rm -rf build/${APP_NAME}-linux-x64/resources/app/node_modules
 cp -R build/modules/linux/node_modules/ build/${APP_NAME}-linux-x64/resources/app/node_modules
+bash -c "cd build/${APP_NAME}-linux-x64/resources && zip -y -r ../../${APP_NAME}-linux-x64.diff app > /dev/null"
 ${ASAR} pack build/${APP_NAME}-linux-x64/resources/app/ build/${APP_NAME}-linux-x64/resources/app.asar
 rm -rf build/${APP_NAME}-linux-x64/resources/app/
 tar -czf build/${APP_NAME}-linux-x64.tar.gz -C build/ ${APP_NAME}-linux-x64
