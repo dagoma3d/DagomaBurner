@@ -152,8 +152,7 @@ function checkForUpdate(){
       global.state.updateChecked = true;
       runApp();
     });
-
-    console.log("updateUrl", updateUrl);
+    
     if(!updateUrl || updateUrl == "THE_UPDATE_URL"){
       console.error("no update url");
       global.state.updateChecked = true;
@@ -175,7 +174,7 @@ function checkForUpdate(){
           console.log(response.headers['content-type']) // 'image/png'
         }else{
           global.state.updateChecked = true;
-          runApp();
+          //runApp();
         }
       });
     }
@@ -183,6 +182,7 @@ function checkForUpdate(){
       //.pipe(request.put('http://mysite.com/img.png'))
   }
   else{
+    console.log("else runApp");
     global.state.updateChecked = true;
     runApp();
   }
@@ -211,10 +211,12 @@ app.on('window-all-closed', function() {
 });
 
 app.on('activate-with-no-open-windows', function(){
+  console.log("On activate-with-no-open-windows");
   runApp();
 });
 
 app.on('ready', function(){
+  console.log("On ready");
   global.state.ready = true;
   runApp();
 });
