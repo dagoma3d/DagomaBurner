@@ -60,10 +60,17 @@ DeviceClassUSB.prototype.open = function (){
     }, false);
   }
 
+  console.log("Delegating a bit port opening ...");
+  setTimeout( that.serial.open.bind( that.serial, function (error){
+    that.resetPort();
+    that.serialPortOpenHandler(error);
+  } ), 500);
+  /*
   that.serial.open(function (error){
     that.resetPort();
     that.serialPortOpenHandler(error);
   });
+  */
 }
 
 DeviceClassUSB.prototype.serialPortOpenHandler = function (error){
@@ -243,8 +250,13 @@ DeviceClassUSB.prototype.close = function(force){
       that.serial.removeListener('data', that.serialDataListener);
 
     try{
-      that.serial.close();
+      console.log( "Serial hardware closing ...");
+      //that.serial.disconnected();
+      that.serial.close( function(e) {
+        console.log( "Serial hardware closed" , e);
+      });
     }catch(e){
+      console.log( "Serial hardware closing error", e);
     }
     that.serial = null;
   }

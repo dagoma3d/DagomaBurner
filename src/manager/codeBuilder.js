@@ -24,7 +24,7 @@ module.exports = function(device, file, type, callback){
     pageSize: 256,
     delay1: 10,
     delay2: 1,
-    timeout:0xc8,
+    timeout: 0x320,//0xc8, // Up to 800ms
     stabDelay:0x64,
     cmdexeDelay:0x19,
     synchLoops:0x20,
@@ -44,14 +44,31 @@ module.exports = function(device, file, type, callback){
 
     avrgirl.flash(file, function (error) {
       if (error) {
-        console.log("error", error);
-        callback(false);
+        console.log("retrying after error", error);
+        //callback(false);
+
+        //device.resetPort();
+        // Retry immediatly
+        setTimeout( function() {
+          avrgirl.flash(file, function (error) {
+            if (error) {
+              console.log("ok, giving up with error", error);
+              callback(false);
+            } else {
+              console.log('done.');
+              callback(true/*, result.message*/);
+            }
+            device.isBuilding = false;
+            setTimeout(function(){device.open()}, 1000);
+          });
+        }, 2000);
+
       } else {
         console.log('done.');
         callback(true/*, result.message*/);
+        device.isBuilding = false;
+        setTimeout(function(){device.open()}, 1000);
       }
-      device.isBuilding = false;
-      setTimeout(function(){device.open()}, 1000);
     });
 
   },

@@ -47,7 +47,7 @@ FirmwareFirmwareClass.prototype.show = function () {
   });
 
   $btn.on("click", function(){
-    ModalManager.showLoader("le firmware est en train d'être uploadé sur la carte ")
+    ModalManager.showLoader("Le firmware est en train d'être chargé sur votre imprimante")
     console.log("window.printer", window.printer);
     new CodeBuilder(DeviceManager.getSelectedDevice(), file.path, window.printer.bootloader, function(success){
       ModalManager.hideLoader();

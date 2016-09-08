@@ -63,7 +63,9 @@ PrinterConnectionClass.prototype.deviceManagerRemoveHandler = function(device){
 }
 
 PrinterConnectionClass.prototype.deviceManagerOpenHandler = function(device){
-  this.openDevice();
+  // Wait a bit before opening the device
+  setTimeout( this.openDevice.bind(this), 500 );
+  //this.openDevice();
 }
 
 
