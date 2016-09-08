@@ -146,7 +146,7 @@ Menu.setApplicationMenu(menu);
   //ipcRenderer.send("updateAccept");
 
   function hasUpdate(){
-    console.log(remote.getGlobal('state'));
+    console.log("updateChecked", remote.getGlobal('state').updateChecked, "hasUpdate", remote.getGlobal('state').hasUpdate);
     if(remote.getGlobal('state').updateChecked){
       if(remote.getGlobal('state').hasUpdate){
         console.log("has new update");

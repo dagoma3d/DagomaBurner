@@ -34,12 +34,16 @@ checkForUpdate();
 //200
 //304
 function runApp(){
-  if(global.state.ready && global.state.updateChecked){
+  if(global.state.ready == false)
+    return;
+
+  if(global.state.updateChecked == false)
+    return;
+
+  if(global.state.hasUpdate == false)
     openWindow();
-  }
-  else if(global.state.ready && !global.state.updateChecked && !global.state.updateWindow){
+  else
     openUpdateWindow();
-  }
 }
 
 function openWindow(){
@@ -130,7 +134,7 @@ function checkForUpdate(){
               var exec = require('child_process').exec;
               console.log("process.argv.slice(1)", process.argv.slice(1))
               console.log("process.execPath", process.execPath);
-              exec(process.execPath);
+              exec("\""+process.execPath+"\"");
               app.quit();
 
               return;
@@ -187,6 +191,7 @@ function checkForUpdate(){
 function checkCurrentVersionInData(){
   try {
     var versionInAppData = require(app.getPath("userData")+"/app/config.json")["build-date"];
+    console.log("versionInAppData", versionInAppData, version);
     if(versionInAppData && versionInAppData != "THE_BUILD_DATE" && versionInAppData > version){
       updateUrl = require(app.getPath("userData")+"/app/config.json").updateUrl;
       console.log("updateUrl test", updateUrl)
@@ -195,6 +200,7 @@ function checkCurrentVersionInData(){
 
   }
   catch (e) {
+    console.log("e", e);
   }
   console.log("get version from appData", versionInAppData);
 }
