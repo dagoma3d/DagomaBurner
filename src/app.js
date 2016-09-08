@@ -15,6 +15,10 @@ var mainWindow = null,
     updateWindow = null,
     requestUpdate = null;
 
+var version = require("./config.json")["build-date"];
+if(version == "THE_BUILD_DATE")
+  version = -1;
+
 var updateUrl = require("./config.json").updateUrl;
 var versionInAppData = false;
 
@@ -71,7 +75,6 @@ function openUpdateWindow(){
     width: 300,
     height:  (process.platform=="win32")?280:250,
     resizable: false, frame: false,
-    transparent:true,
     title: "Dagom'App",
     'use-content-size': true,
     //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
@@ -111,15 +114,29 @@ function checkForUpdate(){
           .on('error', function(err) {
               console.log("unzip error", err);
 
+              var app = require('app'); // or from BrowserWindow: app = require("remote").require('app');
+              var exec = require('child_process').exec;
+              exec(process.execPath);
+              app.quit();
+
+              return;
+              /*
               checkCurrentVersionInData();
               global.state.updateChecked = true;
-              runApp();
+              runApp();*/
             })
           .on('finish', function(err) {
               console.log("unzip finish", err);
-              checkCurrentVersionInData();
+              var exec = require('child_process').exec;
+              console.log("process.argv.slice(1)", process.argv.slice(1))
+              console.log("process.execPath", process.execPath);
+              exec(process.execPath);
+              app.quit();
+
+              return;
+              /*checkCurrentVersionInData();
               global.state.updateChecked = true;
-              runApp();
+              runApp();*/
             });
 
       });
@@ -169,12 +186,15 @@ function checkForUpdate(){
 
 function checkCurrentVersionInData(){
   try {
-    updateUrl = require(app.getPath("userData")+"/app/config.json").updateUrl;
-    console.log("updateUrl test", updateUrl)
-    versionInAppData = true;
+    var versionInAppData = require(app.getPath("userData")+"/app/config.json")["build-date"];
+    if(versionInAppData && versionInAppData != "THE_BUILD_DATE" && versionInAppData > version){
+      updateUrl = require(app.getPath("userData")+"/app/config.json").updateUrl;
+      console.log("updateUrl test", updateUrl)
+      versionInAppData = true;
+    }
+
   }
   catch (e) {
-    console.log("updateUrl error", e);
   }
   console.log("get version from appData", versionInAppData);
 }

@@ -146,14 +146,13 @@ Menu.setApplicationMenu(menu);
   //ipcRenderer.send("updateAccept");
 
   function hasUpdate(){
-    if(remote.getGlobal('state').ready){
-      if(remote.getGlobal('state').updateChecked){
-        if(remote.getGlobal('state').hasUpdate){
-          console.log("has new update");
-          ModalManager.hideLoader();
-          $updateChoice.show();
-          $navbar.show();
-        }
+    console.log(remote.getGlobal('state'));
+    if(remote.getGlobal('state').updateChecked){
+      if(remote.getGlobal('state').hasUpdate){
+        console.log("has new update");
+        ModalManager.hideLoader();
+        $updateChoice.show();
+        $navbar.show();
       }
     }
   }

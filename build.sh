@@ -16,6 +16,7 @@ apply_update_url_to_config() {
 	UPDATE_URL="http://dist.dagoma.fr/update/diff/${APP_NAME}/${1}/${2}"
 	git checkout src/config.json
 	sed -i "s#THE_UPDATE_URL#${UPDATE_URL}#" src/config.json
+  sed -i "s#\"THE_BUILD_DATE\"#${1}#" src/config.json
 }
 
 if test $# -lt 1
