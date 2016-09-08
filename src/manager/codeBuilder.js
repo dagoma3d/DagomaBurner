@@ -35,6 +35,9 @@ module.exports = function(device, file, type, callback){
     protocol: 'stk500v1'
   };
 
+  // Add timeout to mks too. In case of
+  boards.byName.mega.timeout = 0x320;
+
   setTimeout(function(){
     var avrgirl = new Avrgirl({
       board: type, //"melzi",//"mega",

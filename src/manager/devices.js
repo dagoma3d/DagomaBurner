@@ -78,7 +78,7 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
     device.on("open", function(device){
       console.log("DeviceManagerClass open");
       console.log("Delegate a bit open emission");
-      setTimeout( that.emit.bind( that, "open", device), 500 );
+      setTimeout( that.emit.bind( that, "open", device), 800 );
     });
 
     device.on("change", function(device){
