@@ -21,9 +21,7 @@ var versionInAppData = false;
 global.state = {
   ready : false,
   hasUpdate : false,
-  requestUpdate : false,
-  hasUpdate : false
-}
+  requestUpdate : false}
 
 checkCurrentVersionInData();
 
@@ -35,7 +33,7 @@ function runApp(){
   if(global.state.ready && global.state.updateChecked){
     openWindow();
   }
-  else if(!global.state.updateChecked && !global.state.updateWindow){
+  else if(global.state.ready && !global.state.updateChecked && !global.state.updateWindow){
     openUpdateWindow();
   }
 }
@@ -134,6 +132,7 @@ function checkForUpdate(){
       runApp();
     });
 
+    console.log("updateUrl", updateUrl);
     if(!updateUrl || updateUrl == "THE_UPDATE_URL"){
       console.error("no update url");
       global.state.updateChecked = true;
@@ -170,11 +169,12 @@ function checkForUpdate(){
 
 function checkCurrentVersionInData(){
   try {
-    updateUrl = require(app.getPath("userData")+"/app/package.json").updateUrl;
+    updateUrl = require(app.getPath("userData")+"/app/config.json").updateUrl;
+    console.log("updateUrl test", updateUrl)
     versionInAppData = true;
   }
   catch (e) {
-
+    console.log("updateUrl error", e);
   }
   console.log("get version from appData", versionInAppData);
 }

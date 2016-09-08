@@ -137,6 +137,7 @@ Menu.setApplicationMenu(menu);
   $navbar.hide();
 
   ipcRenderer.on("hasUpdate", function(event, message){
+    console.log("getHasUpdate");
     hasUpdate();
   });
 
