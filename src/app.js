@@ -25,6 +25,7 @@ var versionInAppData = false;
 global.state = {
   ready : false,
   hasUpdate : false,
+  updateChecked : false,
   requestUpdate : false}
 
 checkCurrentVersionInData();
@@ -35,19 +36,23 @@ checkForUpdate();
 //304
 function runApp(){
   if(global.state.ready == false)
-    return;
+    return console.log("Run App return ready == false");
 
   if(global.state.updateChecked == false)
-    return;
+    return console.log("Run App return updateChecked == false");
 
-  if(global.state.hasUpdate == false)
-    openWindow();
-  else
-    openUpdateWindow();
+  if(global.state.hasUpdate == false && mainWindow == null)
+    return openWindow();
+  else if(openUpdateWindow == null)
+    return openUpdateWindow();
+
+  return console.log("Run App return openUpdateWindow or openWindow Exist");
 }
 
 function openWindow(){
-  console.log("openWindow");
+  console.log("open Main Window");
+  if(mainWindow)
+    return;
 
   mainWindow = new BrowserWindow({
     width: 500,
@@ -60,11 +65,9 @@ function openWindow(){
   });
   //mainWindow.loadURL(`file://${__dirname}/views/index.html`);
   if(versionInAppData){
-    console.log("getVersion in app data");
     mainWindow.loadURL("file://"+app.getPath("userData")+"/app/views/index.html");
   }
   else {
-    console.log("getVersion in app folder", `file://${__dirname}/views/index.html`);
     mainWindow.loadURL(`file://${__dirname}/views/index.html`);
   }
   mainWindow.focus();
@@ -75,6 +78,9 @@ function openWindow(){
 };
 
 function openUpdateWindow(){
+  if(updateWindow)
+    return;
+
   updateWindow = new BrowserWindow({
     width: 300,
     height:  (process.platform=="win32")?280:250,
@@ -104,85 +110,78 @@ function checkForUpdate(){
     var time = process.hrtime();
 
     ipcMain.on("acceptUpdate", function(e){
-      console.log("file://"+app.getPath("userData")+"/app.zip");
       request
         .get(updateUrl)
         .pipe(ws = fs.createWriteStream(app.getPath("userData")+"/app.zip"));
 
       ws.on('finish', function() {
-        console.log("finish Auto Update");
+        console.log("zip dowloaded");
 
         fs
           .createReadStream(app.getPath("userData")+"/app.zip")
           .pipe(unzip.Extract({ path: app.getPath("userData")+"/" }))
           .on('error', function(err) {
-              console.log("unzip error", err);
+              console.log("unzip error : ", err);
 
-              var app = require('app'); // or from BrowserWindow: app = require("remote").require('app');
+              console.log("restart application");
               var exec = require('child_process').exec;
-              exec(process.execPath);
-              app.quit();
-
-              return;
-              /*
-              checkCurrentVersionInData();
-              global.state.updateChecked = true;
-              runApp();*/
-            })
-          .on('finish', function(err) {
-              console.log("unzip finish", err);
-              var exec = require('child_process').exec;
-              console.log("process.argv.slice(1)", process.argv.slice(1))
-              console.log("process.execPath", process.execPath);
               exec("\""+process.execPath+"\"");
               app.quit();
 
               return;
-              /*checkCurrentVersionInData();
-              global.state.updateChecked = true;
-              runApp();*/
+            })
+          .on('finish', function(err) {
+              console.log("unzip finish", err);
+
+              console.log("restart application");
+              var exec = require('child_process').exec;
+              exec("\""+process.execPath+"\"");
+              app.quit();
+
+              return;
             });
 
       });
     });
 
     ipcMain.on("discardUpdate", function(e){
-      console.log("getDiscardUpdate", e);
+      console.log("User Discard Update");
 
       global.state.updateChecked = true;
+      console.log("Run App from ", "User Discard Update");
       runApp();
     });
 
-    console.log("updateUrl", updateUrl);
+    console.log("updateUrl : ", updateUrl);
     if(!updateUrl || updateUrl == "THE_UPDATE_URL"){
-      console.error("no update url");
+      console.error("No conform update url");
       global.state.updateChecked = true;
+      console.log("Run App from ", "No conform update url");
       runApp();
     }else{
-      console.log("updateUrl", updateUrl);
-
       requestUpdate = request
       .get(updateUrl)
       //.get("http://dist.dagoma.fr/dagomapp/update?v="+version)
       .on('response', function(response) {
 
         var diff = process.hrtime(time);
-        console.log(`Benchmark took ${(diff[0] * 1e9 + diff[1])/1e9} nanoseconds`);
+        console.log(`get status code in  ${(diff[0] * 1e9 + diff[1])/1e9} seconds : ${response.statusCode}`);
 
         if(response.statusCode == 200){
           global.state.hasUpdate = true;
           global.state.updateChecked = true;
-          console.log(response.headers['content-type']) // 'image/png'
+          console.log("Run App from ", "Status 200");
+          runApp();
         }else{
           global.state.updateChecked = true;
+          console.log("Run App from ", "Status != 200");
           runApp();
         }
       });
     }
-
-      //.pipe(request.put('http://mysite.com/img.png'))
   }
   else{
+    console.log("Run App from ", "ENABLE_AUTO_UPDATE FALSE");
     global.state.updateChecked = true;
     runApp();
   }
@@ -191,18 +190,20 @@ function checkForUpdate(){
 function checkCurrentVersionInData(){
   try {
     var versionInAppData = require(app.getPath("userData")+"/app/config.json")["build-date"];
-    console.log("versionInAppData", versionInAppData, version);
-    if(versionInAppData && versionInAppData != "THE_BUILD_DATE" && versionInAppData > version){
+    console.log("version in Application Directory : ", version);
+    console.log("version in AppData : ", versionInAppData);
+    if(versionInAppData && versionInAppData != "THE_BUILD_DATE" && versionInAppData >= version){
       updateUrl = require(app.getPath("userData")+"/app/config.json").updateUrl;
-      console.log("updateUrl test", updateUrl)
+      console.log("get Application From AppData");
       versionInAppData = true;
+    }else{
+      console.log("get Application From Application Directory");
     }
 
   }
   catch (e) {
-    console.log("e", e);
+    console.log("get Application From Application Directory");
   }
-  console.log("get version from appData", versionInAppData);
 }
 
 // Quit when all windows are closed.
@@ -211,10 +212,12 @@ app.on('window-all-closed', function() {
 });
 
 app.on('activate-with-no-open-windows', function(){
+  console.log("Run App from ", "activate-with-no-open-windows");
   runApp();
 });
 
 app.on('ready', function(){
+  console.log("Run App from ", "ready");
   global.state.ready = true;
   runApp();
 });
