@@ -36,17 +36,19 @@ checkForUpdate();
 //304
 function runApp(){
   if(global.state.ready == false)
-    return console.log("Run App return ready == false");
+    return console.log("    return ready == false");
 
-  if(global.state.updateChecked == false)
-    return console.log("Run App return updateChecked == false");
+  if(global.state.updateChecked == false){
+    openUpdateWindow();
+    return console.log("    return updateChecked == false");
+  }
 
   if(global.state.hasUpdate == false && mainWindow == null)
     return openWindow();
-  else if(openUpdateWindow == null)
+  else if(updateWindow == null)
     return openUpdateWindow();
 
-  return console.log("Run App return openUpdateWindow or openWindow Exist");
+  return console.log("    return hasUpdate : ", global.state.hasUpdate, ", mainWindow == null : ", mainWindow == null, ", updateWindow == null : ", updateWindow == null);
 }
 
 function openWindow(){
@@ -148,6 +150,7 @@ function checkForUpdate(){
       console.log("User Discard Update");
 
       global.state.updateChecked = true;
+      global.state.hasUpdate = false;
       console.log("Run App from ", "User Discard Update");
       runApp();
     });
@@ -161,6 +164,11 @@ function checkForUpdate(){
     }else{
       requestUpdate = request
       .get(updateUrl)
+      .on("error", function(err){
+        global.state.updateChecked = true;
+        console.log("Run App from ", "error in updateURL Checking");
+        runApp();
+      })
       //.get("http://dist.dagoma.fr/dagomapp/update?v="+version)
       .on('response', function(response) {
 
