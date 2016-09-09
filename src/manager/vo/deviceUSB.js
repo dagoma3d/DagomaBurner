@@ -64,7 +64,7 @@ DeviceClassUSB.prototype.open = function (){
   setTimeout( that.serial.open.bind( that.serial, function (error){
     that.resetPort();
     that.serialPortOpenHandler(error);
-  } ), 500);
+  } ), 800);
   /*
   that.serial.open(function (error){
     that.resetPort();
