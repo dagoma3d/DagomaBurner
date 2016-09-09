@@ -30,7 +30,6 @@ AppRunnerClass.prototype.run = function (bVersionInAppData, sUpdateUrl, sApplica
     updateChecked : false}
 
   this.versionInAppData = bVersionInAppData;
-  console.log("that.versionInAppData", that.versionInAppData);
   this.updateUrl = sUpdateUrl;
   this.applicationDirname = sApplicationDirname;
 
@@ -66,10 +65,16 @@ AppRunnerClass.prototype.runApp = function(){
     return console.log("    return updateChecked == false");
   }
 
-  if(global.state.hasUpdate == false && that.mainWindow == null)
+  if(global.state.hasUpdate == false && that.mainWindow == null){
     return that.openWindow();
-  else if(that.updateWindow == null)
+  }
+  else if(that.updateWindow == null){
     return that.openUpdateWindow();
+  }
+  else if(that.updateWindow){
+    if(global.state.updateChecked && global.state.hasUpdate)
+      that.updateWindow.webContents.send('hasUpdate');
+  }
 
   return console.log("    return hasUpdate : ", global.state.hasUpdate, ", mainWindow == null : ", that.mainWindow == null, ", updateWindow == null : ", that.updateWindow == null);
 }
@@ -130,6 +135,12 @@ AppRunnerClass.prototype.openUpdateWindow = function(){
   that.updateWindow.focus();
   that.updateWindow.on("will-navigate", function(e) { e.preventDefault() });
   //updateWindow.openDevTools();
+
+  ipcMain.on("updateWindowReady", function(e){
+    if(global.state.updateChecked && global.state.hasUpdate)
+      that.updateWindow.webContents.send('hasUpdate');
+  });
+
   that.updateWindow.webContents.on('did-finish-load', () => {
     if(global.state.updateChecked && global.state.hasUpdate)
       that.updateWindow.webContents.send('hasUpdate');

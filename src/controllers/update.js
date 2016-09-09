@@ -174,4 +174,6 @@ Menu.setApplicationMenu(menu);
     ipcRenderer.send("discardUpdate");
   });
 
+  ipcRenderer.send("updateWindowReady");
+
 } )( window.jQuery );
