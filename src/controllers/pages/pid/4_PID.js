@@ -48,19 +48,27 @@ PIDRunClass.prototype.show = function () {
 
   that.content.hide();
   ModalManager.showLoader("L'imprimante teste la chauffe de la buse");
-  GCodeSender.send([
+  GCodeSender.sendAndWaitSpecial([
     "M303 C8 S200 E0"],
+    "#define  DEFAULT_Kd",
     false,
     function(result){
-      var regex, resultKp, resultKi, resultKd;
-      regex = /#define  DEFAULT_Kp (\d+\.\d+)/;
-      resultKp = +(result.match(regex)[1]);
+      console.log("result PID", result);
+      try{
+        var regex, resultKp, resultKi, resultKd;
+        regex = /#define  DEFAULT_Kp (\d+\.\d+)/;
+        resultKp = +(result.match(regex)[1]);
 
-      regex = /#define  DEFAULT_Ki (\d+\.\d+)/;
-      resultKi = +(result.match(regex)[1]);
+        regex = /#define  DEFAULT_Ki (\d+\.\d+)/;
+        resultKi = +(result.match(regex)[1]);
 
-      regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
-      resultKd = +(result.match(regex)[1]);
+        regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
+        resultKd = +(result.match(regex)[1]);
+      }catch(e){
+        console.error("Erreur de PID : ", e);
+        ModalManager.alert("Erreur", "Erreur lors de la procédure de teste de la chauffe");
+        ModalManager.hideLoader();
+      }
 
       console.log("PID Result : ", resultKp, resultKi, resultKd);
       GCodeSender.send([
@@ -69,7 +77,7 @@ PIDRunClass.prototype.show = function () {
         false,
         function(){
           console.log("Saved");
-          ModalManager.hideLoader("L'imprimante teste la chauffe de la buse");
+          ModalManager.hideLoader();
 
           that.content.find(".kp").text(resultKp)
           that.content.find(".ki").text(resultKi)

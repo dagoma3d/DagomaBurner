@@ -6,6 +6,8 @@ var lodash = require("lodash");
 
 var awaitForAck = true;
 
+var defaultWaitCode = "ok";
+
 var GCodeSenderClass = function GCodeSenderClass(){
 
 }
@@ -22,12 +24,12 @@ GCodeSenderClass.prototype.addButtonGCode = function (id, gCodes, showLoader, ca
   });
 };
 
-GCodeSenderClass.prototype.send = function (gCodes, showLoader, callback) {
+GCodeSenderClass.prototype.sendAndWaitSpecial = function (gCodes, waitCode, showLoader, callback) {
   var that = this;
 
   if(showLoader)
     $("#globalLoader").show();
-  that.sendRecursive(lodash.clone(gCodes), function(result){
+  that.sendRecursiveAndWaitSpecial(lodash.clone(gCodes), waitCode, function(result){
     if(showLoader)
       $("#globalLoader").hide();
     if(callback)
@@ -35,19 +37,24 @@ GCodeSenderClass.prototype.send = function (gCodes, showLoader, callback) {
   }, "");
 };
 
-GCodeSenderClass.prototype.sendRecursive = function (gCodes, callback, result) {
+GCodeSenderClass.prototype.send = function (gCodes, showLoader, callback) {
+  var that = this;
+  that.sendAndWaitSpecial(gCodes, defaultWaitCode, showLoader, callback)
+};
+
+GCodeSenderClass.prototype.sendRecursiveAndWaitSpecial = function (gCodes, waitCode, callback, result) {
   var that = this;
 
   if(gCodes.length == 0){
     return callback(result);
   }
   var gCode = gCodes.shift();
-  that.sendGcode(gCode, function(response){
-    that.sendRecursive(gCodes, callback, result+response);
+  that.sendGcodeAndWaitSpecial(gCode, waitCode, function(response){
+    that.sendRecursiveAndWaitSpecial(gCodes, waitCode, callback, result+response);
   });
 };
 
-GCodeSenderClass.prototype.sendGcode = function (gCode, callback) {
+GCodeSenderClass.prototype.sendGcodeAndWaitSpecial = function (gCode, waitCode, callback) {
   var that = this;
   if(that.forceStop){
     that.forceStop = false;
@@ -55,14 +62,14 @@ GCodeSenderClass.prototype.sendGcode = function (gCode, callback) {
   }
 
   DeviceManager.getSelectedDevice().send(gCode+"\r\n");
-  that.waitForOK(function(response){
+  that.waitForSpecial(waitCode, function(response){
     callback(response);
   });
 };
 
 
 
-GCodeSenderClass.prototype.waitForOK = function (callback) {
+GCodeSenderClass.prototype.waitForSpecial = function (waitCode, callback) {
   var that = this;
   var _data = "";
 
@@ -75,7 +82,7 @@ GCodeSenderClass.prototype.waitForOK = function (callback) {
   var dataHandler = function(data){
     _data += data;
 
-    if(data.toLowerCase().indexOf("ok") >= 0){
+    if(data.toLowerCase().indexOf(waitCode.toLowerCase()) >= 0){
       DeviceManager.getSelectedDevice().removeListener("receive", dataHandler);
       if(callback){
         return callback(_data);
