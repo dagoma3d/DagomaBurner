@@ -35,8 +35,13 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
       var zoffset;
       if(response){
         zoffset = +(response.split("Z:")[1].split(" ")[0]);
+        //console.log("zoffset response", 1, zoffset);
         zoffset = -(config.initialZOffset)+zoffset;
+        //console.log("zoffset response", 2, zoffset);
+        zoffset -= 0.4;
+        //console.log("zoffset response", 3, zoffset);
         zoffset = zoffset.toFixed( 2 );
+        //console.log("zoffset response", 4, zoffset);
       }
 
       GCodeSender.send([
