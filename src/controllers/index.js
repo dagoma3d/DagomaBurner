@@ -6,6 +6,8 @@ var FirmwareController = require(_root+"controllers/firmware.js");
 var PortSelectorController = require(_root+"controllers/portSelector.js");
 var NavManager = require(_root+"manager/NavManager.js");
 var ModalManager = require(_root+"manager/modalManager.js");
+var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
+var I18n = require(_root+"i18n/i18n.js");
 
 const {remote} = require('electron');
 const {Menu, MenuItem} = remote;
@@ -131,6 +133,14 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 ( function( $ ) {
+  ViewLoader("container", function(content){
+    $("body").append(content);
+    initPage();
+  });
+} )( window.jQuery );
+
+function initPage(){
+
   const shell = require('electron').shell;
 
   $(document).on('click', 'a[href^="http"], a[href^="mailto:"]', function(event) {
@@ -154,7 +164,7 @@ Menu.setApplicationMenu(menu);
       if(NavManager.currentPage != "zoffset/3_printerConnection" && NavManager.currentPage != "home "){
         ModalManager.hideLoader();
         NavManager.setPage("home");
-        ModalManager.alert("Oups!", "Votre imprimante s'est d&eacute;connect&eacute;e!");
+        ModalManager.alert(I18n.currentLanguage().disconnected_title, I18n.currentLanguage().disconnected_message);
       }
     }
   })
@@ -196,7 +206,7 @@ Menu.setApplicationMenu(menu);
   ModalManager.hideLoader();
   //ModalManager.setProgress(50);
 
+  $('.tooltipped').tooltip({delay: 50});
 
   $("#version").text("V"+require(_root+"package.json").version);
-
-} )( window.jQuery );
+}

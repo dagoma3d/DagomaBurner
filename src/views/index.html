@@ -6,73 +6,11 @@
     <link type="text/css" rel="stylesheet" href="../static/css/index.css" media="screen,projection"/>
   </head>
   <body>
-    <div id="globalLoader">
-      <div class="roundInternalLoader">
-        <img draggable="false" src="../static/images/logoLoader.png" alt="" />
-      </div>
-      <div class="z-depth-2 description">
-        <div class="content">
-          Chargement
-        </div>
-      </div>
-    </div>
 
-    <div id="globalModal" class="modal">
-      <div class="modal-content">
-        <h4> Modal Header </h4>
-        <div class="content">
-          <p>
-            A bunch of text
-          </p>
-        </div>
-        <div class="modal-footer">
-          <a class="modal-action modal-close waves-effect waves-green btn-flat">Disagree</a>
-          <a class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-        </div>
-      </div>
-    </div>
-    <div id="navbar" class="row">
-      <a id="navHome" href="#" class="home tooltipped" data-position="bottom" data-delay="50" data-tooltip="Accueil"><i class="mdi-action-home"></i></a>
-      <a id="navBack" href="#" class="back tooltipped" data-position="bottom" data-delay="50" data-tooltip="&eacute;tape pr&eacute;c&eacute;dente"><i class="mdi-navigation-chevron-left"> </i></a>
-      <h1>Dagom'App</h1>
-      <a id="navClose" href="#" class="close tooltipped" data-position="bottom" data-delay="50" data-tooltip="Fermer"><i class="mdi-navigation-close"></i></a>
-    </div>
-    <div id="welcome">
-      <img draggable="false" src="../static/images/logoWhite.png" alt="" />
-      <p>
-        Bienvenue dans l'application Dagoma qui va vous permettre de r&eacute;gler votre imprimante et de faire sublimer vos cr&eacute;ations.
-      </p>
-    </div>
-    <div id="pageContainer">
-      <!--div id="comSelector">
-        <select id="com" class="browser-default">
-          <option value="" disabled="disabled" selected="selected">Choisissez le port s&eacute;rie de votre imprimante</option>
-        </select>
-        <p></p>
-      </div>
-      <div class="tabsContent disabled">
-        <div id="firmware" class="col s12">
-          <form>
-            <select id="type" class="browser-default">
-              <option value="" disabled="disabled" selected="selected">Choisissez le type de carte de votre imprimante</option>
-              <option value="melzi">Melzi</option>
-              <option value="mega">MKS</option>
-            </select>
-            <div id="dragBox">
-              <div class="drag">Glissez/D&eacute;posez le fichier .hex du firmware</div>
-              <div class="file hide">
-                <p class="fileName">File.hex</p><a id="burn" class="btn">Flasher</a>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div-->
-    </div>
-    <div id="version">
-    </div>
     <script type="text/javascript">
       window.$ = window.jQuery = require("../static/vendors/jquery/jquery-2.1.4.min.js");
       window.Hammer = require('../static/vendors/hammer/hammer.min.js');
+      window.Handlebars = require("../static/vendors/handlebars/handlebars-v4.0.5.js");
       document.jQuery = window.jQuery;
     </script>
 

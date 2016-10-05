@@ -3,39 +3,24 @@
     <li>
       <div class="collapsible-header">
         <img draggable="false" src="../static/images/ConfigurationIcons1.png"/>
-        <a class="waves-effect waves-light btn-large blue">Une impression parfaite</a>
+        <a class="waves-effect waves-light btn-large blue">{{configuration_zoffset_title}}</a>
       </div>
       <div class="collapsible-body">
-        <p>Nous allons procéder aux réglages de votre imprimante pour obtenir des couches d’impression idéales. <span class="pro"> réglage du Z-offset </span></p>
-        <p>Temps estimé : 3 minutes</p>
+        <p>{{configuration_zoffset_description}} <span class="pro"> {{configuration_zoffset_pro}}</span></p>
+        <p>{{configuration_zoffset_time}}</p>
         <a id="zoffset" class="next btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">keyboard_arrow_right</i></a>
       </div>
     </li>
     <li>
       <div class="collapsible-header">
         <img draggable="false" src="../static/images/ConfigurationIcons2.png"/>
-        <a class="waves-effect waves-light btn-large blue">Une température idéale</a>
+        <a class="waves-effect waves-light btn-large blue">{{configuration_pid_title}}</a>
       </div>
       <div class="collapsible-body">
-        <p>Nous allons optimiser la chauffe de la buse en fonction du milieu extérieur de l’imprimante <span class="exemple"> (bureau à Lille, cave à Bordeaux, grenier à Londres, ...).</span> <span class="pro"> Test du PID </span></p>
-        <p>Temps estimé : 3 minutes</p>
+        <p>{{configuration_pid_description}} <span class="exemple">{{configuration_pid_exemple}}</span> <span class="pro"> {{configuration_pid_pro}}</span></p>
+        <p>{{configuration_pid_time}}</p>
         <a id="pid" class="next btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">keyboard_arrow_right</i></a>
       </div>
     </li>
   </ul>
-
-  <!--div class="link" id="zoffset">
-    <a class="waves-effect waves-light btn-large blue">
-      <h5>
-        Une impression parfaite
-      </h5>
-    </a>
-  </div>
-  <div class="link" id="pid">
-    <a class="waves-effect waves-light btn-large blue">
-      <h5>
-        Une température idéale
-      </h5>
-    </a>
-  </div-->
 </div>
