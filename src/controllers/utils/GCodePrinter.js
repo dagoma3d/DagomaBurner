@@ -10,6 +10,7 @@ var GCodePrinterClass = function(){
   this.forceStop = false;
   this.printStart = true;
   this.printEnd = true;
+  this.temperature = 210;
 }
 
 GCodePrinterClass.prototype.print = function (datas, printStart, printEnd, offsetX, offsetY, offsetZ, maxDistance, callback){
@@ -176,55 +177,136 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
     return callback();
   }
 
-  GCodeSender.send([
-    "G90;",
-    "G28 X Y",
-    "M106 S160",
-    "M109 S180",
-    "M104 S215",
-    //"M111 S25"
-  ],
-  false,
-  function(){
-    ModalManager.setLoaderTitle("Le palpeur vérifie que le plateau est bien droit");
-    GCodeSender.send([
-      "G28",
-      "G29; Detailed Z-Probe",
-      "G90; Set to absolute positioning if not",
-      "G1 X100 Y200 Z5 F3000",
-      "G1 Z0",
-      "M82 ;set extruder to absolute mode",
-      "G0 F3600.000000 Z0.260",
-      "G92 E0 ;zero the extruded length",
-      "G1 X190 E20 F1000",
-      "G92 E0 ;zero the extruded length again",
-      "G1 F60",
-      "G90",
-      "M106 S127.500000",
-    ],false,
-    function(){
-      callback();
-    });
-  });
+  switch(window.printer.type){
+    case "E350":
+      GCodeSender.send([
+        "M117 Initialisation",//
+        "G21",//;metric values
+        "G91",//; Passage coordonnees relatives
+        "G1 Z10 F9000",//  ; lift nozzle
+        "G28 X",//; Home X
+        //; Prechauffage des buses
+        "M117 Prechauffage",// Message sur afficheur
+        "M140 S60",// target plateau temperature
+        "M109 S180",// Set nozzle to 180
+        "M104 S"+this.temperature,//target buse temperature
+        "M190 S60",//target plateau temperature
+        //; Homing
+        "M117 Origine Machine",// Message sur afficheur
+        "G28",// Home X Y Z
+        "G90",// Passage coordonnees absolues
+        //;Parallelisme Axe X
+        "M117 Parallelisme X",// Message sur afficheur
+        "G1 Z5 F9000",// lift nozzle
+        "G28 X Y",//
+        "G92 Z20",//
+        "G91",// Passage coordonnees relatives
+        "G1 Z-18 F200",// Descente en dessous du plateau
+        "G1 Z18 F9000",//"
+        "G28",// Home
+        "G90",// Passage coordonnees absolues
+        //; Palpage
+        "M117 Palpage",// Message sur afficheur
+        "G29",// Palpage
+        "G1 Z10 F9000",// lift nozzle
+        "G1 X176 Y-14 F6000",// Avance avant bed
+        //; Definition des temperature d impression
+        "M117 Chauffage",//
+        "M109 S210",// Set nozzle to print temperature
+        "M190 S60",// set plateau to print temperature
+        //; Nettoyage Buse
+        "M117 Purge Buse",// Message sur afficheur
+        "G92 E0",// reset extruder
+        "G1 F200 E10",// extrude 10 mm
+        "G92 E0",// mise a zero extrudeuse
+        "G1 F3000 E-7",// rectract 7mm
+      ],
+      false,
+      function(){
+        callback();
+      });
+    break;
+    default :
+      GCodeSender.send([
+        "G90;",
+        "G28 X Y",
+        "M106 S160",
+        "M109 S180",
+        "M104 S"+this.temperature,//target buse temperature
+        //"M111 S25"
+      ],
+      false,
+      function(){
+        ModalManager.setLoaderTitle("Le palpeur vérifie que le plateau est bien droit");
+        GCodeSender.send([
+          "G28",
+          "G29; Detailed Z-Probe",
+          "G90; Set to absolute positioning if not",
+          "G1 X100 Y200 Z5 F3000",
+          "G1 Z0",
+          "M82 ;set extruder to absolute mode",
+          "G0 F3600.000000 Z0.260",
+          "G92 E0 ;zero the extruded length",
+          "G1 X190 E20 F1000",
+          "G92 E0 ;zero the extruded length again",
+          "G1 F60",
+          "G90",
+          "M106 S127.500000",
+        ],false,
+        function(){
+          callback();
+        });
+      });
+    break;
+  }
 };
 
 GCodePrinterClass.prototype.finishPrint = function (callback) {
-  GCodeSender.send([
-    "M104 S0     ;extruder heater off",
-    "M106 S255     ;start fan full power",
-    "M140 S0      ;heated bed heater off (if you have it)",
-    "G91        ;relative positioning",
-    "G1 E-1 F300  ;retract the filament a bit before lifting the nozzle, to release some of the pressure",
-    "G1 Z+3 E-2 F60  ;move Z up a bit and retract filament even more",
-    "G28 X0 Y0  ;move X/Y to min endstops, so the head is out of the way;",
-    "M84      ;shut down motors",
-  ],
-  false,
-  function(){
-    if(callback)
-      callback();
-    return;
-  });
+  switch(window.printer.type){
+    case "E350":
+      GCodeSender.send([
+        //;Exctinction
+        "M117",// Extinction ;
+        //;Retract des filaments
+        "G91",//                                    ;relative positioning
+        "G1 E-1 F200",//                 ;retract the filament a bit before lifting the nozzle, to release some of the pressure
+        "G1 Z1 F6000",//  ;move Z up a bit and retract filament even more
+        "M140 S0",//heated bed heater off (if you have it)
+        "M109 S30",//
+        "M106 S0",//
+        "M104 S0 ",//extruder heater off
+        //;Origine Machine
+        "M117 Origine machine",//
+        "G28 X0 Y200",//;move X/Y to min endstops
+        "M84",//;steppers off
+        "G90",//;absolute positioning
+        //;Fin d impression
+        "M117 Fin Impression",//
+      ],
+      false,
+      function(){
+        callback();
+      });
+    break;
+    default :
+      GCodeSender.send([
+        "M104 S0     ;extruder heater off",
+        "M106 S255     ;start fan full power",
+        "M140 S0      ;heated bed heater off (if you have it)",
+        "G91        ;relative positioning",
+        "G1 E-1 F300  ;retract the filament a bit before lifting the nozzle, to release some of the pressure",
+        "G1 Z+3 E-2 F60  ;move Z up a bit and retract filament even more",
+        "G28 X0 Y0  ;move X/Y to min endstops, so the head is out of the way;",
+        "M84      ;shut down motors",
+      ],
+      false,
+      function(){
+        if(callback)
+          callback();
+        return;
+      });
+    break;
+  }
 };
 
 module.exports = GCodePrinterClass;

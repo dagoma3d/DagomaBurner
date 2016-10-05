@@ -377,6 +377,10 @@ html.update{
       border: 2px solid #e19531;
       background-color: #e19531;}
 
+    #zoffsetPreparation select{
+      display: inline-block;
+      width: 170px;}
+
 #zoffsetConnection iframe{
   margin-bottom: 30px;
   margin-top: 40px;}

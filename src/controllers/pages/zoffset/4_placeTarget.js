@@ -44,7 +44,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
   that.content.hide();
   ModalManager.showLoader("L'imprimante est en mouvement");
   GCodeSender.send([
-    "M851 Z-"+config.initialZOffset, //Not -4 but -10 for the new V2
+    "M851 Z-"+config.initialZOffset, //Not -4 but -10 for the new V2],
     "G28",
     "G91",
     "G0 Z5"],

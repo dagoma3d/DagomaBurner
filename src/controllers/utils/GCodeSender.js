@@ -49,6 +49,7 @@ GCodeSenderClass.prototype.sendRecursiveAndWaitSpecial = function (gCodes, waitC
     return callback(result);
   }
   var gCode = gCodes.shift();
+  console.log("sendGCode", gCode);
   that.sendGcodeAndWaitSpecial(gCode, waitCode, function(response){
     that.sendRecursiveAndWaitSpecial(gCodes, waitCode, callback, result+response);
   });

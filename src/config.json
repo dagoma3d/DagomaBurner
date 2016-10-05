@@ -2,14 +2,17 @@
   "printer":{
     "type":{
       "D200":{
+        "type":"D200",
         "name":"Discovery200",
         "bootloader":"melzi"
       },
       "D200V2":{
+        "type":"D200V2",
         "name":"DiscoVeryEasy200",
         "bootloader":"mega"
       },
       "E350":{
+        "type":"E350",
         "name":"Explorer350",
         "bootloader":"mega"
       }

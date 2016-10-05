@@ -27,6 +27,8 @@ ZoffsetPreparationClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
     window.pageAfterDeviceSelection = "zoffset/4_placeTarget";
+    window.temperature = that.content.find("select").val();
+    console.log("window.temperature", window.temperature);
     NavManager.setPage("selectPrinter/1_selectPrinter");
   });
 };

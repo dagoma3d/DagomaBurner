@@ -102,6 +102,7 @@ ZoffsetTestPrintingClass.prototype.show = function () {
     that.roundDatas = datas;
     ModalManager.showLoader("L'imprimante chauffe");
     that.printer  = new GCodePrinter();
+    that.printer.temperature = window.temperature;
     that.printer.initPrint(function(){
       that.content.show();
       ModalManager.hideLoader();
@@ -123,7 +124,7 @@ ZoffsetTestPrintingClass.prototype.printRecursive = function () {
 };
 
 ZoffsetTestPrintingClass.prototype.deviceReceiveHandler = function (message) {
-  var regex = /T:(\d+.?\d?)\s\/(\d+.?\d?)\s@:(\d+.?\d?)/
+  var regex = /T:(\d+.?\d?)\s\/(\d+.?\d?)/
   var result = message.match(regex);
   if(result){
     var current = +result[1];
@@ -133,7 +134,6 @@ ZoffsetTestPrintingClass.prototype.deviceReceiveHandler = function (message) {
 };
 
 ZoffsetTestPrintingClass.prototype.dispose = function () {
-  console.log("this.device", this.device);
   if(this.device){
     this.device.removeListener("receive", this.deviceReceiveListener);
   }
