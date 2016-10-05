@@ -49,7 +49,7 @@ PIDRunClass.prototype.show = function () {
   that.content.hide();
   ModalManager.showLoader("L'imprimante teste la chauffe de la buse");
   GCodeSender.sendAndWaitSpecial([
-    "M303 C8 S200 E0"],
+    "M303 C8 S210 E0"],
     "#define  DEFAULT_Kd",
     false,
     function(result){
