@@ -8,17 +8,32 @@ var I18nClass = function I18nClass(){
 }
 
 I18nClass.prototype.initLanguage = function(){
-  var local = osLocale.sync();
-  console.log("local", local);
+  if(typeof localStorage!='undefined') {
+    // Récupération de la valeur dans web storage
+    var local = localStorage.getItem('local');
+    // Vérification de la présence du compteur
+    if(local!=null) {
+      // Si oui, on convertit en nombre entier la chaîne de texte qui fut stockée
+    } else {
+      local = osLocale.sync();
+    }
+  } else {
+    local = osLocale.sync();
+  }
+
   this.setLanguage(local);
 }
 
 I18nClass.prototype.setLanguage = function(local){
   if(local.split("_")[0] == "fr"){
-    //this.context = require("./fr.json");
-  //}else{
+    this.context = require("./fr.json");
+    this.currentLanguageID = "fr";
+  }else{
     this.context = require("./en.json");
+    this.currentLanguageID = "en";
   }
+
+  localStorage.setItem('local',local);
 }
 
 I18nClass.prototype.currentLanguage = function(){

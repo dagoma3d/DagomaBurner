@@ -65,6 +65,38 @@ a, select, button, input, label, img{
 #navbar{
   background-color: #e19531;}
 
+  #navbar #language{
+    position: absolute;
+    height: 25px;
+    top: 18px;
+    left: 14px;
+    padding: 0px;}
+
+    #navbar #language img{
+      height: 25px;}
+
+  #navbar #dropdownLanguage{
+    min-width: 10px;
+    width: 51px !important;
+    margin-top: -2px;
+    margin-left: -2px;}
+
+  #navbar #dropdownLanguage li{
+    height: 25px;
+    min-height: inherit;
+    margin: 2px;
+    padding: 0px;
+    width: 60px;
+    min-width: 10px;}
+
+    #navbar #dropdownLanguage li img{
+      height: 25px;
+      min-width: 10px;}
+
+    #navbar #dropdownLanguage li a{
+      padding: 0px;
+    }
+
   #navbar a#navClose{
     position: absolute;
     width: 60px;

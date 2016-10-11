@@ -134,11 +134,18 @@ const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 ( function( $ ) {
+
+  setView();
+
+} )( window.jQuery );
+
+function setView(){
   ViewLoader("container", function(content){
-    $("body").append(content);
+    $("body>#content").empty();
+    $("body>#content").append(content);
     initPage();
   });
-} )( window.jQuery );
+}
 
 function initPage(){
 
@@ -198,6 +205,22 @@ function initPage(){
   var firmwareController = new FirmwareController(portSelectorController);
   var diagnosticController = new DiagnosticController(portSelectorController);
   */
+
+  $('.dropdown-button').dropdown();
+  $("#languageFR").click(function(){
+    $("#language img").attr("src", $(this).find("img").attr("src"));
+    I18n.setLanguage("fr");
+    setView();
+  });
+
+  $("#languageEN").click(function(){
+    $("#language img").attr("src", $(this).find("img").attr("src"));
+    I18n.setLanguage("en");
+    setView();
+  });
+
+  $("#language img").attr("src", "../static/images/flags/"+I18n.currentLanguageID+".gif");
+
   $("#navbar a.close").click(function(){
     remote.getCurrentWindow().close();
   });

@@ -41,8 +41,10 @@ NavManagerClass.prototype.updateNavButton = function(){
   if(this.currentPage=="home"){
     $("#navHome").hide();
     $("#navBack").hide();
+    $("#language").show();
   }
   else{
+    $("#language").hide();
     $("#navHome").show();
     if(this.backPage[this.backPage.length-1] == "home"){
       $("#navBack").hide();
