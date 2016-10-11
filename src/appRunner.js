@@ -47,6 +47,7 @@ AppRunnerClass.prototype.run = function (bVersionInAppData, sUpdateUrl, sApplica
 
   app.on('ready', function(){
     console.log("Run App from ", "ready");
+    console.log("locale", app.getLocale());
     global.state.ready = true;
     that.runApp();
   });

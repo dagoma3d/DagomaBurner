@@ -6,6 +6,7 @@
   "dependencies": {
     "electron-packager": "^7.7.0",
     "jq": "^1.7.2",
+    "os-locale": "^1.4.0",
     "winston": "^2.2.0"
   },
   "devDependencies": {},

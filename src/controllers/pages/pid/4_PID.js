@@ -9,7 +9,7 @@ var CodeBuilder = require(_root+"manager/codeBuilder.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
-
+var I18n = require(_root+"i18n/i18n.js");
 
 var PIDRunClass = function PIDRunClass(){
   this.content = null;
@@ -47,7 +47,7 @@ PIDRunClass.prototype.show = function () {
   that.device.on("receive", that.deviceReceiveListener);
 
   that.content.hide();
-  ModalManager.showLoader("L'imprimante teste la chauffe de la buse");
+  ModalManager.showLoader(I18n.currentLanguage().pid_heating);
   GCodeSender.sendAndWaitSpecial([
     "M303 C8 S210 E0"],
     "#define  DEFAULT_Kd",
@@ -65,8 +65,7 @@ PIDRunClass.prototype.show = function () {
         regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
         resultKd = +(result.match(regex)[1]);
       }catch(e){
-        console.error("Erreur de PID : ", e);
-        ModalManager.alert("Erreur", "Erreur lors de la procédure de teste de la chauffe");
+        ModalManager.alert(I18n.currentLanguage().pid_error_title, I18n.currentLanguage().pid_error_description);
         ModalManager.hideLoader();
       }
 

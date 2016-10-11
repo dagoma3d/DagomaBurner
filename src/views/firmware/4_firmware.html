@@ -1,12 +1,16 @@
 <div id="firwareDrag" class="zoffset">
   <div class="file-field input-field">
     <div class="btn">
-      <span>Selectionnez un fichier .HEX</span>
+      <span>{{firmware_select_HEX}}</span>
       <input type="file">
     </div>
     <div class="file-path-wrapper">
       <input class="file-path validate" type="text">
     </div>
   </div>
-  <a id="burn" class="btn">Flasher</a>
+  <a id="burn" class="btn">{{firmware_flash}}</a>
+  <p>
+    {{firmware_go_to_dist}}
+    <a href="http://dist.dagoma.fr/">dist.dagoma.fr</a>
+  </p>
 </div>

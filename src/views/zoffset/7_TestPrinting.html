@@ -1,29 +1,29 @@
 <div id="zoffsetTestPrinting" class="zoffset">
   <iframe src="../static/images/TestPrintingHTML.html" width="60" height="50" class="right"></iframe>
   <p>
-    Observez bien votre première couche et ajustez en temps-réel :
+    {{z_offset_printing_title}}
   </p>
   <div class="zOffsetButton">
     <img draggable="false" src="../static/images/zOffsetDown.jpg" alt="" />
     <p>
-      trop écrasée
+      {{z_offset_printing_crushed}}
     </p>
-    <a id="zOffsetDown" class="waves-effect waves-light btn blue">plus haut</a>
+    <a id="zOffsetDown" class="waves-effect waves-light btn blue">{{z_offset_printing_higher}}</a>
   </div>
   <div class="zOffsetButton">
     <img draggable="false" src="../static/images/zOffsetOk.jpg" alt="" />
     <p>
-      parfaite
+      {{z_offset_printing_perfect}}
     </p>
-    <a id="zOffsetOk" class="waves-effect waves-light btn blue">je suis satisfait</a>
+    <a id="zOffsetOk" class="waves-effect waves-light btn blue">{{z_offset_printing_satisfied}}</a>
   </div>
 
   <div class="zOffsetButton">
     <img draggable="false" src="../static/images/zOffsetUp.jpg" alt="" />
     <p>
-      trop haute
+      {{z_offset_printing_too_high}}
     </p>
-    <a id="zOffsetUp" class="waves-effect waves-light btn blue">plus bas</a>
+    <a id="zOffsetUp" class="waves-effect waves-light btn blue">{{z_offset_printing_lower}}</a>
   </div>
-  <a id="start" class="btn-large waves-effect waves-light center blue">J'enregistre le réglage</a>
+  <a id="start" class="btn-large waves-effect waves-light center blue">{{z_offset_printing_save}}</a>
 </div>

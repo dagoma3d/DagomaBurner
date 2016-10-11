@@ -8,6 +8,7 @@ var NavManager = require(_root+"manager/NavManager.js");
 var ModalManager = require(_root+"manager/modalManager.js");
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var I18n = require(_root+"i18n/i18n.js");
+I18n.initLanguage();
 
 const {remote} = require('electron');
 const {Menu, MenuItem} = remote;
@@ -205,7 +206,6 @@ function initPage(){
 
   ModalManager.hideLoader();
   //ModalManager.setProgress(50);
-
   $('.tooltipped').tooltip({delay: 50});
 
   $("#version").text("V"+require(_root+"package.json").version);

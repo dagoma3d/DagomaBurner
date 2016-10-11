@@ -1,38 +1,38 @@
 <div id="zoffsetPreparation" class="zoffset">
-  <p>Nous allons procéder à l’initialisation de votre imprimante 3D </p>
-  <p class="thanksToPrepare">Préparation : </p>
+  <p>{{z_offset_preparation_explications}}</p>
+  <p class="thanksToPrepare">{{z_offset_preparation}}</p>
   <form>
     <ul>
       <li>
         <input type="checkbox" class="filled-in" id="test3" />
-        <label for="test3">Retirer la carte mémoire (SD) de l'imprimante</label>
+        <label for="test3">{{z_offset_preparation_remove_card}}</label>
       </li>
       <li>
         <input type="checkbox" class="filled-in" id="test1" />
-        <label for="test1">Allumer l'imprimante</label>
+        <label for="test1">{{z_offset_preparation_turn_on}}</label>
       </li>
       <li>
         <input type="checkbox" class="filled-in" id="test2" />
-        <label for="test2">Insérer le filament</label>
+        <label for="test2">{{z_offset_preparation_insert_filament}}</label>
         <select class="browser-default">
-          <option value="190" selected> PLA Chromatik </option>
-          <option value="210"> PLA OctoFiber</option>
-          <option value="200"> PLA Filo3d-VERT</option>
-          <option value="220"> PLA Filo3d-ROUGE</option>
-          <option value="205"> PLA Filo3d-autre couleur</option>
-          <option value="210"> PLA PolyPlus</option>
-          <option value="210"> PLA PolyMax</option>
-          <option value="230"> PLA PolyFlex</option>
-          <option value="210"> PLA PolyWood</option>
+          <option value="190" selected> {{z_offset_filament_Chromatik}} </option>
+          <option value="210"> {{z_offset_filament_Octofiber}}</option>
+          <option value="200"> {{z_offset_filament_Filo3DGreen}}</option>
+          <option value="220"> {{z_offset_filament_Filo3DRed}}</option>
+          <option value="205"> {{z_offset_filament_Filo3DOthers}}</option>
+          <option value="210"> {{z_offset_filament_Polyplus}}</option>
+          <option value="210"> {{z_offset_filament_Polymax}}</option>
+          <option value="230" disabled> {{z_offset_filament_Polyflex}}</option>
+          <option value="230" disabled> {{z_offset_filament_Polywood}}</option>
         </select>
       </li>
       <li>
         <input type="checkbox" class="filled-in" id="test5" />
-        <label for="test5">Se munir de la cible de réglage (fourni) </label>
+        <label for="test5">{{z_offset_preparation_target}} </label>
       </li>
       <li>
         <input type="checkbox" class="filled-in" id="test4" />
-        <label for="test4">Se munir du cable USB (fourni) </label>
+        <label for="test4">{{z_offset_USB_Cable}}</label>
       </li>
     </ul>
   </form>

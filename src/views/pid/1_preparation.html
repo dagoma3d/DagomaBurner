@@ -1,15 +1,19 @@
 <div id="zoffsetPreparation" class="zoffset">
-  <p>Nous allons procéder à la mise à jour de votre imprimante 3D </p>
-  <p class="thanksToPrepare">Préparation : </p>
+  <p>{{pid_preparation_explications}}</p>
+  <p class="thanksToPrepare">{{pid_preparation_title}}</p>
   <form>
     <ul>
       <li>
+        <input type="checkbox" class="filled-in" id="test3" />
+        <label for="test3">{{pid_preparation_remove_card}}</label>
+      </li>
+      <li>
         <input type="checkbox" class="filled-in" id="test1" />
-        <label for="test1">Allumer l'imprimante</label>
+        <label for="test1">{{pid_preparation_turn_on}}</label>
       </li>
       <li>
         <input type="checkbox" class="filled-in" id="test4" />
-        <label for="test4">Se munir du cable USB (fourni) </label>
+        <label for="test4">{{pid_preparation_USB_Cable}} </label>
       </li>
     </ul>
   </form>

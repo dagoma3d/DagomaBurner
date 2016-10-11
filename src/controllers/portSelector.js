@@ -1,5 +1,6 @@
 var root = __dirname + "/../";
 var DeviceManager = require(_root+"manager/devices.js");
+var I18n = require(_root+"i18n/i18n.js");
 
 var PortSelectorControllerClass = function($ref){
   var that = this;
@@ -36,11 +37,11 @@ PortSelectorControllerClass.prototype.openDevice = function () {
   $(".tabsContent").addClass("disabled");
 
   that.textBox.show();
-  that.textBox.text("Ouverture du port "+that.selectedDevice.name+"...");
+  that.textBox.text(I18n.currentLanguage().printer_connexion_opening+" "+that.selectedDevice.nam);
 
   function no3DPrinterFound(){
     clearTimeout(timeOut3DPrinterSearch);
-    that.textBox.text("Aucune imprimante detectée sur ce port !");
+    that.textBox.text(I18n.currentLanguage().printer_connexion_no_printer);
     that.selectedDevice.removeListener("ready", deviceReady);
     that.selectedDevice.removeListener("printerFound", printerFound);
     $(".tabsContent").removeClass("disabled");
@@ -48,13 +49,13 @@ PortSelectorControllerClass.prototype.openDevice = function () {
 
   function printerFound(){
     no3DPrinterFound();
-    that.textBox.text("Imprimante detectée");
+    that.textBox.text(I18n.currentLanguage().printer_connexion_detected);
     that.selectedDevice.removeListener("printerFound", printerFound);
     //$('select#type').val("melzi");
   }
 
   function deviceReady(){
-    that.textBox.text("Recherche d'une imprimante... (peut prendre jusqu'a 30secondes)");
+    that.textBox.text(I18n.currentLanguage().printer_connexion_searching);
 
     that.selectedDevice.removeListener("ready", deviceReady);
     timeOut3DPrinterSearch = setTimeout(function(){

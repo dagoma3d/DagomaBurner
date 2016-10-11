@@ -9,6 +9,7 @@
     "avrgirl-arduino": "^1.7.1",
     "lodash": "^4.0.0",
     "moment": "^2.11.1",
+    "os-locale": "^1.4.0",
     "request": "^2.74.0",
     "serialport": "^3.1.2",
     "unzip": "^0.1.11"

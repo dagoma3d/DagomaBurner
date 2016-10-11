@@ -8,6 +8,7 @@ var ModalManager = require(_root+"manager/modalManager.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
+var I18n = require(_root+"i18n/i18n.js");
 
 var ZoffsetTestPrintingClass = function ZoffsetTestPrintingClass(){
   this.content = null;
@@ -35,7 +36,7 @@ ZoffsetTestPrintingClass.prototype.initView = function () {
   var that = this;
 
   that.content.find("#start").on("click", function(){
-    ModalManager.showLoader("L'impression s'arrête");
+    ModalManager.showLoader(I18n.currentLanguage().z_offset_print_stoping);
     that.printer.stop(function(){
       ModalManager.hideLoader();
       NavManager.setPage("zoffset/8_Save");
@@ -100,7 +101,7 @@ ZoffsetTestPrintingClass.prototype.show = function () {
 
   GCodeParser(_root+"/pastille.g", function(datas){
     that.roundDatas = datas;
-    ModalManager.showLoader("L'imprimante chauffe");
+    ModalManager.showLoader(I18n.currentLanguage().z_offset_print_heating);
     that.printer  = new GCodePrinter();
     that.printer.temperature = window.temperature;
     that.printer.initPrint(function(){

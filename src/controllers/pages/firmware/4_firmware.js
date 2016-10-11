@@ -6,7 +6,7 @@ var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
 var ModalManager = require(_root+"manager/modalManager.js");
 var CodeBuilder = require(_root+"manager/codeBuilder.js");
-
+var I18n = require(_root+"i18n/i18n.js");
 
 var FirmwareFirmwareClass = function FirmwareFirmwareClass(){
   this.content = null;
@@ -47,14 +47,14 @@ FirmwareFirmwareClass.prototype.show = function () {
   });
 
   $btn.on("click", function(){
-    ModalManager.showLoader("Le firmware est en train d'être chargé sur votre imprimante")
+    ModalManager.showLoader(I18n.currentLanguage().firmware_burning);
     console.log("window.printer", window.printer);
     new CodeBuilder(DeviceManager.getSelectedDevice(), file.path, window.printer.bootloader, function(success){
       ModalManager.hideLoader();
       if(success)
-        ModalManager.alert("Succès", "Votre imprimante s'est bien mise à jour");
+        ModalManager.alert(I18n.currentLanguage().firmware_success_title, I18n.currentLanguage().firmware_success_message);
       else
-        ModalManager.alert("<span class=\"red\">Erreur!</span>", "La mise à jour à connu une erreur");
+        ModalManager.alert("<span class=\"red\">"+I18n.currentLanguage().error_title+"</span>", I18n.currentLanguage().firmware_error_description);
       NavManager.setPage("home");
     });
   })

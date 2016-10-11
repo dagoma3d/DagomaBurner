@@ -9,7 +9,7 @@ var ModalManager = require(_root+"manager/modalManager.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
-
+var I18n = require(_root+"i18n/i18n.js");
 
 var ZoffsetPlaceTargetClass = function ZoffsetPlaceTargetClass(){
   this.content = null;
@@ -42,7 +42,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
   var that = this;
 
   that.content.hide();
-  ModalManager.showLoader("L'imprimante est en mouvement");
+  ModalManager.showLoader(I18n.currentLanguage().z_offset_print_moving);
   GCodeSender.send([
     "M851 Z-"+config.initialZOffset, //Not -4 but -10 for the new V2],
     "G28",

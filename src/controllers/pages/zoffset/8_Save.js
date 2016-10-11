@@ -8,6 +8,7 @@ var ModalManager = require(_root+"manager/modalManager.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
+var I18n = require(_root+"i18n/i18n.js");
 
 var ZoffsetSaveClass = function ZoffsetSaveClass(){
   this.content = null;
@@ -36,7 +37,7 @@ ZoffsetSaveClass.prototype.initView = function () {
 
 ZoffsetSaveClass.prototype.show = function () {
   var that = this;
-  ModalManager.showLoader("Sauvegarde du Z-offset");
+  ModalManager.showLoader(I18n.currentLanguage().z_offset_printing_saving);
   that.printer  = new GCodePrinter();
   that.content.hide();
   GCodeSender.send([
