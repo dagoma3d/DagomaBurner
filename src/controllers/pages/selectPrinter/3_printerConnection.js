@@ -59,7 +59,7 @@ PrinterConnectionClass.prototype.initView = function () {
 
 PrinterConnectionClass.prototype.deviceManagerRemoveHandler = function(device){
   this.removeDeviceList(device);
-  this.textBox.hide();
+  //this.textBox.hide();
   this.content.find("#next").hide();
 }
 
@@ -89,6 +89,7 @@ PrinterConnectionClass.prototype.show = function () {
   var that = this;
   that.selectedDevice = null;
   that.textBox = that.content.find("#comSelector p");
+  //that.textBox.hide();
 
   for (var device in DeviceManager.devices) {
     that.updateDeviceList(DeviceManager.devices[device]);

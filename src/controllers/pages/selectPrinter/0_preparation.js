@@ -5,16 +5,20 @@ var _root = __dirname + "/../../../";
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
 
-var ZoffsetPreparationClass = function ZoffsetPreparationClass(){
+var SelectPrinterPreparationClass = function SelectPrinterPreparationClass(){
   this.content = null;
 }
 
-ZoffsetPreparationClass.prototype.load = function (callback) {
+SelectPrinterPreparationClass.prototype.load = function (callback) {
   var that = this;
   if(that.content)
     return callback();
 
-  ViewLoader("firmware/1_preparation", function(content){
+  if(DeviceManager.selectedDevice && DeviceManager.selectedDevice.validate == true){
+    return NavManager.setPage(window.pageAfterDeviceSelection);
+  }
+
+  ViewLoader("selectPrinter/0_preparation", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -23,15 +27,14 @@ ZoffsetPreparationClass.prototype.load = function (callback) {
   });
 };
 
-ZoffsetPreparationClass.prototype.initView = function () {
+SelectPrinterPreparationClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
-    window.pageAfterDeviceSelection = "firmware/4_firmware";
     NavManager.setPage("selectPrinter/1_selectPrinter");
   });
 };
 
-ZoffsetPreparationClass.prototype.show = function () {
+SelectPrinterPreparationClass.prototype.show = function () {
   var that = this;
   that.count = 0;
   that.content.find("#next").hide();
@@ -40,7 +43,7 @@ ZoffsetPreparationClass.prototype.show = function () {
   });
 };
 
-ZoffsetPreparationClass.prototype.checkCheckbox = function () {
+SelectPrinterPreparationClass.prototype.checkCheckbox = function () {
   var that = this;
   that.count = 0;
   that.content.find(":checkbox").each(function(){
@@ -57,8 +60,8 @@ ZoffsetPreparationClass.prototype.checkCheckbox = function () {
   });
 };
 
-ZoffsetPreparationClass.prototype.dispose = function () {
+SelectPrinterPreparationClass.prototype.dispose = function () {
 
 };
 
-module.exports = ZoffsetPreparationClass;
+module.exports = SelectPrinterPreparationClass;

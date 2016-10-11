@@ -27,12 +27,9 @@ HomePageClass.prototype.load = function (callback) {
 HomePageClass.prototype.initView = function () {
   var that = this;
   that.content.find("#configure").on("click", function(){
-    NavManager.setPage("configuration");
-    //NavManager.setPage("zoffset/7_TestPrinting");
-  });
-
-  that.content.find("#firmware").on("click", function(){
-    NavManager.setPage("firmware/1_preparation");
+    window.pageAfterDeviceSelection = "configuration";
+    NavManager.setPage("selectPrinter/0_preparation");
+    //NavManager.setPage("configuration");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 

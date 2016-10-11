@@ -27,12 +27,17 @@ ConfigurationPageClass.prototype.load = function (callback) {
 ConfigurationPageClass.prototype.initView = function () {
   var that = this;
   that.content.find("#zoffset").on("click", function(){
-    NavManager.setPage("zoffset/1_preparation");
+    NavManager.setPage("zoffset/0_chose");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 
   that.content.find("#pid").on("click", function(){
     NavManager.setPage("pid/1_preparation");
+    //NavManager.setPage("zoffset/7_TestPrinting");
+  });
+
+  that.content.find("#firmware").on("click", function(){
+    NavManager.setPage("firmware/1_preparation");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 };

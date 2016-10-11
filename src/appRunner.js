@@ -88,7 +88,7 @@ AppRunnerClass.prototype.openWindow = function(){
 
   that.mainWindow = new BrowserWindow({
     width: 500,
-    height:  (process.platform=="win32")?460:430,
+    height:  (process.platform=="win32")?480:450,
     resizable: false, frame: false,
     //type:"dock",
     title: "Dagom'App",

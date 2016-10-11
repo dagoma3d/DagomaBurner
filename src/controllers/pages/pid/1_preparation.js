@@ -49,7 +49,7 @@ PIDPreparationClass.prototype.checkCheckbox = function () {
     }else{
       that.count--;
     }
-    if(that.count == 2){
+    if(that.count == that.content.find(":checkbox").size()){
       that.content.find("#next").show();
     }else{
       that.content.find("#next").hide();
