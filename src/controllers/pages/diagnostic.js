@@ -107,7 +107,6 @@ DiagnosticPageClass.prototype.show = function () {
 };
 
 DiagnosticPageClass.prototype.dataHandler = function(data){
-  console.log("data", data);
   var consoleDiv = this.content.find("#console")
   consoleDiv.append(data+"<br/>");
   consoleDiv[0].scrollTop = consoleDiv[0].scrollHeight;
