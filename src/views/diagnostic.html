@@ -1,72 +1,73 @@
 <div id="diagnostic" class="col s12">
-  <div id="modalZoffset" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <p>Placez une feuille entre la buse et le plateau.</p>
-      <p>Descendez la buse &agrave; l'aide des boutons ci-contre pour pincer la feuille</p>
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3">
+          <a href="#serial">Serial</a>
+        </li>
+        <li class="tab col s3">
+          <a class="active" href="#move">Move</a>
+        </li>
+      </ul>
+    </div>
+    <div id="serial">
+      <div id="console">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget ex at libero ultricies commodo viverra eu libero. Proin ullamcorper et eros pretium vehicula. In lacinia pulvinar sapien, sed bibendum augue accumsan quis. Suspendisse potenti. Etiam in dictum elit. Nulla vitae mollis lorem. Etiam tincidunt ornare velit ac elementum. Morbi tempus nulla non risus placerat sollicitudin. Praesent elementum porttitor vulputate. Quisque leo nibh, tincidunt sit amet cursus a, blandit non purus.
+
+Phasellus ac blandit quam, at fringilla diam. Proin at erat scelerisque, molestie risus at, bibendum lectus. Mauris imperdiet massa id pellentesque consequat. Curabitur lacinia vitae orci venenatis mollis. Vivamus vulputate blandit ipsum et fermentum. Nunc ac dictum nisi. Sed scelerisque massa nisi, eu vulputate nibh auctor ac.
+
+Ut sit amet leo purus. Integer aliquam nisi tortor, nec pulvinar nunc cursus egestas. Donec feugiat nec nisl vel mollis. Cras elementum iaculis enim et euismod. Maecenas a nibh pellentesque, laoreet elit bibendum, condimentum nisi. Nam nec dolor tincidunt, aliquam risus ut, porta arcu. Donec a ipsum eu sapien tempor vulputate a sed leo. Pellentesque sit amet libero elit. Aenean sodales ultricies dui, et iaculis ante convallis quis. Integer semper ex quis risus rhoncus ultricies. Mauris accumsan pharetra consequat. Vivamus purus lectus, semper sit amet nulla sit amet, ullamcorper lobortis neque. Aenean rutrum condimentum metus, non lacinia leo sagittis ut.
+
+Aenean eget bibendum felis. Aliquam a sollicitudin ipsum. Donec non sem turpis. Etiam vulputate sem id dignissim commodo. Vestibulum tincidunt accumsan tristique. Sed mollis lacus eu rutrum luctus. Ut ligula metus, consequat dignissim mi quis, rhoncus semper enim. Cras ullamcorper sed urna sed lobortis. Integer a congue arcu, et efficitur felis. Praesent justo quam, ornare eu orci at, sagittis consectetur leo. Cras bibendum, arcu non pulvinar efficitur, ipsum ante feugiat velit, at eleifend metus urna eu arcu. Quisque non velit non sem luctus commodo a eget quam. Nullam mattis tortor eu lectus elementum, vel fermentum purus tincidunt.
+
+Sed ut finibus mauris. Suspendisse consequat commodo viverra. Maecenas ornare turpis ac bibendum placerat. Nam tellus nulla, bibendum ut neque non, dictum faucibus ex. Vestibulum sit amet faucibus purus. Fusce id suscipit dui, ut ornare neque. Maecenas libero enim, pulvinar sed congue nec, tincidunt nec massa. Fusce vitae diam vel neque viverra venenatis. Sed et lacus quam. Pellentesque dolor massa, scelerisque hendrerit neque eget, lacinia lobortis dolor. Quisque leo massa, commodo nec consequat varius, mattis ultricies enim.
+      </div>
+      <form class="col s12" action="#">
+        <div class="row">
+          <input type="submit" value="Send" class="btn right col s2">
+          <div class="col s10">
+            <input placeholder="Gcode" id="gcode" type="text">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div id="move">
       <table class="position">
         <tr class="row">
-          <td><a id="zp01" class="btn"><i class="material-icons">expand_less</i></a></td>
-          <td><a id="zp1" class="btn"><i class="material-icons">expand_less</i></a></td>
-          <td><a id="zp10" class="btn"><i class="material-icons">expand_less</i></a></td>
+          <td></td>
+          <td>X/Y</td>
+          <td></td>
+          <td class="colZ">Z</td>
         </tr>
         <tr class="row">
-          <td>0,1mm</td>
-          <td>1mm</td>
-          <td>10mm</td>
+          <td></td>
+          <td><a id="yp" class="btn btnPosition"><i class="material-icons">expand_less</i></a></td>
+          <td></td>
+          <td><a id="zp" class="btn btnPosition colZ"><i class="material-icons">expand_less</i></a></td>
         </tr>
         <tr class="row">
-          <td><a id="zm01" class="btn"><i class="material-icons">expand_more</i></a></td>
-          <td><a id="zm1" class="btn"><i class="material-icons">expand_more</i></a></td>
-          <td><a id="zm10" class="btn"><i class="material-icons">expand_more</i></a></td>
+          <td><a id="xm" class="btn btnPosition"><i class="material-icons">chevron_left</i></a></td>
+          <td><a id="home" class="btn"><i class="material-icons">home</i></a></td>
+          <td><a id="xp" class="btn btnPosition"><i class="material-icons">chevron_right</i></a></td>
+          <td><a id="home" class="btn colZ"><i class="material-icons">home</i></a></td>
+        </tr>
+        <tr class="row">
+          <td></td>
+          <td><a id="ym" class="btn btnPosition"><i class="material-icons">expand_more</i></a></td>
+          <td></td>
+          <td><a id="zm" class="btn colZ btnPosition"><i class="material-icons">expand_more</i></a></td>
+        </tr>
+        <tr class="row">
+          <td colspan="4">
+            <div class="speedControl">
+                <a id="s01" class="btnRadio">0.1</a>
+                <a id="s1" class="btnRadio selected">1</a>
+                <a id="s10" class="btnRadio">10</a>
+                <a id="s100" class="btnRadio">100</a>
+            </div>
+          </td>
         </tr>
       </table>
     </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">La feuille est pinc&eacute;e</a>
-    </div>
   </div>
-  <table class="position">
-    <tr class="row">
-      <td></td>
-      <td>X/Y</td>
-      <td></td>
-      <td class="colZ">Z</td>
-    </tr>
-    <tr class="row">
-      <td></td>
-      <td><a id="yp" class="btn btnPosition"><i class="material-icons">expand_less</i></a></td>
-      <td></td>
-      <td><a id="zp" class="btn btnPosition colZ"><i class="material-icons">expand_less</i></a></td>
-    </tr>
-    <tr class="row">
-      <td><a id="xm" class="btn btnPosition"><i class="material-icons">chevron_left</i></a></td>
-      <td><a id="home" class="btn"><i class="material-icons">home</i></a></td>
-      <td><a id="xp" class="btn btnPosition"><i class="material-icons">chevron_right</i></a></td>
-      <td><a id="home" class="btn colZ"><i class="material-icons">home</i></a></td>
-    </tr>
-    <tr class="row">
-      <td></td>
-      <td><a id="ym" class="btn btnPosition"><i class="material-icons">expand_more</i></a></td>
-      <td></td>
-      <td><a id="zm" class="btn colZ btnPosition"><i class="material-icons">expand_more</i></a></td>
-    </tr>
-    <tr class="row">
-      <td colspan="4">
-        <div class="speedControl">
-            <a id="s01" class="btnRadio">0.1</a>
-            <a id="s1" class="btnRadio selected">1</a>
-            <a id="s10" class="btnRadio">10</a>
-            <a id="s100" class="btnRadio">100</a>
-        </div>
-      </td>
-    </tr>
-  </table>
-  <p>
-    <a id="zoffset" class="btn">Z-Offset</a>
-    <a id="spirale" class="btn">Spirale</a>
-    <a id="monter" class="btn">Monter</a>
-    <a id="descendre" class="btn">Descendre</a>
-    <a id="stop" class="btn">Stop</a>
-    <a id="pastille" class="btn">Pastille</a>
-  </p>
 </div>

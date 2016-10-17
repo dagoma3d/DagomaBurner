@@ -22,6 +22,9 @@ HomePageClass.prototype.load = function (callback) {
       callback();
     }
   });
+
+  this.keyDownListener = this.keydownHandler.bind(this);
+
 };
 
 HomePageClass.prototype.initView = function () {
@@ -37,14 +40,28 @@ HomePageClass.prototype.initView = function () {
     NavManager.setPage("dagoExperts");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
+
+  that.keys = [];
+  $(document).on("keydown", this.keyDownListener);
 };
+
+HomePageClass.prototype.keydownHandler = function (e) {
+  var that = this;
+  that.keys.push( e.which );
+  that.keys = that.keys.slice( -10 );
+  if (that.keys.join('') == '38384040373937396665') {
+    window.pageAfterDeviceSelection = "diagnostic";
+    //NavManager.setPage("diagnostic");
+    NavManager.setPage("selectPrinter/0_preparation");
+  }
+}
 
 HomePageClass.prototype.show = function () {
 
 };
 
 HomePageClass.prototype.dispose = function () {
-
+  $(document).off("keydown", this.keyDownListener);
 };
 
 module.exports = HomePageClass;

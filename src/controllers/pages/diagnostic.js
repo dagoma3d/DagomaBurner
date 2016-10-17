@@ -12,6 +12,8 @@ var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
 
 var DiagnosticPageClass = function DiagnosticPageClass(){
   this.content = null;
+
+  this.dataListener = this.dataHandler.bind(this);
 }
 
 DiagnosticPageClass.prototype.load = function (callback) {
@@ -34,6 +36,17 @@ DiagnosticPageClass.prototype.initView = function () {
 
 DiagnosticPageClass.prototype.show = function () {
   var that = this;
+
+  $('ul.tabs').tabs();
+
+  that.content.find("form").submit(function(e){
+    GCodeSender.send([that.content.find("#gcode").val()], false);
+    that.content.find("#gcode").val("");
+  })
+
+  $("#navbar").css("background-color", "#f44336");
+  $("#navbar h1").text("Dagom'App Expert Mode");
+  that.content.find("#console").empty();
 
   that.needToGoUp = true;
 
@@ -90,220 +103,21 @@ DiagnosticPageClass.prototype.show = function () {
     GCodeSender.send(["G91", gcode], false);
   });
 
-  $("#diagnostic #spirale").click(function(){
-      that.needToStop = false;
+  DeviceManager.getSelectedDevice().on("receive", this.dataListener);
+};
 
-      GCodeSender.send([
-        "G28 X Y",
-        "M106 S160",
-        "M109 S180",
-        "M104 S215",
-        "G28",
-      ],
-      true,
-      function(){
-        GCodeSender.send([
-          "M114",
-        ],
-        true,
-        function(response){
-
-          var regex = /X:(\d+.\d+) Y:(\d+.\d+) Z:(\d+.\d+)/.exec(response);
-          var centerx = parseFloat(regex[1]);
-          var centery = parseFloat(regex[2]);
-          var zOffset = -parseFloat(regex[3]);
-          var initialZ = 0.26;
-          console.log("ok", regex, centerx, centery, zOffset);
-          that.z = initialZ;
-
-          GCodeSender.send([
-            "G29; Detailed Z-Probe",
-            "G90; Set to absolute positioning if not",
-            "G1 X100 Y200 Z5 F3000",
-            "G1 Z0",
-            "M82 ;set extruder to absolute mode",
-            "G92 E0 ;zero the extruded length",
-            "G1 F200 E3 ;extrude 10mm of feed stock",
-            "G92 E0 ;zero the extruded length again",
-            "G1 F60",
-            "G1 Y190",
-            "G90",
-            "G0 X"+centerx+" Y"+centery+" F3000",
-            "G0 Z"+initialZ
-          ],
-          true,
-          function(){
-            var it = 0;
-
-            var dist = 1; //5; // distance entre chaque point
-            var sep = 2; //2; //separation entre les lignes
-            var r = dist;
-            var b = sep / (2 * Math.PI);
-            var phi = r / b;
-            var x,y;
-            var volume = dist * 0.2 * 0.8;// (à ajuster)
-            var e = volume/(Math.pow(1.75/2, 2)*Math.PI);
-
-            function finishPrint(){
-              zOffset = zOffset + that.z - initialZ;
-              zOffset = zOffset.toFixed( 2 );
-              console.log("zOffset", zOffset);
-
-              GCodeSender.send([
-                "M104 S0     ;extruder heater off",
-                "M106 S255     ;start fan full power",
-                "M140 S0      ;heated bed heater off (if you have it)",
-                "G91        ;relative positioning",
-                "G1 E-1 F300  ;retract the filament a bit before lifting the nozzle, to release some of the pressure",
-                "G1 Z+3 E-2 F60  ;move Z up a bit and retract filament even more",
-                "G28 X0 Y0  ;move X/Y to min endstops, so the head is out of the way;",
-                "M84      ;shut down motors",
-                "M851 Z"+zOffset,
-                "M500",
-              ],
-              true,
-              function(){
-                alert("Z-offset : "+zOffset);
-              });
-            }
-
-            function doIteration(){
-              it++;
-              if(that.needToStop){
-                return finishPrint();
-              }
-              phi += dist / r;
-              r = b * phi;
-              x = r * Math.cos(phi) + centerx;
-              y = r * Math.sin(phi) + centery;
-              var gcode = "G0 Z"+that.z+" X"+x+" Y"+y+" E"+(e*it)+" F1000"
-
-              GCodeSender.send([gcode],
-                false,
-                function(){
-                  doIteration();
-                });
-            }
-            doIteration();
-          });
-        });
-      });
-  });
-
-  $("#diagnostic #pastille").click(function(){
-    GCodeParser(_root+"/pastille.g", function(datas){
-      that.printer  = new GCodePrinter();
-      that.printer.print(datas, true, false, 50, 50, 0, 0.5, function(){
-        that.printer.print(datas, false, false, 70, 50, 0, 0.5, function(){
-          that.printer.print(datas, false, false, 90, 50, 0, 0.5, function(){
-            that.printer.print(datas, false, false, 110, 50, 0, 0.5, function(){
-              that.printer.print(datas, false, false, 130, 50, 0, 0.5, function(){
-                that.printer.print(datas, false, false, 130, 70, 0, 0.5, function(){
-                  that.printer.print(datas, false, false, 110, 70, 0, 0.5, function(){
-                    that.printer.print(datas, false, false, 90, 70, 0, 0.5, function(){
-                      that.printer.print(datas, false, false, 70, 70, 0, 0.5, function(){
-                        that.printer.print(datas, false, false, 50, 70, 0, 0.5, function(){
-                          that.printer.print(datas, false, false, 50, 90, 0, 0.5, function(){
-                            that.printer.print(datas, false, true, 70, 90, 0, 0.5, function(){
-
-                            });
-                          });
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
-
-  $("#diagnostic #monter").click(function(){
-      that.z += 0.1;
-      if(that.printer)
-        that.printer.insert(["G91", "G0 Z0.1", "G90"]);
-  });
-  $("#diagnostic #descendre").click(function(){
-      that.z -= 0.1;
-      if(that.printer)
-        that.printer.insert(["G91", "G0 Z-0.1", "G90"]);
-  });
-  $("#diagnostic #stop").click(function(){
-      that.needToStop = true;
-      if(that.printer){
-        that.printer.stop(function(){
-          GCodeSender.send([
-            "M114",
-            "M503",
-            "G90",
-            "G90",
-          ],
-          true,
-          function(response){
-            var regex = /X:(\d+.\d+) Y:(\d+.\d+) Z:(\d+.\d+)/.exec(response);
-            var currentZ = -parseFloat(regex[3]);
-            var regex = /M851 Z(-?\d+.\d+)/.exec(response);
-            var currentZOffset = parseFloat(regex[1]);
-            console.log(regex);
-            var newZOffset = currentZOffset - 0.26 - currentZ;
-
-            console.log("response M114 M503", "currentZ", currentZ, "currentZOffset", currentZOffset, "newZOffset", newZOffset);
-
-            GCodeSender.send([
-              "M851 Z"+newZOffset,
-              "M500"
-            ],
-            true,
-            function(){
-              that.printer.finishPrint(function(){
-                alert("z-offset réglé à : "+newZOffset );
-              });
-            })
-          });
-        });
-      }
-  });
-
-  $("#diagnostic #zoffset").click(function(){
-      GCodeSender.send([
-        "M851 Z-7", //Not -4 but -7 for the new V2
-        "G28",
-        "G91",
-        "G0 Z5"
-      ],
-      true,
-      function(){
-        $('#modalZoffset').openModal({
-          dismissible:false,
-          complete: function(){
-            GCodeSender.send(["M114"], true, function(response){
-              var zoffset = +(response.split("Z:")[1].split(" ")[0]);
-              console.log(zoffset);
-              zoffset = -4+zoffset;
-              zoffset = zoffset.toFixed( 2 );
-              GCodeSender.send([
-                "M851 Z"+zoffset,
-                "M500",
-                "G28",
-                "G90",
-                "G0 Z0", //origine auto : besoin pour que le z soit pris en compte
-              ],
-              true,
-              function(){
-                alert("z-offset réglé à : "+zoffset );
-              })
-            })
-          }
-        });
-      })
-  });
+DiagnosticPageClass.prototype.dataHandler = function(data){
+  console.log("data", data);
+  var consoleDiv = this.content.find("#console")
+  consoleDiv.append(data+"<br/>");
+  consoleDiv[0].scrollTop = consoleDiv[0].scrollHeight;
 };
 
 DiagnosticPageClass.prototype.dispose = function () {
-
+  if(DeviceManager.getSelectedDevice())
+    DeviceManager.getSelectedDevice().removeListener("receive", this.dataListener);
+  $("#navbar").css("background-color", "#e19531");
+  $("#navbar h1").text("Dagom'App");
 };
 
 module.exports = DiagnosticPageClass;

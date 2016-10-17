@@ -27,6 +27,8 @@ SelectPrinterClass.prototype.load = function (callback) {
       callback();
     }
   });
+
+
 };
 
 SelectPrinterClass.prototype.initView = function () {
@@ -54,8 +56,8 @@ SelectPrinterClass.prototype.show = function () {
 
 };
 
-SelectPrinterClass.prototype.dispose = function () {
 
+SelectPrinterClass.prototype.dispose = function () {
 };
 
 module.exports = SelectPrinterClass;

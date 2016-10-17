@@ -416,7 +416,7 @@ html.update{
 
     .zoffset select{
       display: inline-block;
-      width: 170px;}
+      width: 360px;}
 
 #zoffsetChose {
   margin: 110px 30px 0px 20px;}
@@ -704,13 +704,15 @@ iframe{
 
 
 #diagnostic{
-  margin-top:40px;
-}
+  margin-top: -20px;
+  margin-left: -10px;}
 
-#diagnostic a{
+#diagnostic .tabs{
+  margin-bottom: 10px}
+
+#diagnostic #move a{
   margin:5px;
-  background-color: #4d5254;
-}
+  background-color: #4d5254;}
 
 #diagnostic .modal-action{
   background-color: #ff8242;}
@@ -718,14 +720,35 @@ iframe{
 #diagnostic .modal-content{
   overflow-y: hidden;}
 
-#diagnostic table{
-  margin-left: 20px;
+#diagnostic #move table{
+  margin-left: 100px;
   width: 210px;
-  float: left;
-  margin-right: 16px;
-  border-right: 1px solid #CCC;}
+  margin-top: 50px;
+  float: left;}
 
+#diagnostic #serial{
+  position: relative;
+  top: 60px;
+  border: 1px solid #CCC;
+  margin-right: 10px;
+  height: 320px;}
 
+  #diagnostic #serial #console{
+    height: 266px;
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 8px;
+    height: 270px;
+    overflow: scroll;
+    padding: 10px;
+    width: 100%;
+    position: relative;
+    bottom: 57px;}
+
+  #diagnostic form{
+    position: relative;
+    bottom: 62px;}
+
+/*
   #diagnostic .modal-content table{
     margin-left: 80px;
     margin-top: 20px;
@@ -734,27 +757,27 @@ iframe{
   #diagnostic .modal-content table td{
     width: 70px!important;
     padding-bottom: 5px!important;}
-
-  #diagnostic table.position td{
+*/
+  #diagnostic #move table.position td{
     text-align: center;
     margin: 0px;
     border: 0px;
     padding: 0px;
     width: 42px;}
 
-    #diagnostic table.position td a{
+    #diagnostic #move table.position td a{
       width: 40px;
       text-align: center;
       padding: 0px;
       margin: 1px;}
 
-    #diagnostic table.position td.colZ{
+    #diagnostic #move table.position td.colZ{
       padding-left: 20px;}
 
-    #diagnostic table.position a.colZ{
+    #diagnostic #move table.position a.colZ{
       margin-left: 20px;}
 
-    #diagnostic table.position .speedControl{
+    #diagnostic #move table.position .speedControl{
       margin-top: 20px;
       width: 100%;
       background-color: #4d5254;
@@ -764,7 +787,7 @@ iframe{
       color: white;
       border-radius: 2px;}
 
-      #diagnostic table.position .speedControl a{
+      #diagnostic #move table.position .speedControl a{
         display: block;
         background: transparent;
         margin: 0px;
@@ -775,16 +798,16 @@ iframe{
         color: white;
         border-left: 1px solid white;}
 
-      #diagnostic table.position .speedControl a:first-child{
+      #diagnostic #move table.position .speedControl a:first-child{
         border-left: 0px;}
 
-      #diagnostic table.position .speedControl a.selected{
+      #diagnostic #move table.position .speedControl a.selected{
         box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
         background-color: #ff8242;
         border-radius:2px;
         }
 
-      #diagnostic #stopMotors{
+      #diagnostic #move #stopMotors{
         background-color: red;
         width: 100%;
         margin: 10px 0px;}
@@ -811,7 +834,9 @@ iframe{
 
       #dagoExperts footer a{
         margin-bottom: 2px;
-      }
+        width: 260px;
+        padding: 0px;}
+
       #dagoExperts footer  p {
         margin: 6px 0px;}
 

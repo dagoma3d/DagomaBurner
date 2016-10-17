@@ -22,6 +22,8 @@ ConfigurationPageClass.prototype.load = function (callback) {
       callback();
     }
   });
+
+  this.keyDownListener = this.keydownHandler.bind(this);
 };
 
 ConfigurationPageClass.prototype.initView = function () {
@@ -48,10 +50,22 @@ ConfigurationPageClass.prototype.show = function () {
   that.content.find('.collapsible').collapsible({
     accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
   });
+
+  that.keys = [];
+  $(document).on("keydown", this.keyDownListener);
 };
 
-ConfigurationPageClass.prototype.dispose = function () {
+ConfigurationPageClass.prototype.keydownHandler = function (e) {
+  var that = this;
+  that.keys.push( e.which );
+  that.keys = that.keys.slice( -10 );
+  if (that.keys.join('') == '38384040373937396665') {
+    NavManager.setPage("diagnostic");
+  }
+}
 
+ConfigurationPageClass.prototype.dispose = function () {
+  $(document).off("keydown", this.keyDownListener);
 };
 
 module.exports = ConfigurationPageClass;

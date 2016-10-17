@@ -12,6 +12,7 @@ var PrinterConnectionClass = function PrinterConnectionClass(){
   this.deviceManagerAddListener = this.deviceManagerAddHandler.bind(this);
   this.deviceManagerOpenListener = this.deviceManagerOpenHandler.bind(this);
   this.deviceManagerRemoveListener = this.deviceManagerRemoveHandler.bind(this);
+  this.keyDownListener = this.keydownHandler.bind(this);
 
 }
 
@@ -27,6 +28,8 @@ PrinterConnectionClass.prototype.load = function (callback) {
       callback();
     }
   });
+
+
 };
 
 PrinterConnectionClass.prototype.initView = function () {
@@ -96,6 +99,9 @@ PrinterConnectionClass.prototype.show = function () {
   }
 
   that.content.find("#next").hide();
+
+  that.keys = [];
+  $(document).on("keydown", this.keyDownListener);
 };
 
 PrinterConnectionClass.prototype.openDevice = function () {
@@ -156,10 +162,20 @@ PrinterConnectionClass.prototype.removeDeviceList = function(device){
 }
 
 
+PrinterConnectionClass.prototype.keydownHandler = function (e) {
+  var that = this;
+  that.keys.push( e.which );
+  that.keys = that.keys.slice( -10 );
+  if (that.keys.join('') == '38384040373937396665') {
+    that.content.find('select#com').show();
+  }
+}
+
 PrinterConnectionClass.prototype.dispose = function () {
   DeviceManager.removeListener("add", this.deviceManagerAddListener);
   DeviceManager.removeListener("open", this.deviceManagerOpenListener);
   DeviceManager.removeListener("remove", this.deviceManagerRemoveListener);
+  $(document).off("keydown", this.keyDownListener);
 };
 
 module.exports = PrinterConnectionClass;
