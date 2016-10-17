@@ -40,6 +40,8 @@ DiagnosticPageClass.prototype.show = function () {
   $('ul.tabs').tabs();
 
   that.content.find("form").submit(function(e){
+    e.preventDefault();
+
     GCodeSender.send([that.content.find("#gcode").val()], false);
     that.content.find("#gcode").val("");
   })
