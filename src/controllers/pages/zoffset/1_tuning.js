@@ -44,7 +44,7 @@ ZoffsetTuningClass.prototype.show = function () {
     false,
     function(response){
       console.log("response", response);
-      var regex = /Z Offset : (-?\d+.\d+)/.exec(response);
+      var regex = / : (-?\d+.\d+)/.exec(response);
       console.log("regex", regex);
       if(regex && regex.length>=2){
         console.log("zoffset:", regex[1]);
