@@ -52,12 +52,6 @@ DiagnosticPageClass.prototype.show = function () {
 
   that.needToGoUp = true;
 
-  DeviceManager.on("printerFound", function(device){
-    GCodeSender.send(["M105"], false, function(response){
-      console.log("M105", response);
-    });
-  })
-
   $('.modal-trigger').leanModal();
 
   GCodeSender.addButtonGCode("#home", ["G28"], true);
@@ -70,6 +64,11 @@ DiagnosticPageClass.prototype.show = function () {
   GCodeSender.addButtonGCode("#zm10", ["G91", "G0 Z-10"], false);
   GCodeSender.addButtonGCode("#stopMotors", ["M18"], false);
 
+  GCodeSender.addButtonGCode("#off", ["M104 S0"], false);
+
+  $("#diagnostic #set").click(function(){
+    GCodeSender.send(["M104 S"+$("#diagnostic #temperature").val()], false);
+  });
 
   $("#diagnostic .speedControl a").click(function(){
     $("#diagnostic .speedControl a").removeClass("selected");
@@ -106,6 +105,72 @@ DiagnosticPageClass.prototype.show = function () {
   });
 
   DeviceManager.getSelectedDevice().on("receive", this.dataListener);
+
+  this.setupGraph();
+  this.getTemperature();
+};
+
+DiagnosticPageClass.prototype.getTemperature = function () {
+  var that = this;
+  GCodeSender.send(["M105"], false, function(response){
+
+    var regex = /T:(\d+\.\d) \/(\d+\.\d)/.exec(response);
+    console.log("regex", regex);
+    if(regex && regex.length>=3){
+      console.log("M105", response);
+      that.currentLine.x.push(++that.currentIndex);
+      that.currentLine.y.push(parseFloat(regex[1]));
+      that.targetLine.x.push(that.currentIndex);
+      that.targetLine.y.push(parseFloat(regex[2]));
+
+      if(that.currentIndex > 30){
+        that.currentLine.x.shift();
+        that.currentLine.y.shift();
+        that.targetLine.x.shift();
+        that.targetLine.y.shift();
+      }
+
+      that.updateGraph();
+    }
+
+
+    setTimeout(function(){
+      that.getTemperature();
+    }, 1000);
+  });
+}
+
+DiagnosticPageClass.prototype.setupGraph = function () {
+  this.currentIndex = 1;
+  this.currentLine = {
+    x: [1],
+    y: [0],
+    type: 'scatter',
+    line: {
+      dash: 'solid',
+      color: 'blue',
+      width: 2
+    }
+  };
+
+  this.targetLine = {
+    x: [1],
+    y: [0],
+    mode: 'lines',
+    name: 'target',
+    line: {
+      dash: 'dot',
+      color: 'black',
+      width: 2
+    }
+  };
+
+  this.updateGraph();
+};
+
+DiagnosticPageClass.prototype.updateGraph = function () {
+  var data = [this.currentLine, this.targetLine];
+  Plotly.newPlot('graph', data, {margin: {t:0, b:0, l:40, r:0}, showlegend:false}, {displayModeBar:false});
 };
 
 DiagnosticPageClass.prototype.dataHandler = function(data){

@@ -721,9 +721,9 @@ iframe{
   overflow-y: hidden;}
 
 #diagnostic #move table{
-  margin-left: 100px;
+  margin-left: 20px;
   width: 210px;
-  margin-top: 50px;
+  margin-top: 10px;
   float: left;}
 
 #diagnostic #serial{
@@ -747,6 +747,21 @@ iframe{
   #diagnostic form{
     position: relative;
     bottom: 62px;}
+
+  #diagnostic #graph{
+    width: 190px;
+    height: 320px;
+    position: absolute;
+    right: 10px;
+    top: 110px;}
+
+  #diagnostic #move input{
+    display: inline-block;
+    width: 95px;}
+
+  #diagnostic #move p{
+    margin-top: 20px;
+    margin-bottom: 0px;}
 
 /*
   #diagnostic .modal-content table{

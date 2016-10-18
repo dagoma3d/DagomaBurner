@@ -18,8 +18,8 @@ ZoffsetSaveClass.prototype.load = function (callback) {
   var that = this;
   if(that.content)
     return callback();
-
   ViewLoader("zoffset/8_Save", function(content){
+
     that.content = $(content);
     that.initView();
     if(callback){
