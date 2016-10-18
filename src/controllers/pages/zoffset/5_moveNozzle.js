@@ -32,23 +32,28 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
   var that = this;
   that.content.find("#next").on("click", function(){
     GCodeSender.send(["M114"], false, function(response){
+      window.currentZPosition = 0;
       var zoffset;
       if(response){
         zoffset = +(response.split("Z:")[1].split(" ")[0]);
-        //console.log("zoffset response", 1, zoffset);
+        /*//console.log("zoffset response", 1, zoffset);
         zoffset = -(config.initialZOffset)+zoffset;
-        //console.log("zoffset response", 2, zoffset);
-        zoffset -= 0.4;
-        //console.log("zoffset response", 3, zoffset);
+        *///console.log("zoffset response", 2, zoffset);
+        zoffset -= 0.4; //remove thickness of the Card
+        /*//console.log("zoffset response", 3, zoffset);
+        zoffset -= 20;
         zoffset = zoffset.toFixed( 2 );
         //console.log("zoffset response", 4, zoffset);
+        */
+        window.currentZPosition = zoffset;
+        console.log("window.currentZPosition", window.currentZPosition);
       }
 
       GCodeSender.send([
-        "G91;",
+        "G91",
         "G0 F3600.000000 Z10",
-        "M851 Z"+zoffset,
-        "M500"],
+        /*"M851 Z"+zoffset,
+        "M500"*/],
         false,
         function(){
           //alert("z-offset réglé à : "+zoffset );

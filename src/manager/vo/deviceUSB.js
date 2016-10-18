@@ -227,6 +227,7 @@ DeviceClassUSB.prototype.parseSerialData = function(data){
 DeviceClassUSB.prototype.send = function (data){
   if(this.serial != null){
     this.serial.write(data);//+"\r\n");
+    console.log("write", data);
   }
 }
 

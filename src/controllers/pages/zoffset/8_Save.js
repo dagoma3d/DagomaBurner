@@ -42,24 +42,26 @@ ZoffsetSaveClass.prototype.show = function () {
   that.content.hide();
   GCodeSender.send([
     "M114",
-    "M503",
     "G90",
     "G90"],
     false,
     function(response){
       console.log("response", response);
+
+
       var currentZ, currentZOffset;
       var regex = /X:(\d+.\d+) Y:(\d+.\d+) Z:(-?\d+.\d+)/.exec(response);
       console.log("regex", regex);
       if(regex && regex.length>=3)
         currentZ = -parseFloat(regex[3]);
-      var regex = /M851 Z(-?\d+.\d+)/.exec(response);
+      /*var regex = /M851 Z(-?\d+.\d+)/.exec(response);
       if(regex && regex.length>1)
         currentZOffset = parseFloat(regex[1]);
-      console.log(regex);
-      var newZOffset = currentZOffset - 0.26 - currentZ;
+      console.log(regex);*/
+      var newZOffset = -10 - 0.26 - currentZ;
+      newZOffset = newZOffset.toFixed(2);
 
-      console.log("response M114 M503", "currentZ", currentZ, "currentZOffset", currentZOffset, "newZOffset", newZOffset);
+      console.log("response M114 M503", "currentZ", currentZ, "newZOffset", newZOffset);
 
       GCodeSender.send([
         "M851 Z"+newZOffset,
@@ -70,7 +72,7 @@ ZoffsetSaveClass.prototype.show = function () {
         that.printer.finishPrint(function(){
           ModalManager.hideLoader();
           that.content.show();
-          that.content.find("#zOffsetValue").text(newZOffset.toFixed(2));
+          that.content.find("#zOffsetValue").text(newZOffset);
         });
       })
     });

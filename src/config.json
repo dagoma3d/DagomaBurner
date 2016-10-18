@@ -18,7 +18,6 @@
       }
     }
   },
-  "initialZOffset":20,
   "updateUrl":"THE_UPDATE_URL",
   "build-date":"THE_BUILD_DATE"
 }

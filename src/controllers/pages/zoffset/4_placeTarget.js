@@ -42,9 +42,10 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
   var that = this;
 
   that.content.hide();
+
   ModalManager.showLoader(I18n.currentLanguage().z_offset_print_moving);
   GCodeSender.send([
-    "M851 Z-"+config.initialZOffset, //Not -4 but -10 for the new V2],
+    "M851 Z-10",//config.initialZOffset //Not -4 but -10 for the new V2],
     "G28",
     "G91",
     "G0 Z5"],

@@ -49,7 +49,6 @@ GCodeSenderClass.prototype.sendRecursiveAndWaitSpecial = function (gCodes, waitC
     return callback(result);
   }
   var gCode = gCodes.shift();
-  console.log("sendGCode", gCode);
   that.sendGcodeAndWaitSpecial(gCode, waitCode, function(response){
     that.sendRecursiveAndWaitSpecial(gCodes, waitCode, callback, result+response);
   });
@@ -65,12 +64,20 @@ GCodeSenderClass.prototype.sendGcodeAndWaitSpecial = function (gCode, waitCode, 
   DeviceManager.getSelectedDevice().send(gCode+"\r\n");
   that.waitForSpecial(waitCode, function(response){
     callback(response);
+  }, function(){
+    console.error("\"Unknown command\" received, retry it");
+    DeviceManager.getSelectedDevice().send(gCode+"\r\n");
+    that.waitForSpecial(waitCode, function(response){
+      callback(response);
+    }, function(){
+      callback(response);
+    });
   });
 };
 
 
 
-GCodeSenderClass.prototype.waitForSpecial = function (waitCode, callback) {
+GCodeSenderClass.prototype.waitForSpecial = function (waitCode, callback, callbackUnknown) {
   var that = this;
   var _data = "";
 
@@ -83,7 +90,12 @@ GCodeSenderClass.prototype.waitForSpecial = function (waitCode, callback) {
   var dataHandler = function(data){
     _data += data;
 
-    if(data.toLowerCase().indexOf(waitCode.toLowerCase()) >= 0){
+    if(data.toLowerCase().indexOf("unknown command:") >= 0){
+      if(callbackUnknown){
+        return callbackUnknown(_data);
+      }
+    }
+    else if(data.toLowerCase().indexOf(waitCode.toLowerCase()) >= 0){
       DeviceManager.getSelectedDevice().removeListener("receive", dataHandler);
       if(callback){
         return callback(_data);

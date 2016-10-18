@@ -104,7 +104,7 @@ ZoffsetTestPrintingClass.prototype.show = function () {
     ModalManager.showLoader(I18n.currentLanguage().z_offset_print_heating);
     that.printer  = new GCodePrinter();
     that.printer.temperature = window.temperature;
-    that.printer.initPrint(function(){
+    that.printer.initPrintZOffset(function(){
       that.content.show();
       ModalManager.hideLoader();
       that.printRecursive();
@@ -118,7 +118,7 @@ ZoffsetTestPrintingClass.prototype.printRecursive = function () {
   var yPrint = 40+((that.numberRound-that.numberRound%6)/6)*20;
   console.log("xPrint", xPrint);
   console.log("yPrint", yPrint);
-  that.printer.print(that.roundDatas, false, false, xPrint, yPrint, 0, 0.5, function(){
+  that.printer.print(that.roundDatas, false, false, xPrint, yPrint, window.currentZPosition, 0.5, function(){
     that.printRecursive();
   });
   that.numberRound++;

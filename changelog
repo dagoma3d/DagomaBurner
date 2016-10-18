@@ -1,0 +1,6 @@
+#0.2.19
+
+  - Correction du bug de sauvegarde du Z-offset en mode expert avec une Easy200 option écran
+  - Nouvelle gestion du Z-offset pour pouvoir descendre plus bas sur certaines imprimantes
+  - Gestion des commandes mal reçues par Marlin
+  -

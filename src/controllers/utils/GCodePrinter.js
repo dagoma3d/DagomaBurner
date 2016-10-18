@@ -59,12 +59,13 @@ GCodePrinterClass.prototype.print = function (datas, printStart, printEnd, offse
         //console.log("numberDeltaXY",numberDeltaXY);
         if(distXY > that.maxDistance){
           numberDeltaXY = Math.ceil(distXY/that.maxDistance);
+          var x, y, e;
           //console.log("numberDeltaXY", numberDeltaXY);
           for(var j=1; j<numberDeltaXY; j++){
-            var x = (lastX+(j*(distX/numberDeltaXY)));
-            var y = (lastY+(j*(distY/numberDeltaXY)));
-            var e = (lastE+(j*(distE/numberDeltaXY)));
-            newDatas.push("G0 X"+x+" Y"+y+" E"+e+";D");
+            x = (lastX+(j*(distX/numberDeltaXY)));
+            y = (lastY+(j*(distY/numberDeltaXY)));
+            e = (lastE+(j*(distE/numberDeltaXY)));
+            newDatas.push("G0 X"+x.toFixed(3)+" Y"+y.toFixed(3)+" E"+e.toFixed(3)+";DA");
           }
         }
       }
@@ -148,13 +149,13 @@ GCodePrinterClass.prototype.addOffset = function (gCode) {
   var that = this;
 
   function addXOffset(match, p1, offset, string){
-    return "X"+(parseFloat(p1)+that.offsetX);
+    return "X"+(parseFloat(p1)+that.offsetX).toFixed(3);
   }
   function addYOffset(match, p1, offset, string){
-    return "Y"+(parseFloat(p1)+that.offsetY);
+    return "Y"+(parseFloat(p1)+that.offsetY).toFixed(3);
   }
   function addZOffset(match, p1, offset, string){
-    return "Z"+(parseFloat(p1)+that.offsetZ);
+    return "Z"+(parseFloat(p1)+that.offsetZ).toFixed(3);
   }
   gCode = gCode.replace(/X(\d+.\d+)/, addXOffset);
   gCode = gCode.replace(/Y(\d+.\d+)/, addYOffset);
@@ -260,6 +261,96 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
     break;
   }
 };
+
+GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
+  if(!this.printStart){
+    return callback();
+  }
+
+  switch(window.printer.type){
+    case "E350":
+      GCodeSender.send([
+        "M117 Initialisation",//
+        "G21",//;metric values
+        "G91",//; Passage coordonnees relatives
+        "G1 Z"+(window.currentZPosition + 10)+" F9000",//  ; lift nozzle
+        "G28 X",//; Home X
+        //; Prechauffage des buses
+        "M117 Prechauffage",// Message sur afficheur
+        "M140 S60",// target plateau temperature
+        "M109 S180",// Set nozzle to 180
+        "M104 S"+this.temperature,//target buse temperature
+        "M190 S60",//target plateau temperature
+        //; Homing
+        "M117 Origine Machine",// Message sur afficheur
+        "G28",// Home X Y Z
+        "G90",// Passage coordonnees absolues
+        //;Parallelisme Axe X
+        "M117 Parallelisme X",// Message sur afficheur
+        "G1 Z"+(window.currentZPosition + 5)+" F9000",// lift nozzle
+        "G28 X Y",//
+        "G92 Z20",//
+        "G91",// Passage coordonnees relatives
+        "G1 Z-18 F200",// Descente en dessous du plateau
+        "G1 Z18 F9000",//"
+        "G28",// Home
+        "G90",// Passage coordonnees absolues
+        //; Palpage
+        "M117 Palpage",// Message sur afficheur
+        "G29",// Palpage
+        "G1 Z"+(window.currentZPosition + 10)+" F9000",// lift nozzle
+        "G1 X176 Y-14 F6000",// Avance avant bed
+        //; Definition des temperature d impression
+        "M117 Chauffage",//
+        "M109 S210",// Set nozzle to print temperature
+        "M190 S60",// set plateau to print temperature
+        //; Nettoyage Buse
+        "M117 Purge Buse",// Message sur afficheur
+        "G92 E0",// reset extruder
+        "G1 F200 E10",// extrude 10 mm
+        "G92 E0",// mise a zero extrudeuse
+        "G1 F3000 E-7",// rectract 7mm
+      ],
+      false,
+      function(){
+        callback();
+      });
+    break;
+    default :
+      GCodeSender.send([
+        "G90",
+        "G28 X Y",
+        "M106 S160",
+        "M109 S180",
+        "M104 S"+this.temperature,//target buse temperature
+        //"M111 S25"
+      ],
+      false,
+      function(){
+        ModalManager.setLoaderTitle("Le palpeur vérifie que le plateau est bien droit");
+        GCodeSender.send([
+          "G28",
+          "G29; Detailed Z-Probe",
+          "G90; Set to absolute positioning if not",
+          "G1 X100 Y200 Z"+(window.currentZPosition + 5 )+" F3000",
+          "G1 Z"+window.currentZPosition,
+          "M82 ;set extruder to absolute mode",
+          "G0 F3600.000000 Z"+(window.currentZPosition + 0.260),
+          "G92 E0 ;zero the extruded length",
+          "G1 X190 E20 F1000",
+          "G92 E0 ;zero the extruded length again",
+          "G1 F60",
+          "G90",
+          "M106 S127.500000",
+        ],false,
+        function(){
+          callback();
+        });
+      });
+    break;
+  }
+};
+
 
 GCodePrinterClass.prototype.finishPrint = function (callback) {
   switch(window.printer.type){
