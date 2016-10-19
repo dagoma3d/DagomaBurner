@@ -113,11 +113,8 @@ DiagnosticPageClass.prototype.show = function () {
 DiagnosticPageClass.prototype.getTemperature = function () {
   var that = this;
   GCodeSender.send(["M105"], false, function(response){
-
     var regex = /T:(\d+\.\d) \/(\d+\.\d)/.exec(response);
-    console.log("regex", regex);
     if(regex && regex.length>=3){
-      console.log("M105", response);
       that.currentLine.x.push(++that.currentIndex);
       that.currentLine.y.push(parseFloat(regex[1]));
       that.targetLine.x.push(that.currentIndex);
@@ -134,7 +131,7 @@ DiagnosticPageClass.prototype.getTemperature = function () {
     }
 
 
-    setTimeout(function(){
+    that.timeout = setTimeout(function(){
       that.getTemperature();
     }, 1000);
   });
@@ -180,6 +177,7 @@ DiagnosticPageClass.prototype.dataHandler = function(data){
 };
 
 DiagnosticPageClass.prototype.dispose = function () {
+  clearTimeout(this.timeout);
   if(DeviceManager.getSelectedDevice())
     DeviceManager.getSelectedDevice().removeListener("receive", this.dataListener);
   $("#navbar").css("background-color", "#e19531");
