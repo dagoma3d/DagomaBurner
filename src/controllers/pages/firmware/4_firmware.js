@@ -54,7 +54,7 @@ FirmwareFirmwareClass.prototype.show = function () {
       if(success)
         ModalManager.alert(I18n.currentLanguage().firmware_success_title, I18n.currentLanguage().firmware_success_message);
       else
-        ModalManager.alert("<span class=\"red\">"+I18n.currentLanguage().firmware_error_title+"</span>", I18n.currentLanguage().firmware_error_description);
+        ModalManager.alert("<span class=\"red-text\">"+I18n.currentLanguage().firmware_error_title+"</span>", I18n.currentLanguage().firmware_error_description);
       NavManager.setPage("home");
     });
   })

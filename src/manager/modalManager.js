@@ -45,7 +45,7 @@ ModalManagerClass.prototype.alert = function (title, content) {
   var that = this;
   that.resetView();
 
-  $("#globalModal .modal-footer").hide();
+  //$("#globalModal .modal-footer").hide();
 
   $('#globalModal h4').html(title);
   $('#globalModal .content').html(content);
