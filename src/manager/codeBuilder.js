@@ -37,8 +37,9 @@ module.exports = function(device, file, type, callback){
 
   // Add timeout to mks too. In case of
   boards.byName.mega.timeout = 0x320;
-
+  console.log("ready to flash");
   setTimeout(function(){
+    console.log("flash");
     var avrgirl = new Avrgirl({
       board: type, //"melzi",//"mega",
       port: device.portName,
@@ -64,7 +65,7 @@ module.exports = function(device, file, type, callback){
             device.isBuilding = false;
             setTimeout(function(){device.open()}, 1000);
           });
-        }, 2000);
+        }, 5000);
 
       } else {
         console.log('done.');
@@ -75,5 +76,5 @@ module.exports = function(device, file, type, callback){
     });
 
   },
-  1000);
+  5000);
 };
