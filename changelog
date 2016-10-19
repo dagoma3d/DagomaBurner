@@ -1,3 +1,6 @@
+#0.2.21
+  - correction d'un bug sur les modalBox
+
 #0.2.20
   - Ajout de la courbe de température dans le mode expert et d'un formulaire de définition de température
   - Correction d'un bug visuel sur windows
