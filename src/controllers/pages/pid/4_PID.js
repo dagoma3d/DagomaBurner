@@ -48,40 +48,48 @@ PIDRunClass.prototype.show = function () {
 
   that.content.hide();
   ModalManager.showLoader(I18n.currentLanguage().pid_heating);
-  GCodeSender.sendAndWaitSpecial([
-    "M303 C8 S210 E0"],
-    "#define  DEFAULT_Kd",
+  GCodeSender.send([
+    "G28",
+    "G90",
+    "G0 Z50"],
     false,
-    function(result){
-      console.log("result PID", result);
-      try{
-        var regex, resultKp, resultKi, resultKd;
-        regex = /#define  DEFAULT_Kp (\d+\.\d+)/;
-        resultKp = +(result.match(regex)[1]);
-
-        regex = /#define  DEFAULT_Ki (\d+\.\d+)/;
-        resultKi = +(result.match(regex)[1]);
-
-        regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
-        resultKd = +(result.match(regex)[1]);
-      }catch(e){
-        ModalManager.alert(I18n.currentLanguage().pid_error_title, I18n.currentLanguage().pid_error_description);
-        ModalManager.hideLoader();
-      }
-
-      console.log("PID Result : ", resultKp, resultKi, resultKd);
-      GCodeSender.send([
-        "M301 P"+resultKp+" I"+resultKi+" D"+resultKd+"",
-        "M500"],
+    function(){
+      GCodeSender.sendAndWaitSpecial([
+        "M303 C8 S210 E0"],
+        "#define  DEFAULT_Kd",
         false,
-        function(){
-          console.log("Saved");
-          ModalManager.hideLoader();
+        function(result){
+          console.log("result PID", result);
+          try{
+            var regex, resultKp, resultKi, resultKd;
+            regex = /#define  DEFAULT_Kp (\d+\.\d+)/;
+            resultKp = +(result.match(regex)[1]);
 
-          that.content.find(".kp").text(resultKp)
-          that.content.find(".ki").text(resultKi)
-          that.content.find(".kd").text(resultKd);
-          that.content.show();
+            regex = /#define  DEFAULT_Ki (\d+\.\d+)/;
+            resultKi = +(result.match(regex)[1]);
+
+            regex = /#define  DEFAULT_Kd (\d+\.\d+)/;
+            resultKd = +(result.match(regex)[1]);
+          }catch(e){
+            ModalManager.alert(I18n.currentLanguage().pid_error_title, I18n.currentLanguage().pid_error_description);
+            ModalManager.hideLoader();
+          }
+
+          console.log("PID Result : ", resultKp, resultKi, resultKd);
+          GCodeSender.send([
+            "M301 P"+resultKp+" I"+resultKi+" D"+resultKd+"",
+            "M500"],
+            false,
+            function(){
+              console.log("Saved");
+              ModalManager.hideLoader();
+
+              that.content.find(".kp").text(resultKp)
+              that.content.find(".ki").text(resultKi)
+              that.content.find(".kd").text(resultKd);
+              that.content.show();
+            }
+          );
         }
       );
     }
