@@ -1,3 +1,7 @@
+#0.2.23
+  - correction d'un bug à l'apparition de deux popup
+  - Ajout du parallélisme des axe Z sur la E350 au début du réglage de Z-offset
+
 #0.2.22
   - correction de petits bugs visuels sur windows et dans le mode experts
   - Mise en place de la buse a 5cm du plateau pour lancer le PID
