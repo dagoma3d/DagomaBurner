@@ -44,9 +44,10 @@ ModalManagerClass.prototype.resetView = function (title, content) {
 ModalManagerClass.prototype.alert = function (title, content) {
   var that = this;
   that.resetView();
-
+  //$('#globalModal').closeModal();
   //$("#globalModal .modal-footer").hide();
 
+  $('.lean-overlay').remove();
   $('#globalModal h4').html(title);
   $('#globalModal .content').html(content);
   $('#globalModal').openModal();
