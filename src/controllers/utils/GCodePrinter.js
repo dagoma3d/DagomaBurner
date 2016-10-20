@@ -271,6 +271,38 @@ GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
     case "E350":
       GCodeSender.send([
         "M117 Initialisation",//
+        "G21",//       		 		;metric values
+        "G91",//               		; Passage coordonnees relatives
+        "G1 Z"+(window.currentZPosition + 10)+" F9000",//  ; lift nozzle
+        "G28 X",//          			; Home X
+        //"; Prechauffage des buses
+        "M117 Prechauffage",// 		      ; Message sur afficheur
+        "M140 S60",// ;target plateau temperature
+        "M109 S180",//  			 		   ; Set nozzle to 180
+        "M104 S210",// 	   ;target buse temperature
+        "M190 S60",// ;target plateau temperature
+        //"; Homing
+        "M117 Origine Machine",//      ; Message sur afficheur
+        "G28",//             	    ; Home X Y Z
+        "G90",//                	 ; Passage coordonnees absolues
+        //"; Palpage
+        "M117 Palpage",//                ; Message sur afficheur
+        "G29",//                         ; Palpage
+        "G1 Z"+(window.currentZPosition + 5)+" F9000",//      ; lift nozzle
+        "G1 X176 Y-14 F6000",//   ; Avance avant bed
+        //"; Definition des temperature d impression
+        "M117 Chauffage",//
+        "M109 S210",//  	    ; Set nozzle to print temperature
+        "M190 S60",//  ; set plateau to print temperature
+        //"; Nettoyage Buse
+        "M117 Purge Buse",//    ; Message sur afficheur
+        "G92 E0",//             ; reset extruder
+        "G1 F200 E10",//        ; extrude 10 mm
+        "G92 E0",//             ; mise a zero extrudeuse
+        "G1 F3000 E-7"//	     ; rectract 7mm
+
+        /*
+        "M117 Initialisation",//
         "G21",//;metric values
         "G91",//; Passage coordonnees relatives
         "G1 Z"+(window.currentZPosition + 10)+" F9000",//  ; lift nozzle
@@ -309,7 +341,7 @@ GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
         "G92 E0",// reset extruder
         "G1 F200 E10",// extrude 10 mm
         "G92 E0",// mise a zero extrudeuse
-        "G1 F3000 E-7",// rectract 7mm
+        "G1 F3000 E-7",// rectract 7mm*/
       ],
       false,
       function(){

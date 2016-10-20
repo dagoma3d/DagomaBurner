@@ -44,17 +44,40 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
   that.content.hide();
 
   ModalManager.showLoader(I18n.currentLanguage().z_offset_print_moving);
-  GCodeSender.send([
-    "M851 Z-10",//config.initialZOffset //Not -4 but -10 for the new V2],
-    "G28",
-    "G91",
-    "G0 Z5"],
-    false,
-    function(){
-      that.content.show();
-      ModalManager.hideLoader();
-    });
-
+  switch(window.printer.type){
+    case "E350":
+      //;Parallelisme Axe X
+      GCodeSender.send([
+        "M117 Parallelisme X",//      ; Message sur afficheur",
+        "G1 Z5 F9000",//           ; lift nozzle",
+        "G28 X Y",// ",
+        "G92 Z20",//",
+        "G91",//                   ; Passage coordonnees relatives",
+        "G1 Z-18 F200",//             ; Descente en dessous du plateau",
+        "G1 Z18 F9000",//,
+        "G28",//                 ; Home",
+        "G91",//                   ; Passage coordonnees absolues",
+        "M851 Z-10"],
+        false,
+        function(){
+          that.content.show();
+          ModalManager.hideLoader();
+        }
+      );
+    break;
+    default :
+      GCodeSender.send([
+        "M851 Z-10",//config.initialZOffset //Not -4 but -10 for the new V2],
+        "G28",
+        "G91",
+        "G0 Z5"],
+        false,
+        function(){
+          that.content.show();
+          ModalManager.hideLoader();
+        });
+    break;
+  });
 };
 
 
