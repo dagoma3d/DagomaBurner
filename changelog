@@ -1,3 +1,7 @@
+#0.2.22
+  - correction de petits bugs visuels sur windows et dans le mode experts
+  - Mise en place de la buse a 5cm du plateau pour lancer le PID
+
 #0.2.21
   - correction d'un bug sur les modalBox
 
