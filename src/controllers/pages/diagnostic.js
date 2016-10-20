@@ -142,6 +142,7 @@ DiagnosticPageClass.prototype.setupGraph = function () {
   this.currentLine = {
     x: [1],
     y: [0],
+    name: 'E0',
     type: 'scatter',
     line: {
       dash: 'solid',
