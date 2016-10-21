@@ -1,3 +1,8 @@
+#0.2.25
+  - Différentes correction pour la E350
+  - Suppression de la possibilité de faire un PID
+  - Ajout de la possibilité de remettre les paramêtres d'usine de l'imprimante
+
 #0.2.24
   - correction d'un bug au z-offset
   - Augmentation de la vitesse de déplacement du PID
@@ -31,7 +36,7 @@
   - Correction d'un bug lors de l'envoi de GCode dans le mode expert
 
 #0.2.16
-  - Ajout du mode expert caché pour ceux qui aiment Konami ;D
+  - Ajout du mode expert
   - Ajout de la traduction Anglais/Français
   - Ajout du nouveau flow de connecion d'une imprimante
 
