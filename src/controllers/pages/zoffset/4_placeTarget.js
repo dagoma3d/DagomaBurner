@@ -49,8 +49,9 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
       //;Parallelisme Axe X
       GCodeSender.send([
         "M117 Parallelisme X",//      ; Message sur afficheur",
-        "G1 Z5 F9000",//           ; lift nozzle",
+        "G28",// ",
         "G28 X Y",// ",
+        "G1 Z5 F9000",//           ; lift nozzle",
         "G92 Z20",//",
         "G91",//                   ; Passage coordonnees relatives",
         "G1 Z-18 F200",//             ; Descente en dessous du plateau",
