@@ -77,7 +77,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
           ModalManager.hideLoader();
         });
     break;
-  });
+  };
 };
 
 
