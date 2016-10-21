@@ -34,7 +34,7 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
     GCodeSender.send(["M114"], false, function(response){
       window.currentZPosition = 0;
       var zoffset;
-      if(response){
+      if(response != undefined){
         zoffset = +(response.split("Z:")[1].split(" ")[0]);
         /*//console.log("zoffset response", 1, zoffset);
         zoffset = -(config.initialZOffset)+zoffset;
