@@ -38,6 +38,12 @@ ConfigurationPageClass.prototype.initView = function () {
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 
+  that.content.find("#reset").on("click", function(){
+    NavManager.setPage("reset/1_preparation");
+    //NavManager.setPage("zoffset/7_TestPrinting");
+  });
+
+
   that.content.find("#firmware").on("click", function(){
     NavManager.setPage("firmware/1_preparation");
     //NavManager.setPage("zoffset/7_TestPrinting");

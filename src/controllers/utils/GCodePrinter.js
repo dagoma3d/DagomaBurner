@@ -279,7 +279,7 @@ GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
         "M117 Prechauffage",// 		      ; Message sur afficheur
         "M140 S60",// ;target plateau temperature
         "M109 S180",//  			 		   ; Set nozzle to 180
-        "M104 S210",// 	   ;target buse temperature
+        "M104 S"+this.temperature,// 	   ;target buse temperature
         "M190 S60",// ;target plateau temperature
         //"; Homing
         "M117 Origine Machine",//      ; Message sur afficheur
@@ -292,7 +292,7 @@ GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
         "G1 X176 Y-14 F6000",//   ; Avance avant bed
         //"; Definition des temperature d impression
         "M117 Chauffage",//
-        "M109 S210",//  	    ; Set nozzle to print temperature
+        "M109 S"+this.temperature,//  	    ; Set nozzle to print temperature
         "M190 S60",//  ; set plateau to print temperature
         //"; Nettoyage Buse
         "M117 Purge Buse",//    ; Message sur afficheur
