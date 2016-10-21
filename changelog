@@ -1,3 +1,6 @@
+#0.2.27
+  - Suppression du bouton reset dans le mode expert, redondant avec celui publique
+
 #0.2.26
   - Correction orthographique
 
