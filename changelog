@@ -1,3 +1,6 @@
+#0.2.24
+  - correction d'un bug au z-offset
+
 #0.2.23
   - correction d'un bug à l'apparition de deux popup
   - Ajout du parallélisme des axe Z sur la E350 au début du réglage de Z-offset
