@@ -340,7 +340,7 @@ html.update{
     .buttonListExpendable .collapsible .collapsible-header img{
       position: absolute;
       top: 5px;
-      right: 30px;
+      right: 19px;
       z-index: 2;
       height: 60px;}
 
@@ -723,8 +723,8 @@ iframe{
 
 #diagnostic #move table{
   margin-left: 20px;
-  width: 210px;
-  margin-top: 10px;
+  width: 190px;
+  margin-top: 0px;
   float: left;}
 
 #diagnostic #serial{
@@ -758,11 +758,28 @@ iframe{
 
   #diagnostic #move input{
     display: inline-block;
-    width: 95px;}
+    width: 53px;
+    margin-top: 10px;
+    margin-bottom: 9px;
+    text-align: center;}
 
   #diagnostic #move p{
-    margin-top: 20px;
-    margin-bottom: 0px;}
+    margin-top: 21px;
+    margin-bottom: 0px;
+    float: left;}
+
+  #diagnostic #move a#ResetConfig{
+    width: 185px;}
+
+  #diagnostic #move a#pid{
+    width: 185px;}
+
+    #diagnostic #move a#pid .preloader-wrapper{
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      position: relative;
+      top: 5px;}
 
 /*
   #diagnostic .modal-content table{
@@ -794,7 +811,7 @@ iframe{
       margin-left: 20px;}
 
     #diagnostic #move table.position .speedControl{
-      margin-top: 20px;
+      margin-top: 10px;
       width: 100%;
       background-color: #4d5254;
       height: 42px;

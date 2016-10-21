@@ -54,6 +54,9 @@ DiagnosticPageClass.prototype.show = function () {
 
   $('.modal-trigger').leanModal();
 
+  GCodeSender.addButtonGCode("#ResetConfig", ["M502", "M500"], false);
+
+  GCodeSender.addButtonGCode("#homeXY", ["G28 X Y"], true);
   GCodeSender.addButtonGCode("#home", ["G28"], true);
 
   GCodeSender.addButtonGCode("#zp01", ["G91", "G0 Z0.1"], false);
@@ -65,6 +68,66 @@ DiagnosticPageClass.prototype.show = function () {
   GCodeSender.addButtonGCode("#stopMotors", ["M18"], false);
 
   GCodeSender.addButtonGCode("#off", ["M104 S0"], false);
+
+  that.content.find("#pid .preloader-wrapper").hide();
+  that.content.find("#pid").click(function(){
+    clearTimeout(that.timeout);
+    that.content.find("#pid .preloader-wrapper").show();
+
+    GCodeSender.send([
+      "G28",
+      "G90",
+      "G0 Z50 F4000"],
+      false,
+      function(){
+        GCodeSender.sendAndWaitSpecial([
+          "M303 C8 S210 E0"],
+          "PID Autotune", false, function(){
+            GCodeSender.waitForSpecial("PID Autotune", function(result){
+              console.log("result PID", result);
+              if(result.indexOf("PID Autotune failed") >= 0){
+                ModalManager.alert(I18n.currentLanguage().pid_error_title, I18n.currentLanguage().pid_error_description);
+                that.content.find("#pid .preloader-wrapper").hide();
+                return;
+              }
+
+              try{
+                result = result.split("Classic PID");
+                result = result[result.length-1];
+                console.log("classiPID : ", result);
+
+                var regex, resultKp, resultKi, resultKd;
+                regex = /Kp: (\d+\.\d+)/;
+                resultKp = +(result.match(regex)[1]);
+
+                regex = /Ki: (\d+\.\d+)/;
+                resultKi = +(result.match(regex)[1]);
+
+                regex = /Kd: (\d+\.\d+)/;
+                resultKd = +(result.match(regex)[1]);
+
+                console.log("PID Result : ", resultKp, resultKi, resultKd);
+                GCodeSender.send([
+                  "M301 P"+resultKp+" I"+resultKi+" D"+resultKd+"",
+                  "M500"],
+                  false,
+                  function(){
+                    ModalManager.alert("PID Result", "PID Autotune set to : KP="+resultKp+" KI="+resultKi+" KD="+resultKd);
+                    that.content.find("#pid .preloader-wrapper").hide();
+                  }
+                );
+              }catch(e){
+                console.error(e);
+                ModalManager.alert(I18n.currentLanguage().pid_error_title, I18n.currentLanguage().pid_error_description);
+                that.content.find("#pid .preloader-wrapper").hide();
+              }
+
+              that.getTemperature();
+            });
+          })
+      }
+    );
+  });
 
   $("#diagnostic #set").click(function(){
     GCodeSender.send(["M104 S"+$("#diagnostic #temperature").val()], false);
@@ -113,29 +176,31 @@ DiagnosticPageClass.prototype.show = function () {
 DiagnosticPageClass.prototype.getTemperature = function () {
   var that = this;
   GCodeSender.send(["M105"], false, function(response){
-    var regex = /T:(\d+\.\d) \/(\d+\.\d)/.exec(response);
-    if(regex && regex.length>=3){
-      that.currentLine.x.push(++that.currentIndex);
-      that.currentLine.y.push(parseFloat(regex[1]));
-      that.targetLine.x.push(that.currentIndex);
-      that.targetLine.y.push(parseFloat(regex[2]));
-
-      if(that.currentIndex > 30){
-        that.currentLine.x.shift();
-        that.currentLine.y.shift();
-        that.targetLine.x.shift();
-        that.targetLine.y.shift();
-      }
-
-      that.updateGraph();
-    }
-
-
     that.timeout = setTimeout(function(){
       that.getTemperature();
     }, 1000);
   });
 }
+
+DiagnosticPageClass.prototype.addTemperatureInGraph = function (response) {
+  var that = this;
+  var regex = /T:(\d+\.\d) \/(\d+\.\d)/.exec(response);
+  if(regex && regex.length>=3){
+    that.currentLine.x.push(++that.currentIndex);
+    that.currentLine.y.push(parseFloat(regex[1]));
+    that.targetLine.x.push(that.currentIndex);
+    that.targetLine.y.push(parseFloat(regex[2]));
+
+    if(that.currentIndex > 30){
+      that.currentLine.x.shift();
+      that.currentLine.y.shift();
+      that.targetLine.x.shift();
+      that.targetLine.y.shift();
+    }
+
+    that.updateGraph();
+  }
+};
 
 DiagnosticPageClass.prototype.setupGraph = function () {
   this.currentIndex = 1;
@@ -172,6 +237,8 @@ DiagnosticPageClass.prototype.updateGraph = function () {
 };
 
 DiagnosticPageClass.prototype.dataHandler = function(data){
+  this.addTemperatureInGraph(data);
+
   var consoleDiv = this.content.find("#console")
   consoleDiv.append(data+"<br/>");
   consoleDiv[0].scrollTop = consoleDiv[0].scrollHeight;
