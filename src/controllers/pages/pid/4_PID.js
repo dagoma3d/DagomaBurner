@@ -51,7 +51,7 @@ PIDRunClass.prototype.show = function () {
   GCodeSender.send([
     "G28",
     "G90",
-    "G0 Z50"],
+    "G0 Z50 F4000"],
     false,
     function(){
       GCodeSender.sendAndWaitSpecial([

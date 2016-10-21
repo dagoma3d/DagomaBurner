@@ -1,5 +1,6 @@
 #0.2.24
   - correction d'un bug au z-offset
+  - Augmentation de la vitesse de déplacement du PID
 
 #0.2.23
   - correction d'un bug à l'apparition de deux popup
