@@ -768,6 +768,9 @@ iframe{
     margin-bottom: 0px;
     float: left;}
 
+  #diagnostic #move a#ResetPort{
+    width: 185px;}
+
   #diagnostic #move a#ResetConfig{
     width: 185px;}
 

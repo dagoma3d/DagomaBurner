@@ -69,6 +69,11 @@ DiagnosticPageClass.prototype.show = function () {
 
   GCodeSender.addButtonGCode("#off", ["M104 S0"], false);
 
+  that.content.find("#ResetPort").click(function(){
+    console.log("reset");
+    DeviceManager.getSelectedDevice().resetPort();
+  })
+
   that.content.find("#pid .preloader-wrapper").hide();
   that.content.find("#pid").click(function(){
     clearTimeout(that.timeout);
