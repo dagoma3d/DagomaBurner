@@ -174,8 +174,8 @@ DeviceClassUSB.prototype.endsWith = function(topic, suffix) {
 DeviceClassUSB.prototype.resetPort = function () {
   var that = this;
 
-  //if(!that.serial)
-  //  return;
+  if(that.serial == null)
+    return;
 
   that.serial.set({
     rts: true,

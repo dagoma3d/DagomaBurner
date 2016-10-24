@@ -12,6 +12,9 @@ var config = require(_root+"config.json");
 
 var ZoffsetMoveNozzleClass = function ZoffsetMoveNozzleClass(){
   this.content = null;
+
+  this.mouseUpListener = this.mouseUpHandler.bind(this);
+
 }
 
 ZoffsetMoveNozzleClass.prototype.load = function (callback) {
@@ -34,7 +37,7 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
     GCodeSender.send(["M114"], false, function(response){
       window.currentZPosition = 0;
       var zoffset;
-      if(response != undefined){
+      if(response){
         zoffset = +(response.split("Z:")[1].split(" ")[0]);
         /*//console.log("zoffset response", 1, zoffset);
         zoffset = -(config.initialZOffset)+zoffset;
@@ -64,6 +67,8 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
 
   that.moveEnabled = true;
 
+  $(document).on("mouseup", that.mouseUpListener);
+
   that.content.mouseup(function(e){
     clearTimeout(that.pressTimer);
     clearInterval(that.pressInterval);
@@ -75,6 +80,11 @@ ZoffsetMoveNozzleClass.prototype.initView = function () {
 
   $("#navBack").show();
 };
+
+ZoffsetMoveNozzleClass.prototype.mouseUpHandler = function () {
+  clearTimeout(this.pressTimer);
+  clearInterval(this.pressInterval);
+}
 
 ZoffsetMoveNozzleClass.prototype.addButton = function (button, callback) {
   var that = this;
@@ -113,6 +123,9 @@ ZoffsetMoveNozzleClass.prototype.moveDown = function () {
 };
 
 ZoffsetMoveNozzleClass.prototype.dispose = function () {
+  clearTimeout(this.pressTimer);
+  clearInterval(this.pressInterval);
+  $(document).off("mouseup", this.mouseUpListener);
 };
 
 module.exports = ZoffsetMoveNozzleClass;

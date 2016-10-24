@@ -14,8 +14,7 @@ var ZoffsetTestPrintingClass = function ZoffsetTestPrintingClass(){
   this.content = null;
 
   this.deviceReceiveListener = this.deviceReceiveHandler.bind(this);
-
-
+  this.mouseUpListener = this.mouseUpHandler.bind(this);
 }
 
 ZoffsetTestPrintingClass.prototype.load = function (callback) {
@@ -63,8 +62,15 @@ ZoffsetTestPrintingClass.prototype.initView = function () {
     that.content.find("#start").show();
     that.content.addClass("ready");
   });
+
+  $(document).on("mouseup", that.mouseUpListener);
+
 };
 
+ZoffsetTestPrintingClass.prototype.mouseUpHandler = function () {
+  clearTimeout(this.pressTimer);
+  clearInterval(this.pressInterval);
+}
 
 ZoffsetTestPrintingClass.prototype.addButton = function (button, callback) {
   var that = this;
@@ -138,6 +144,10 @@ ZoffsetTestPrintingClass.prototype.dispose = function () {
   if(this.device){
     this.device.removeListener("receive", this.deviceReceiveListener);
   }
+  clearTimeout(this.pressTimer);
+  clearInterval(this.pressInterval);
+  $(document).off("mouseup", this.mouseUpListener);
+
 };
 
 module.exports = ZoffsetTestPrintingClass;
