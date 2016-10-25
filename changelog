@@ -1,3 +1,6 @@
+#0.2.28
+  - Correction d'un bug au relachement de la souris hors de la fenêtres
+
 #0.2.27
   - Suppression du bouton reset dans le mode expert, redondant avec celui publique
 
