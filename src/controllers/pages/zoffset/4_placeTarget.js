@@ -49,6 +49,8 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
       //;Parallelisme Axe X
       GCodeSender.send([
         "M117 Parallelisme X",//      ; Message sur afficheur",
+        "G91",
+        "G0 Z10",
         "G28",// ",
         "G28 X Y",// ",
         "G1 Z5 F9000",//           ; lift nozzle",
@@ -56,9 +58,10 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
         "G91",//                   ; Passage coordonnees relatives",
         "G1 Z-18 F200",//             ; Descente en dessous du plateau",
         "G1 Z18 F9000",//,
+        "M851 Z-10",
         "G28",//                 ; Home",
-        "G91",//                   ; Passage coordonnees absolues",
-        "M851 Z-10"],
+        "G90",
+        "G0 Z15"],
         false,
         function(){
           that.content.show();
@@ -68,6 +71,8 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
     break;
     default :
       GCodeSender.send([
+        "G91",
+        "G0 Z10",
         "M851 Z-10",//config.initialZOffset //Not -4 but -10 for the new V2],
         "G28",
         "G91",

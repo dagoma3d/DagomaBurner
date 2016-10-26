@@ -301,8 +301,8 @@ GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
         "G92 E0",//             ; reset extruder
         "G1 F200 E10",//        ; extrude 10 mm
         "G92 E0",//             ; mise a zero extrudeuse
-        "G1 F3000 E-7"//	     ; rectract 7mm
-
+        "G1 F3000 E-7",//	     ; rectract 7mm
+        "G0 F3600.000000 Z"+(window.currentZPosition + 0.260)
         /*
         "M117 Initialisation",//
         "G21",//;metric values
