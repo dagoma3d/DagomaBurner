@@ -101,8 +101,10 @@ GCodePrinterClass.prototype.printDatas = function (callback) {
   var that = this;
   if(that.forceStop){
     that.forceStop = false;
-    if(this.forceStopCallback)
-        this.forceStopCallback();
+    if(this.forceStopCallback){
+      setTimeout(this.forceStopCallback, 2000);
+    }
+
     return;
   }
 
