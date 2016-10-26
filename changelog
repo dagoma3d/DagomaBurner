@@ -1,3 +1,8 @@
+#0.2.30
+  - Correction de la procédure de Z-offset sur la 350
+  - Ajout d'une montée en Z avant la recherche du plateau au début d'un z-offset
+  - Gestion de la reconnexion de l'imprimante après un flash et rechargement des paramêtres par défaut après un flash
+
 #0.2.29
   - Correction d'un bug lié à la fin de l'impression des pastilles
 
