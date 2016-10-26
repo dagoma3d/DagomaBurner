@@ -7,6 +7,7 @@ var NavManager = require(_root+"manager/NavManager.js");
 var ModalManager = require(_root+"manager/modalManager.js");
 var CodeBuilder = require(_root+"manager/codeBuilder.js");
 var I18n = require(_root+"i18n/i18n.js");
+var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 
 var FirmwareFirmwareClass = function FirmwareFirmwareClass(){
   this.content = null;
@@ -50,6 +51,15 @@ FirmwareFirmwareClass.prototype.show = function () {
     ModalManager.showLoader(I18n.currentLanguage().firmware_burning);
     console.log("window.printer", window.printer);
     new CodeBuilder(DeviceManager.getSelectedDevice(), file.path, window.printer.bootloader, function(success){
+      GCodeSender.send([
+        "M502",
+        "M500"],
+        false,
+        function(result){
+          console.log("result M502/M500", result);
+        }
+      );
+
       ModalManager.hideLoader();
       if(success)
         ModalManager.alert(I18n.currentLanguage().firmware_success_title, I18n.currentLanguage().firmware_success_message);

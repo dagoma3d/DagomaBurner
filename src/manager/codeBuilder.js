@@ -13,9 +13,12 @@ module.exports = function(device, file, type, callback){
 
   console.log("burn to ", device);
 
+  var timeOut3DPrinterSearch;
+  var success = true;
   var board = "mega";
   device.isBuilding = true;
   device.pause();
+
 
   boards.byName.melzi = {
     baud: 57600,
@@ -46,6 +49,25 @@ module.exports = function(device, file, type, callback){
       debug: true
     });
 
+
+    function printerFound(){
+      clearTimeout(timeOut3DPrinterSearch);
+      device.removeListener("printerFound", printerFound);
+      callback(success);
+    }
+
+    function resetAndWaitPort(success){
+      device.isBuilding = false;
+      setTimeout(function(){device.open()}, 1000);
+
+      timeOut3DPrinterSearch = setTimeout(function(){
+        //TODO: treat when no printer is discovered
+        //no3DPrinterFound();
+        printerFound();
+      }, 30000);
+      device.on("printerFound", printerFound);
+    }
+
     avrgirl.flash(file, function (error) {
       if (error) {
         console.log("retrying after error", error);
@@ -55,23 +77,23 @@ module.exports = function(device, file, type, callback){
         // Retry immediatly
         setTimeout( function() {
           avrgirl.flash(file, function (error) {
+
             if (error) {
               console.log("ok, giving up with error", error);
-              callback(false);
+              success = false;
             } else {
               console.log('done.');
-              callback(true/*, result.message*/);
+              success = true;
             }
-            device.isBuilding = false;
-            setTimeout(function(){device.open()}, 1000);
+
+            resetAndWaitPort(true/*, result.message*/);
           });
         }, 5000);
 
       } else {
         console.log('done.');
-        callback(true/*, result.message*/);
-        device.isBuilding = false;
-        setTimeout(function(){device.open()}, 1000);
+        success = true;
+        resetAndWaitPort(true/*, result.message*/);
       }
     });
 
