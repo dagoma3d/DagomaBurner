@@ -232,4 +232,8 @@ function initPage(){
   $('.tooltipped').tooltip({delay: 50});
 
   $("#version").text("V"+require(_root+"package.json").version);
+
+  if(require(_root+"package.json").beta){
+    $("body").addClass("beta");
+  }
 }

@@ -46,6 +46,17 @@ html{
   color: #DDD;
   left: 6px;}
 
+  body.beta #version{
+    color: black;
+    font-size: 16px;
+    font-weight: bold;}
+
+    body.beta #version::after{
+      content: "b";
+      font-size: 60%;
+      position: relative;
+      bottom: 10px;}
+
 a, button{
   cursor: pointer;}
 
@@ -64,6 +75,9 @@ a, select, button, input, label, img{
 #navbar{
   -webkit-app-region: drag;
   background-color: #e19531;}
+
+  body.beta #navbar{
+    background-color: grey;}
 
   #navbar #language{
     position: absolute;
@@ -138,6 +152,12 @@ a, select, button, input, label, img{
     font-size: 1.5rem;
     font-weight: 300;
   }
+
+  body.beta h1:after{
+    content: "beta";
+    font-size: 60%;
+    position: relative;
+    bottom: 5px;}
 
 #pageContainer{
   margin: 0px 00px 10px 100px;}
