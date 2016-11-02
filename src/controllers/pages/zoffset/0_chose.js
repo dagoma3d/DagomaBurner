@@ -26,6 +26,21 @@ ZoffsetChoseClass.prototype.load = function (callback) {
 ZoffsetChoseClass.prototype.initView = function () {
   var that = this;
   that.content.find("#initialisation").on("click", function(){
+    window.zOffsetType = 1;
+    window.pageAfterDeviceSelection = "configuration";
+    NavManager.setPage("zoffset/1_preparation");
+    //NavManager.setPage("configuration");
+    //NavManager.setPage("zoffset/7_TestPrinting");
+  });
+
+  if(window.printer.type != "Delta"){
+    that.content.find("#initialisation2").hide();
+  }else{
+    that.content.addClass("delta")
+  }
+
+  that.content.find("#initialisation2").on("click", function(){
+    window.zOffsetType = 2;
     window.pageAfterDeviceSelection = "configuration";
     NavManager.setPage("zoffset/1_preparation");
     //NavManager.setPage("configuration");

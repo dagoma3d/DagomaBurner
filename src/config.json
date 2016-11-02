@@ -15,6 +15,11 @@
         "type":"E350",
         "name":"Explorer350",
         "bootloader":"mega"
+      },
+      "delta":{
+        "type":"Delta",
+        "name":"Delta",
+        "bootloader":"mega"
       }
     }
   },

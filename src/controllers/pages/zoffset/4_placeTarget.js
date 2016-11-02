@@ -69,6 +69,89 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
         }
       );
     break;
+    case "delta":
+      if(window.zOffsetType == 1){
+        GCodeSender.send([
+          "G0 X-77.94 Y-45.00 Z5 F8000",
+          "G30",
+          "G0 X77.94 Y-45 Z5 F8000",//config.initialZOffset //Not -4 but -10 for the new V2],
+          "G30",
+          "G0 X0 Y90 Z5 F8000",
+          "G30"],
+          false,
+          function(result){
+            var regex = /X(\d+.\d+)/.exec(response);
+            var offsetX = regex[1];
+
+            regex = /Y(\d+.\d+)/.exec(response);
+            var offsetY = regex[1];
+
+            regex = /Z(\d+.\d+)/.exec(response);
+            var offsetZ = regex[1];
+
+            GCodeSender.send([
+              "M206 X"+offsetX+" Y"+offsetY+" Z"+offsetZ,
+              "G0 X0 Y0 Z5 F8000",
+              "G30"],
+              false,
+              function(result){
+                var regex = /Z(\d+.\d+)/.exec(response);
+                var homeZ = regex[1];
+
+                GCodeSender.send([
+                  "M666 Z"+homeZ],
+                  false,
+                  function(result){
+                    that.content.show();
+                    ModalManager.hideLoader();
+                  });
+                });
+              });
+      }
+      else
+      {
+        GCodeSender.send([
+          "G0 X0 Y0 Z5 F8000",
+          "G30"],
+          false,
+          function(result){
+            var regex = /Z(\d+.\d+)/.exec(response);
+            var homeZ = regex[1];
+
+            GCodeSender.send([
+              "M666 Z"+homeZ],
+              false,
+              function(result){
+                GCodeSender.send([
+                  "G0 X-77.94 Y-45.00 Z5 F8000",
+                  "G30",
+                  "G0 X77.94 Y-45 Z5 F8000",//config.initialZOffset //Not -4 but -10 for the new V2],
+                  "G30",
+                  "G0 X0 Y90 Z5 F8000",
+                  "G30"],
+                  false,
+                  function(result){
+                    var regex = /X(\d+.\d+)/.exec(response);
+                    var offsetX = regex[1];
+
+                    regex = /Y(\d+.\d+)/.exec(response);
+                    var offsetY = regex[1];
+
+                    regex = /Z(\d+.\d+)/.exec(response);
+                    var offsetZ = regex[1];
+
+                    GCodeSender.send([
+                      "M206 X"+offsetX+" Y"+offsetY+" Z"+offsetZ],
+                      false,
+                      function(){
+                        that.content.show();
+                        ModalManager.hideLoader();
+                      });
+                  });
+              });
+          });
+      }
+    break;
     default :
       GCodeSender.send([
         "G91",

@@ -9,6 +9,8 @@ var config = require(_root+"config.json");
 
 var SelectPrinterClass = function SelectPrinterClass(){
   this.content = null;
+  this.keyDownListener = this.keydownHandler.bind(this);
+
 }
 
 SelectPrinterClass.prototype.load = function (callback) {
@@ -49,15 +51,33 @@ SelectPrinterClass.prototype.initView = function () {
     NavManager.setPage("selectPrinter/3_printerConnection");
   });
 
+  that.content.find("#delta").hide();
+
+  that.content.find("#delta").on("click", function(){
+    window.printer = config.printer.type.delta;
+    NavManager.setPage("selectPrinter/3_printerConnection");
+  });
+
   $("#navBack").show();
 }
 
 SelectPrinterClass.prototype.show = function () {
-
+  this.keys = [];
+  $(document).on("keydown", this.keyDownListener);
 };
 
 
+SelectPrinterClass.prototype.keydownHandler = function (e) {
+  var that = this;
+  that.keys.push( e.which );
+  that.keys = that.keys.slice( -10 );
+  if (that.keys.join('') == '6869768465') {
+    that.content.find('#delta').show();
+  }
+}
+
 SelectPrinterClass.prototype.dispose = function () {
+  $(document).off("keydown", this.keyDownListener);
 };
 
 module.exports = SelectPrinterClass;

@@ -99,6 +99,7 @@
   "printer_selection_discovery":"Discovery200",
   "printer_selection_discoeasy":"DiscoEasy200",
   "printer_selection_explorer":"Explorer 350",
+  "printer_selection_delta":"Delta",
   "printer_selection_jumper":"Connectez le jumper d'auto-reset sur votre melzi",
   "printer_selection_zoffset":"Connectez votre imprimante à votre ordinateur",
   "printer_selection_chose_com":"Choisissez le port série de votre imprimante",
