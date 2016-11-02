@@ -69,7 +69,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
         }
       );
     break;
-    case "delta":
+    case "Delta":
       if(window.zOffsetType == 1){
         GCodeSender.send([
           "G0 X-77.94 Y-45.00 Z5 F8000",
