@@ -24,8 +24,9 @@
     }
   },
   "sav":{
-    "url":"188.166.20.119",
-    "port":9000
+    "url":"dago-meet-m2m.dagoma.net",
+    "port":9000,
+    "path":"/meet-us"
   },
   "updateUrl":"THE_UPDATE_URL",
   "build-date":"THE_BUILD_DATE"
