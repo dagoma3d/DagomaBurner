@@ -54,6 +54,10 @@ HomePageClass.prototype.keydownHandler = function (e) {
     //NavManager.setPage("diagnostic");
     NavManager.setPage("selectPrinter/0_preparation");
   }
+
+  if (that.keys.join('') == '38404037393739836586') {
+    NavManager.setPage("savAdminConnection");
+  }
 }
 
 HomePageClass.prototype.show = function () {

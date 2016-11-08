@@ -52,6 +52,7 @@ SelectPrinterClass.prototype.initView = function () {
   });
 
   that.content.find("#delta").hide();
+  that.content.find("#sav").hide();
 
   that.content.find("#delta").on("click", function(){
     window.printer = config.printer.type.delta;

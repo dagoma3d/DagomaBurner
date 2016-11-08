@@ -23,6 +23,10 @@
       }
     }
   },
+  "sav":{
+    "url":"188.166.20.119",
+    "port":9000
+  },
   "updateUrl":"THE_UPDATE_URL",
   "build-date":"THE_BUILD_DATE"
 }

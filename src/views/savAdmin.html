@@ -1,0 +1,83 @@
+<div id="savAdmin">
+  <div id="move">
+    <table class="position">
+      <tr class="row">
+        <td></td>
+        <td>X/Y</td>
+        <td></td>
+        <td class="colZ">Z</td>
+      </tr>
+      <tr class="row">
+        <td></td>
+        <td><a id="yp" class="btn btnPosition"><i class="material-icons">expand_less</i></a></td>
+        <td></td>
+        <td><a id="zp" class="btn btnPosition colZ"><i class="material-icons">expand_less</i></a></td>
+      </tr>
+      <tr class="row">
+        <td><a id="xm" class="btn btnPosition"><i class="material-icons">chevron_left</i></a></td>
+        <td><a id="homeXY" class="btn"><i class="material-icons">home</i></a></td>
+        <td><a id="xp" class="btn btnPosition"><i class="material-icons">chevron_right</i></a></td>
+        <td><a id="home" class="btn colZ"><i class="material-icons">home</i></a></td>
+      </tr>
+      <tr class="row">
+        <td></td>
+        <td><a id="ym" class="btn btnPosition"><i class="material-icons">expand_more</i></a></td>
+        <td></td>
+        <td><a id="zm" class="btn colZ btnPosition"><i class="material-icons">expand_more</i></a></td>
+      </tr>
+      <tr class="row">
+        <td colspan="4">
+          <div class="speedControl">
+              <a id="s01" class="btnRadio">0.1</a>
+              <a id="s1" class="btnRadio selected">1</a>
+              <a id="s10" class="btnRadio">10</a>
+              <a id="s100" class="btnRadio">100</a>
+          </div>
+        </td>
+      </tr>
+      <tr class="row">
+        <td colspan="4">
+          <p>Heat</p>
+          <div>
+              <a id="off" class="btn">Off</a>
+              <input id="temperature" type="text">
+              <a id="set" class="btn">set</a>
+          </div>
+        </td>
+      </tr>
+      <tr class="row">
+        <td colspan="4">
+          <div>
+            <a id="ResetPort" class="btn">Reset Port</a>
+            <a id="ResetConfig" class="btn">Reset Config</a>
+            <a id="pid" class="btn">PID (210°)
+              <div class="preloader-wrapper active">
+                <div class="spinner-layer spinner-red-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div id="graph"></div>
+  </div>
+  <div id="serial">
+    <div id="console"></div>
+    <form class="col s12" action="#">
+      <div class="row">
+        <input type="submit" value="Send" class="btn right col s2">
+        <div class="col s10">
+          <input placeholder="Gcode" id="gcode" type="text">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

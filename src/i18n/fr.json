@@ -112,5 +112,7 @@
   "printer_connexion_no_printer":"Aucune imprimante detectée sur ce port !",
   "printer_connexion_no_detected":"Si votre imprimante n'est pas détectée, débranchez-la et rebranchez-la après 10 secondes",
   "printer_connexion_detected":"Imprimante détectée",
-  "printer_connexion_searching":"Recherche d'une imprimante... (peut prendre jusqu'à 30secondes)"
+  "printer_connexion_searching":"Recherche d'une imprimante... (peut prendre jusqu'à 30secondes)",
+  "sav_code":"Votre code SAV : ",
+  "sav_connected":"Vous êtes connecté au SAV"
 }

@@ -19,7 +19,8 @@ GCodeSenderClass.prototype.stop = function () {
 GCodeSenderClass.prototype.addButtonGCode = function (id, gCodes, showLoader, callback) {
   var that = this;
 
-  $("#diagnostic "+id).click(function(){
+  $(id).click(function(){
+    console.log("id", id);
     that.send(gCodes, showLoader, callback);
   });
 };

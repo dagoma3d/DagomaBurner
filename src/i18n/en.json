@@ -112,5 +112,6 @@
   "printer_connexion_no_printer":"No printer has been found on this port!",
   "printer_connexion_no_detected":"If your printer hasn't been found: unplug it, wait 10 seconds and replug it",
   "printer_connexion_detected":"Printer found",
-  "printer_connexion_searching":"Looking for your printer... (this could take up to 30 seconds)"
+  "printer_connexion_searching":"Looking for your printer... (this could take up to 30 seconds)",
+  "sav_code":"Your "
 }

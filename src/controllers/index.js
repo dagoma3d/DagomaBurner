@@ -236,4 +236,6 @@ function initPage(){
   if(require(_root+"package.json").beta){
     $("body").addClass("beta");
   }
+
+  $("#savBar").hide();
 }
