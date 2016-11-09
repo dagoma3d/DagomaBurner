@@ -67,8 +67,8 @@ P2PConnectionClass.prototype.connectToID = function (id) {
     host: config.sav.url,
     port: config.sav.port,
     path : config.sav.path,
+    secure: config.sav.secure,
     key: "253b8464e7f5a449231c3400fadd9e78642d69d3",
-    //secure: true,
   })//{key: '7gphj6gigo561or', });
   var conn = peer.connect(id);
   conn.on('open', function(){
