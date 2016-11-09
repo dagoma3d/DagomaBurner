@@ -65,7 +65,7 @@ GCodePrinterClass.prototype.print = function (datas, printStart, printEnd, offse
             x = (lastX+(j*(distX/numberDeltaXY)));
             y = (lastY+(j*(distY/numberDeltaXY)));
             e = (lastE+(j*(distE/numberDeltaXY)));
-            newDatas.push("G0 X"+x.toFixed(3)+" Y"+y.toFixed(3)+" E"+e.toFixed(3)+";DA");
+            newDatas.push("G0 X"+x.toFixed(3)+" Y"+y.toFixed(3)+" E"+e.toFixed(3));//+";DA");
           }
         }
       }
@@ -243,15 +243,15 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
         ModalManager.setLoaderTitle("Le palpeur vérifie que le plateau est bien droit");
         GCodeSender.send([
           "G28",
-          "G29; Detailed Z-Probe",
-          "G90; Set to absolute positioning if not",
+          "G29",//; Detailed Z-Probe",
+          "G90",//; Set to absolute positioning if not",
           "G1 X100 Y200 Z5 F3000",
           "G1 Z0",
-          "M82 ;set extruder to absolute mode",
+          "M82",// ;set extruder to absolute mode",
           "G0 F3600.000000 Z0.260",
-          "G92 E0 ;zero the extruded length",
+          "G92 E0",// ;zero the extruded length",
           "G1 X190 E20 F1000",
-          "G92 E0 ;zero the extruded length again",
+          "G92 E0",// ;zero the extruded length again",
           "G1 F60",
           "G90",
           "M106 S127.500000",
@@ -364,15 +364,15 @@ GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
         ModalManager.setLoaderTitle("Le palpeur vérifie que le plateau est bien droit");
         GCodeSender.send([
           "G28",
-          "G29; Detailed Z-Probe",
-          "G90; Set to absolute positioning if not",
+          "G29",//; Detailed Z-Probe",
+          "G90",//; Set to absolute positioning if not",
           "G1 X100 Y200 Z"+(window.currentZPosition + 5 )+" F3000",
           "G1 Z"+window.currentZPosition,
-          "M82 ;set extruder to absolute mode",
+          "M82",// ;set extruder to absolute mode",
           "G0 F3600.000000 Z"+(window.currentZPosition + 0.260),
-          "G92 E0 ;zero the extruded length",
+          "G92 E0",// ;zero the extruded length",
           "G1 X190 E20 F1000",
-          "G92 E0 ;zero the extruded length again",
+          "G92 E0",// ;zero the extruded length again",
           "G1 F60",
           "G90",
           "M106 S127.500000",

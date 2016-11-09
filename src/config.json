@@ -24,10 +24,10 @@
     }
   },
   "sav":{
-    "url":"dago-meet-m2m.dagoma.net",
+    "url":"188.166.20.119",
     "port":9000,
     "path":"/meet-us"
   },
-  "updateUrl":"THE_UPDATE_URL",
-  "build-date":"THE_BUILD_DATE"
+  "updateUrl":"http://dist.dagoma.fr/update/diff/DagomApp/1476717532/a937d125692dd4f0f86f89458326881d",
+  "build-date":1476717532
 }

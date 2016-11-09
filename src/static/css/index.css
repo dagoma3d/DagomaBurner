@@ -18,7 +18,7 @@ html{
   background-size: auto;
   background-repeat: no-repeat;
   background-position: 0px 90px;
-	-webkit-touch-callout: none;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -947,7 +947,40 @@ iframe{
   margin-top: 0px;
   float: left;}
 
+#savAdmin #graphOptions{
+  float: left;
+  margin-top: 18px;}
+
+#savAdmin video{
+  flex: 1;
+  height: auto;
+  width: 100%;
+  max-width: 500px;
+  border-bottom: 1px solid #CCC;}
+
+#savAdmin #videoOptionsContainer{
+  flex: 0 1 auto;
+  height: 40px;}
+
+#savAdmin #serialOptionsContainer{
+  flex: 0 1 auto;
+  height: 40px;
+  border-bottom: 1px solid #CCC;
+    border-top: 1px solid #CCC;}
+
+#savAdmin #serial #serialOptions{
+  width: 300px;
+  margin-top: 10px;
+  height: 30px;
+  float: left;}
+
+#savAdmin #serial #serialOptions #autoScrollContainer{
+  float: right;
+  margin-right: 10px;}
+
 #savAdmin #serial{
+  display: flex; /* crée un contexte flex pour ses enfants */
+  flex-direction: column; /* affichage vertical */
   position: absolute;
   top: 70px;
   border: 1px solid #CCC;
@@ -959,16 +992,35 @@ iframe{
   width: calc(100% - 320px);}
 
   #savAdmin #serial #console{
-    height: 266px;
+    flex: 1;
     border-bottom: 1px solid #CCC;
     margin-bottom: 8px;
-    height: calc(100% - 60px);
+    height: calc(100% - 110px);
     overflow: scroll;
     padding: 10px;
     width: 100%;
     font-family: monospace;
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: initial;
     /* position: relative; */
     /* bottom: 57px; */}
+
+  #savAdmin #gcodeForm{
+    flex: 0 1 auto;
+    height: 40px;}
+
+  #savAdmin #portComForm{
+    height: 40px;
+    width: calc(100% - 300px);
+    float: left;}
+
+  #savAdmin #portCom{
+    width: 100%;
+    float: left;
+    height: 40px;}
 
   #savAdmin form{
     position: relative;
@@ -976,10 +1028,10 @@ iframe{
 
   #savAdmin #graph{
     width: 220px;
-    height: calc(100% - 370px);
+    height: calc(100% - 450px);
     position: relative;
     right: 10px;
-    top: 370px;}
+    top: 400px;}
 
   #savAdmin #move{
     height: 100%;

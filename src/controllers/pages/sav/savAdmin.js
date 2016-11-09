@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -9,6 +9,7 @@ var DeviceManager = require(_root+"manager/devices.js");
 var GCodeSender = require(_root+"controllers/utils/GCodeSender.js");
 var GCodeParser = require(_root+"controllers/utils/GCodeParser.js");
 var GCodePrinter = require(_root+"controllers/utils/GCodePrinter.js");
+
 const {remote} = require('electron');
 
 
@@ -16,7 +17,9 @@ var SavAdminPageClass = function SavAdminPageClass(){
   this.content = null;
 
   this.dataListener = this.dataHandler.bind(this);
+  this.writeListener = this.writeHandler.bind(this);
   this.resizeListener = this.resizeHandler.bind(this);
+  this.deleteListener = this.deleteHandler.bind(this);
 }
 
 SavAdminPageClass.prototype.load = function (callback) {
@@ -24,14 +27,13 @@ SavAdminPageClass.prototype.load = function (callback) {
   if(that.content)
     return callback();
 
-  ViewLoader("savAdmin", function(content){
+  ViewLoader("sav/savAdmin", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
       callback();
     }
   });
-
 };
 
 SavAdminPageClass.prototype.initView = function () {
@@ -42,16 +44,55 @@ SavAdminPageClass.prototype.show = function () {
   var that = this;
   var win = remote.getCurrentWindow();
   that.currentBounds = win.getBounds();
+  window.currentBounds = that.currentBounds;
   win.setResizable(true);
-  win.on("resize", that.resizeListener);
+
+  $( window ).on("resize", that.resizeListener);
 
   $('ul.tabs').tabs();
 
-  that.content.find("form").submit(function(e){
+  if(DeviceManager.getSelectedDevice().type != "p2p"){
+    that.content.find("video").hide();
+  }else{
+
+    that.content.find("video").on("click", function(e){
+      DeviceManager.getSelectedDevice().sendClick(e.offsetX, e.offsetY-20);
+    });
+
+    that.content.find("#videoEnable").change(function(){
+      if(that.content.find("#videoEnable").is(':checked')){
+        that.content.find("video").show();
+      }else{
+        that.content.find("video").hide();
+      }
+    });
+
+    console.log(DeviceManager.getSelectedDevice().stream);
+    if(DeviceManager.getSelectedDevice().stream != null){
+      document.querySelector('video').src = URL.createObjectURL(DeviceManager.getSelectedDevice().stream)
+    }else{
+      DeviceManager.getSelectedDevice().on("getStream", function(){
+        document.querySelector('video').src = URL.createObjectURL(DeviceManager.getSelectedDevice().stream)
+      })
+    }
+  }
+
+  that.content.find("form#gcodeForm").submit(function(e){
     e.preventDefault();
 
     GCodeSender.send([that.content.find("#gcode").val()], false);
     that.content.find("#gcode").val("");
+  })
+
+  that.content.find("form#portComForm").submit(function(e){
+    e.preventDefault();
+    console.log("coucou");
+
+    try{
+      DeviceManager.getSelectedDevice().connectToPort(that.content.find("#portCom").val());
+    }catch(e){
+      console.log(e);
+    }
   })
 
   $("#navbar").css("background-color", "#1e88e5");
@@ -64,8 +105,8 @@ SavAdminPageClass.prototype.show = function () {
 
   GCodeSender.addButtonGCode("#ResetConfig", ["M502", "M500"], false);
 
-  GCodeSender.addButtonGCode("#homeXY", ["G28 X Y"], true);
-  GCodeSender.addButtonGCode("#home", ["G28"], true);
+  GCodeSender.addButtonGCode("#homeXY", ["G28 X Y"], false);
+  GCodeSender.addButtonGCode("#home", ["G28"], false);
 
   GCodeSender.addButtonGCode("#stopMotors", ["M18"], false);
 
@@ -175,7 +216,12 @@ SavAdminPageClass.prototype.show = function () {
   });
 
   DeviceManager.getSelectedDevice().on("receive", this.dataListener);
-  console.log("coucou");
+  DeviceManager.getSelectedDevice().on("write", this.writeListener);
+  DeviceManager.getSelectedDevice().on("delete", this.deleteListener);
+
+  that.content.find("#autoUpdate").change(function(){
+    that.getTemperature();
+  });
 
   try{
     DeviceManager.getSelectedDevice().getPortList();
@@ -187,11 +233,13 @@ SavAdminPageClass.prototype.show = function () {
 
 SavAdminPageClass.prototype.getTemperature = function () {
   var that = this;
-  GCodeSender.send(["M105"], false, function(response){
-    that.timeout = setTimeout(function(){
-      that.getTemperature();
-    }, 1000);
-  });
+  if(that.content.find("#autoUpdate").is(':checked')){
+    GCodeSender.send(["M105"], false, function(response){
+        that.timeout = setTimeout(function(){
+          that.getTemperature();
+        }, 1000);
+    });
+  }
 }
 
 SavAdminPageClass.prototype.addTemperatureInGraph = function (response) {
@@ -211,7 +259,18 @@ SavAdminPageClass.prototype.addTemperatureInGraph = function (response) {
     }
 */
     that.updateGraph();
+  }else{
+    var regex = /T:(\d+\.\d)/.exec(response);
+    if(regex && regex.length>=2){
+      that.currentLine.x.push(++that.currentIndex);
+      that.currentLine.y.push(parseFloat(regex[1]));
+      that.targetLine.x.push(that.currentIndex);
+      that.targetLine.y.push(parseFloat(regex[2]));
+
+      that.updateGraph();
+    }
   }
+
 };
 
 SavAdminPageClass.prototype.setupGraph = function () {
@@ -249,13 +308,30 @@ SavAdminPageClass.prototype.updateGraph = function () {
 };
 
 SavAdminPageClass.prototype.dataHandler = function(data){
-  console.log("data", data);
   this.addTemperatureInGraph(data);
 
   var consoleDiv = this.content.find("#console")
   consoleDiv.append(data+"<br/>");
-  consoleDiv[0].scrollTop = consoleDiv[0].scrollHeight;
-};
+  console.log(this.content.find("#autoScroll").is(':checked'));
+  if(this.content.find("#autoScroll").is(':checked'))
+    consoleDiv[0].scrollTop = consoleDiv[0].scrollHeight;
+}
+
+SavAdminPageClass.prototype.deleteHandler = function(){
+  NavManager.setPage("sav/savAdminConnection");
+  alert("Déconnexion");
+}
+
+
+SavAdminPageClass.prototype.writeHandler = function(data){
+  if(this.content.find("#debugCom").is(':checked') == false)
+    return;
+
+  var consoleDiv = this.content.find("#console")
+  consoleDiv.append("<span class=\"blue-text\">"+data+"</span><br/>");
+  if(this.content.find("#autoScroll").is(':checked'))
+    consoleDiv[0].scrollTop = consoleDiv[0].scrollHeight;
+}
 
 SavAdminPageClass.prototype.resizeHandler = function(data){
   this.updateGraph();
@@ -263,15 +339,22 @@ SavAdminPageClass.prototype.resizeHandler = function(data){
 
 SavAdminPageClass.prototype.dispose = function () {
   clearTimeout(this.timeout);
-  if(DeviceManager.getSelectedDevice())
+  if(DeviceManager.getSelectedDevice()){
     DeviceManager.getSelectedDevice().removeListener("receive", this.dataListener);
+    DeviceManager.getSelectedDevice().removeListener("write", this.writeListener);
+  }
   $("#navbar").css("background-color", "#e19531");
   $("#navbar h1").text("Dagom'App");
 
   var win = remote.getCurrentWindow();
-  win.removeListener("resize", this.resizeListener);
-  win.setBounds(this.currentBounds);
+  win.setBounds(window.currentBounds);
   win.setResizable(false);
+  $( window ).off("resize", this.resizeListener);
+
+  if(DeviceManager.getSelectedDevice().type == "p2p"){
+    DeviceManager.getSelectedDevice().close();
+    DeviceManager.setSelectedDevice(null);
+  }
 };
 
 module.exports = SavAdminPageClass;

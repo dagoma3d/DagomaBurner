@@ -67,11 +67,39 @@
         </td>
       </tr>
     </table>
+    <form id="graphOptions" action="#">
+      <div class="row" id="autoScrollContainer">
+        <input id="autoUpdate" type="checkbox">
+        <label for="autoUpdate">AutoUpdate Graph</label>
+      </div>
+    </form>
     <div id="graph"></div>
   </div>
   <div id="serial">
+    <div id="videoOptionsContainer">
+      <form id="videoOptions" action="#">
+        <div class="row" id="autoScrollContainer">
+          <input id="videoEnable" type="checkbox" checked>
+          <label for="videoEnable">Video</label>
+        </div>
+      </form>
+    </div>
+    <video autoplay></video>
+    <div id="serialOptionsContainer">
+      <form id="portComForm" action="#">
+        <input placeholder="PortCom" id="portCom" type="text">
+      </form>
+      <form id="serialOptions" action="#">
+        <div class="row" id="autoScrollContainer">
+          <input id="debugCom" type="checkbox">
+          <label for="debugCom">Debug Communication</label>
+          <input id="autoScroll" type="checkbox" checked>
+          <label for="autoScroll">AutoScroll</label>
+        </div>
+      </form>
+    </div>
     <div id="console"></div>
-    <form class="col s12" action="#">
+    <form id="gcodeForm" class="col s12" action="#">
       <div class="row">
         <input type="submit" value="Send" class="btn right col s2">
         <div class="col s10">

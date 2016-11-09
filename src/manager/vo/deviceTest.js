@@ -12,6 +12,7 @@ var DeviceClassTest = function(portName, pnpId, manufacturer, typeId, version, s
   EventEmitter.call(this);
 
   this.parent = new AbstractDeviceClass(portName.split("/dev/").join(""), this);
+  this.type = "generic";
 	this.portName = portName;
 	this.uid = pnpId;
 	this.serial = null;

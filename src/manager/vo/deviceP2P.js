@@ -7,13 +7,21 @@ var AbstractDeviceClass = require("./abstractDevice.js");
 var root = __dirname + "/../";
 var data = "";
 
-var DeviceClassP2P = function(conn){
+var DeviceClassP2P = function(peer, conn){
   EventEmitter.call(this);
+
+  this.parent = new AbstractDeviceClass("p2p", this);
+
   var that = this;
+  this.type = "p2p";
+  that.peer = peer;
   that.connection = conn;
   that.connection.on("data", function(data){
-    console.log("dataP2P", data);
+    //console.log("dataP2P", data);
     switch(data.t){
+      case "w":
+        that.emit("write", data.m);
+        break;
       case "d":
         that.emit("receive", data.m);
         break;
@@ -21,16 +29,34 @@ var DeviceClassP2P = function(conn){
         that.emit("receive", "<span class=\"red-text\">==> Liste des ports : "+data.m.join(", ")+"</span>");
         break;
       case "pa":
-        that.emit("receive", "<span class=\"red-text\">==> Add port : "+data.m.join(", ")+"</span>");
+        that.emit("receive", "<span class=\"red-text\">==> Add port : "+data.m+"</span>");
         break;
       case "po":
-        that.emit("receive", "<span class=\"red-text\">==> Open port : "+data.m.join(", ")+"</span>");
+        that.emit("receive", "<span class=\"red-text\">==> Open port : "+data.m+"</span>");
         break;
       case "pr":
-        that.emit("receive", "<span class=\"red-text\">==> Remove port : "+data.m.join(", ")+"</span>");
+        that.emit("receive", "<span class=\"red-text\">==> Remove port : "+data.m+"</span>");
         break;
     }
+  });
+
+  that.connection.on("close", function(){
+    that.delete();
   })
+
+  that.peer.on('close', function(){
+    that.delete();
+  });
+
+  that.peer.on('call', function(call) {
+    console.log("call");
+    call.answer(null); // Answer the call with an A/V stream.
+    call.on('stream', function(remoteStream) {
+      that.stream = remoteStream;
+      that.emit("getStream");
+      // Show stream in some <video> element.
+    });
+  });
 };
 
 util.inherits(DeviceClassP2P, EventEmitter);
@@ -83,12 +109,21 @@ DeviceClassP2P.prototype.getPortList = function (){
   this.connection.send({"t":"g", "m":"pl"});
 }
 
-DeviceClassP2P.prototype.delete = function(){
+DeviceClassP2P.prototype.connectToPort = function (port){
+  console.log("connectToPort", port);
+  this.connection.send({"t":"c", "m":port});
+}
 
+DeviceClassP2P.prototype.sendClick = function (x, y){
+  this.connection.send({"t":"m", "x":x, "y":y});
+}
+
+DeviceClassP2P.prototype.delete = function(){
+  this.parent.delete();
 }
 
 DeviceClassP2P.prototype.close = function(force){
-
+  this.connection.close();
 }
 
 DeviceClassP2P.prototype.pause = function(){

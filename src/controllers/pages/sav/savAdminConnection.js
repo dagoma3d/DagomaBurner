@@ -1,6 +1,6 @@
 "use strict";
 
-var _root = __dirname + "/../../";
+var _root = __dirname + "/../../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
@@ -18,7 +18,7 @@ P2PConnectionClass.prototype.load = function (callback) {
   if(that.content)
     return callback();
 
-  ViewLoader("savAdminConnection", function(content){
+  ViewLoader("sav/savAdminConnection", function(content){
     that.content = $(content);
     that.initView();
     if(callback){
@@ -40,15 +40,21 @@ P2PConnectionClass.prototype.show = function () {
   });
 
   that.content.find("#next").on("click", function(){
-    NavManager.setPage("savAdmin");
+    NavManager.setPage("sav/savAdmin");
   });
 
   that.content.find("#usbPrinter").on("click", function(){
-    window.pageAfterDeviceSelection = "savAdmin";
+    window.pageAfterDeviceSelection = "sav/savAdmin";
     NavManager.setPage("selectPrinter/0_preparation");
   });
 
   that.content.find("#next").hide();
+
+  var lastID = localStorage.getItem('lastID');
+  // Vérification de la présence du compteur
+  if(lastID!=null) {
+    that.content.find("input").val(lastID);
+  }
 
 };
 
@@ -57,7 +63,13 @@ P2PConnectionClass.prototype.connectToID = function (id) {
   console.log("id", id);
   that.content.find("#text").text("connection...");
   console.log(config);
-  var peer = new Peer({host: config.sav.url, port: config.sav.port})//{key: '7gphj6gigo561or', });
+  var peer = new Peer({
+    host: config.sav.url,
+    port: config.sav.port,
+    path : config.sav.path,
+    key: "253b8464e7f5a449231c3400fadd9e78642d69d3",
+    //secure: true,
+  })//{key: '7gphj6gigo561or', });
   var conn = peer.connect(id);
   conn.on('open', function(){
     conn.send('ping');
@@ -66,9 +78,10 @@ P2PConnectionClass.prototype.connectToID = function (id) {
   conn.on('data', function(data){
     if(data == "pong"){
       that.content.find("#text").text("connected");
-      var device = new VODeviceP2P(conn);
+      var device = new VODeviceP2P(peer, conn);
       DeviceManager.setSelectedDevice(device);
-      NavManager.setPage("savAdmin");
+      NavManager.setPage("sav/savAdmin");
+      localStorage.setItem('lastID', id);
     }
   });
 };

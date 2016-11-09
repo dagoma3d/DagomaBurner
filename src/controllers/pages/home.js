@@ -56,7 +56,7 @@ HomePageClass.prototype.keydownHandler = function (e) {
   }
 
   if (that.keys.join('') == '38404037393739836586') {
-    NavManager.setPage("savAdminConnection");
+    NavManager.setPage("sav/savAdminConnection");
   }
 }
 

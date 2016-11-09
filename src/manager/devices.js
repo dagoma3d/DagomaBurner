@@ -85,6 +85,14 @@ DeviceManagerClass.prototype.createDevice = function(name, device){
       that.emit("change", device);
     });
 
+    device.on("receive", function(data){
+      that.emit("receive", data);
+    });
+
+    device.on("write", function(data){
+      that.emit("write", data);
+    });
+
     device.on("printerFound", function(device){
       that.emit("printerFound", device);
     });

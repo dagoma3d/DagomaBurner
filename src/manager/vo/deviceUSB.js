@@ -15,6 +15,7 @@ var DeviceClassUSB = function(portName, uid, manufacturer){
   EventEmitter.call(this);
 
   this.parent = new AbstractDeviceClass(portName.split("/dev/").join(""), this);
+  this.type = "usb";
   this.portName = portName;
   this.baudRate = 250000;
   this.uid = uid;
@@ -226,6 +227,7 @@ DeviceClassUSB.prototype.parseSerialData = function(data){
 
 DeviceClassUSB.prototype.send = function (data){
   if(this.serial != null){
+    this.emit("write", data);
     this.serial.write(data);//+"\r\n");
     console.log("write", data);
   }

@@ -56,6 +56,10 @@ var template = [
         accelerator: 'Command+R',
         click(item, focusedWindow) {
           if (focusedWindow) focusedWindow.reload();
+          if(window.currentBounds && focusedWindow){
+            focusedWindow.setBounds(window.currentBounds);
+            focusedWindow.setResizable(false);
+          }
         }
       },
       {

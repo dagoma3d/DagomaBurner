@@ -3,7 +3,7 @@ const ENABLE_AUTO_UPDATE = true;
 const electron = require('electron');
 const {app} = electron;
 const {BrowserWindow} = electron;
-const {remote} = electron;
+const {dialog} = require('electron');
 const {ipcMain, ipcRenderer, shell} = electron;
 
 const fs = require('fs');
@@ -89,10 +89,12 @@ AppRunnerClass.prototype.openWindow = function(){
   that.mainWindow = new BrowserWindow({
     width: 500,
     height:  (process.platform=="win32")?480:450,
-    resizable: false, frame: false,
+    resizable: false, frame: true,
     //type:"dock",
     title: "Dagom'App",
+    name: "Dagom'App",
     'use-content-size': true,
+
     //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
   });
   //mainWindow.loadURL(`file://${__dirname}/views/index.html`);
@@ -108,6 +110,20 @@ AppRunnerClass.prototype.openWindow = function(){
   that.mainWindow.focus();
   that.mainWindow.on("will-navigate", function(e) { e.preventDefault() });
   //mainWindow.openDevTools();
+
+  that.mainWindow.webContents.on('crashed', function () {
+    const options = {
+      type: 'info',
+      title: "Dagom'App Crashed",
+      message: "Dagom'App Crashed",
+      buttons: ['Reload', 'Close']
+    }
+    dialog.showMessageBox(options, function (index) {
+      if (index === 0) that.mainWindow.reload()
+      else that.mainWindow.close()
+    })
+  })
+
   if(that.updateWindow)
     that.updateWindow.close();
 };

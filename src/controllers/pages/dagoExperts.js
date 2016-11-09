@@ -31,7 +31,7 @@ DagoExpertsClass.prototype.initView = function () {
 
 DagoExpertsClass.prototype.show = function () {
   this.content.find("img").on("click", function(){
-    NavManager.setPage("savUser");
+    NavManager.setPage("sav/savUser");
   });
 };
 
