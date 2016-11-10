@@ -75,6 +75,10 @@ P2PConnectionClass.prototype.connectToID = function (id) {
     conn.send('ping');
   });
 
+  conn.on('error', function(error){
+    console.log("error", error);
+  });
+
   conn.on('data', function(data){
     if(data == "pong"){
       that.content.find("#text").text("connected");

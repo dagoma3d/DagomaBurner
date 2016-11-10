@@ -94,6 +94,7 @@ AppRunnerClass.prototype.openWindow = function(){
     title: "Dagom'App",
     name: "Dagom'App",
     'use-content-size': true,
+    autoHideMenuBar: true,
 
     //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
   });

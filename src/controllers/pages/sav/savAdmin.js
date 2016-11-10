@@ -56,7 +56,7 @@ SavAdminPageClass.prototype.show = function () {
   }else{
 
     that.content.find("video").on("click", function(e){
-      DeviceManager.getSelectedDevice().sendClick(e.offsetX, e.offsetY-20);
+      DeviceManager.getSelectedDevice().sendClick(e.offsetX, e.offsetY);
     });
 
     that.content.find("#videoEnable").change(function(){

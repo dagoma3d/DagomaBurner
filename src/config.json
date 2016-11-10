@@ -29,6 +29,6 @@
     "secure": true,
     "path":"/meet-us"
   },
-  "updateUrl":"THE_UPDATE_URL",
-  "build-date":"THE_BUILD_DATE"
+  "updateUrl":"http://dist.dagoma.fr/update/diff/DagomApp/1476717532/c93169f1eb9be7246f990690b5e66b2d",
+  "build-date":1476717532
 }
