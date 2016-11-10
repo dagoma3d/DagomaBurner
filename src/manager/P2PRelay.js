@@ -23,6 +23,8 @@ util.inherits(P2PRelayClass, EventEmitter);
 
 P2PRelayClass.prototype.init = function(conn) {
   $("#savBar").show();
+  $("#navbar").addClass("savBar");
+
   if(this.connection){
     this.connection.removeListener("data", this.dataListener);
     this.connection.removeListener("close", this.disconnectedListener);
@@ -55,6 +57,7 @@ P2PRelayClass.prototype.portWriteHandler = function(data) {
 
 P2PRelayClass.prototype.disconnectedHandler = function(event) {
   $("#savBar").hide();
+  $("#navbar").removeClass("savBar");
   console.log("disconnected", event);
 }
 
@@ -63,10 +66,22 @@ P2PRelayClass.prototype.dataHandler = function(data) {
   switch(data.t){
     case "m":
       var win = remote.getCurrentWindow();
+
+      if(process.platform=="darwin"){
+        data.x-=5;
+        data.y-=23;
+      }else if(process.platform=="linux"){
+        data.y-=5;
+      }else if(process.platform=="win32"){
+        data.x-=10;
+        data.y-=30;
+      }
+
       win.webContents.sendInputEvent({type:"mouseDown", x:data.x, y:data.y, button:"left", clickCount:1});
       win.webContents.sendInputEvent({type:"mouseUp", x:data.x, y:data.y, button:"left", clickCount:1});
       $("#pointer").css("left", data.x);
       $("#pointer").css("top", data.y);
+      $("#pointer").stop().fadeIn(200).delay(500).fadeOut(500);
       break;
     case "d":
       if(DeviceManager.selectedDevice)
