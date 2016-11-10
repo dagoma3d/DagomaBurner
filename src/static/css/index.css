@@ -939,15 +939,17 @@ iframe{
       right: 5px;}
 
 #pointer{
+  pointer-events: none;
   position: absolute;
-  background-color: grey;
+  background-color: #333;
   width: 30px;
   height: 30px;
   margin-left: -15px;
   margin-top: -15px;
   border-radius: 30px;
   /*opacity: 0.5;*/
-  display: none;}
+  display: none;
+  z-index: 999999;}
 
 #savConnection #usbPrinter{
   position: absolute;

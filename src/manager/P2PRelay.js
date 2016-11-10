@@ -64,7 +64,8 @@ P2PRelayClass.prototype.disconnectedHandler = function(event) {
 P2PRelayClass.prototype.dataHandler = function(data) {
 
   switch(data.t){
-    case "m":
+    case "mD":
+    case "mU":
       var win = remote.getCurrentWindow();
 
       if(process.platform=="darwin"){
@@ -77,11 +78,18 @@ P2PRelayClass.prototype.dataHandler = function(data) {
         data.y-=30;
       }
 
-      win.webContents.sendInputEvent({type:"mouseDown", x:data.x, y:data.y, button:"left", clickCount:1});
-      win.webContents.sendInputEvent({type:"mouseUp", x:data.x, y:data.y, button:"left", clickCount:1});
       $("#pointer").css("left", data.x);
       $("#pointer").css("top", data.y);
-      $("#pointer").stop().fadeIn(200).delay(500).fadeOut(500);
+      console.log("okok");
+
+      if(data.t == "mD"){
+        win.webContents.sendInputEvent({type:"mouseDown", x:data.x, y:data.y, button:"left", clickCount:1});
+        $("#pointer").finish().fadeIn(200);
+      }else{
+        win.webContents.sendInputEvent({type:"mouseUp", x:data.x, y:data.y, button:"left", clickCount:1});
+        $("#pointer").finish().fadeOut(500);
+      }
+
       break;
     case "d":
       if(DeviceManager.selectedDevice)
@@ -104,6 +112,7 @@ P2PRelayClass.prototype.dataHandler = function(data) {
       if(DeviceManager.devices[data.m]){
         DeviceManager.setSelectedDevice(DeviceManager.devices[data.m]);
         DeviceManager.selectedDevice.open();
+        DeviceManager.selectedDevice.validate = true;
       }
       break;
   }

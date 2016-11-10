@@ -6,6 +6,8 @@ var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
 
 var HomePageClass = function HomePageClass(){
+  this.keyDownListener = this.keydownHandler.bind(this);
+
   this.content = null;
 }
 
@@ -23,7 +25,6 @@ HomePageClass.prototype.load = function (callback) {
     }
   });
 
-  this.keyDownListener = this.keydownHandler.bind(this);
 
 };
 
@@ -40,9 +41,6 @@ HomePageClass.prototype.initView = function () {
     NavManager.setPage("dagoExperts");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
-
-  that.keys = [];
-  $(document).on("keydown", this.keyDownListener);
 };
 
 HomePageClass.prototype.keydownHandler = function (e) {
@@ -61,7 +59,8 @@ HomePageClass.prototype.keydownHandler = function (e) {
 }
 
 HomePageClass.prototype.show = function () {
-
+  this.keys = [];
+  $(document).on("keydown", this.keyDownListener);
 };
 
 HomePageClass.prototype.dispose = function () {

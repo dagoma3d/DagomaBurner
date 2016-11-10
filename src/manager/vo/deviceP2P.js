@@ -114,8 +114,12 @@ DeviceClassP2P.prototype.connectToPort = function (port){
   this.connection.send({"t":"c", "m":port});
 }
 
-DeviceClassP2P.prototype.sendClick = function (x, y){
-  this.connection.send({"t":"m", "x":x, "y":y});
+DeviceClassP2P.prototype.sendMouseDown = function (x, y){
+  this.connection.send({"t":"mD", "x":x, "y":y});
+}
+
+DeviceClassP2P.prototype.sendMouseUp = function (x, y){
+  this.connection.send({"t":"mU", "x":x, "y":y});
 }
 
 DeviceClassP2P.prototype.delete = function(){

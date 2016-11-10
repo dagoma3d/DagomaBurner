@@ -7,6 +7,7 @@ var NavManager = require(_root+"manager/NavManager.js");
 
 var ConfigurationPageClass = function ConfigurationPageClass(){
   this.content = null;
+  this.keyDownListener = this.keydownHandler.bind(this);
 }
 
 ConfigurationPageClass.prototype.load = function (callback) {
@@ -23,7 +24,6 @@ ConfigurationPageClass.prototype.load = function (callback) {
     }
   });
 
-  this.keyDownListener = this.keydownHandler.bind(this);
 };
 
 ConfigurationPageClass.prototype.initView = function () {
