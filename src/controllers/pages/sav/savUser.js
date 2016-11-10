@@ -45,7 +45,7 @@ SavClass.prototype.s4 = function() {
 SavClass.prototype.show = function () {
   var that = this;
   if(window.p2pId == null){
-    window.p2pId = (100000+(Math.random() * 89999)).toFixed();
+    window.p2pId = (100000+(Math.random() * 899999)).toFixed();
     var peer = new Peer(window.p2pId, {
       host: config.sav.url,
       port: config.sav.port,
