@@ -131,6 +131,12 @@ DeviceClassUSB.prototype.parseData = function(){
     that.emit("printerFound", that);
     that.printerFound = true;
   }
+
+  if(lineData.indexOf("MINTEMP triggered")>=0 || lineData.indexOf("MAXTEMP triggered")>=0){
+    ModalManager.hideLoader();
+    ModalManager.alert(I18n.currentLanguage().error_minmaxtemp_title, I18n.currentLanguage().error_minmaxtemp_message);
+  }
+
   //console.log(lineData.charCodeAt(0), lineData.charCodeAt(1));
   /*
   if(lineData[0] == "!" && lineData[1] == "S" && lineData[2] == "k"){

@@ -114,5 +114,7 @@
   "printer_connexion_detected":"Imprimante détectée",
   "printer_connexion_searching":"Recherche d'une imprimante... (peut prendre jusqu'à 30secondes)",
   "sav_code":"Votre code SAV : ",
-  "sav_connected":"Vous êtes connecté au SAV"
+  "sav_connected":"Vous êtes connecté au SAV",
+  "error_minmaxtemp_title":"Erreur de l'imprimante",
+  "error_minmaxtemp_message":"L'imprimante n'a pas correctement détectée la tête d'impression, vérifiez les cablages"
 }
