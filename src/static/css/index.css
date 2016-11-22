@@ -1,3 +1,10 @@
+/*
+************************************************************************
+***************************** COMMON ***********************************
+************************************************************************
+*/
+
+
 *{
   white-space-collapse: discard;}
 
@@ -25,20 +32,6 @@ html{
   -ms-user-select: none;
   user-select: none;
   cursor: default;}
-
-#welcome{
-  position: absolute;
-  z-index: 10;
-  top: 0px;
-  background-color: #e19531;
-  bottom: 0px;
-  padding: 60px 50px;
-  font-size: 26px;
-  text-align: center;
-  color: white;}
-
-  #welcome p{
-    margin: 0px;}
 
 #version{
   position: fixed;
@@ -285,6 +278,23 @@ html.update{
 ************************************************************************
 */
 
+#welcome{
+  position: absolute;
+  z-index: 10;
+  top: 0px;
+  background-color: #e19531;
+  bottom: 0px;
+  padding: 60px 50px;
+  font-size: 26px;
+  text-align: center;
+  color: white;}
+
+  #welcome p{
+    margin: 0px;}
+
+#home a{
+  width: 320px;}
+
 .buttonList{
   margin: 100px 20px 0px;}
 
@@ -327,20 +337,11 @@ html.update{
         font-size: 15px;
         margin: 0px;}
 
-.explication{
-  font-size: 18px;}
-
-  .explication #start{
-    display: block;
-    position: absolute;
-    left: 100px;
-    right: 20px;
-    bottom: 20px;}
-
-  .explication p{
-    margin-top: 0px;
-    margin-bottom: 20px;}
-
+/*
+************************************************************************
+***************************** Configuration ****************************
+************************************************************************
+*/
 
 .buttonListExpendable {
     margin-left: 6px;}
@@ -413,9 +414,6 @@ html.update{
 ************************************************************************
 */
 
-#home a{
-  width: 320px;}
-
 .selectPrinter p{
   font-size: 20px;
   }
@@ -432,18 +430,19 @@ html.update{
 
 /*
 ************************************************************************
-************************************************************************
+**************************** Z-Offset **********************************
 ************************************************************************
 */
 
-.zoffset #next{
-  position: absolute;
-  bottom: 20px;
-  right: 20px;}
 
 .zoffset{
   font-size: 18px;
   margin: 0px 20px 0px 20px;}
+
+  .zoffset #next{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;}
 
   #zoffsetPreparation .thanksToPrepare{
     margin-bottom: 0px;}
@@ -493,26 +492,28 @@ html.update{
     height: 70px;
     text-transform: inherit;}
 
-#zoffsetConnection iframe{
-  margin-bottom: 30px;
-  margin-top: 40px;}
+#zoffsetConnection{}
 
-#zoffsetConnection img{
-  margin-bottom: 20px;
-  margin-left: 20px;}
+  #zoffsetConnection iframe{
+    margin-bottom: 30px;
+    margin-top: 40px;}
 
-  #zoffsetConnection p{
-    margin-bottom: 0px;}
+  #zoffsetConnection img{
+    margin-bottom: 20px;
+    margin-left: 20px;}
 
-  #zoffsetConnection #comSelector{
-    margin-bottom: 10px;
-    margin-right: 10px;
-    font-size: 14px;}
+    #zoffsetConnection p{
+      margin-bottom: 0px;}
 
-    #zoffsetConnection #comSelector p{
-      margin: 5px;
-      color: #999;
-      padding-bottom: 5px;}
+    #zoffsetConnection #comSelector{
+      margin-bottom: 10px;
+      margin-right: 10px;
+      font-size: 14px;}
+
+      #zoffsetConnection #comSelector p{
+        margin: 5px;
+        color: #999;
+        padding-bottom: 5px;}
 
 #zoffsetSetJumper, #zoffsetSetJumper_melzi {
   font-size: 15px;
@@ -547,40 +548,37 @@ html.update{
         line-height: 140px;
         text-shadow: 1px 1px 2px grey;}
 
-
 iframe{
   border: 0px;
   margin-left: 20px;
   margin-bottom: 10px;
   overflow: hidden;}
 
+#zoffsetTuning{}
 
-#zoffsetTuning{
-}
+  #zoffsetTuning iframe{
+    margin-left: 40px;}
 
-#zoffsetTuning iframe{
-  margin-left: 40px;}
+  #zoffsetTuning .useButton{
+    margin-bottom: 20px}
 
-#zoffsetTuning .useButton{
-  margin-bottom: 20px}
+  #zoffsetTuning h3{
+    float: left;
+    text-align: center;
+    margin-left: 40px;
+    margin-top: 50px;}
 
-#zoffsetTuning h3{
-  float: left;
-  text-align: center;
-  margin-left: 40px;
-  margin-top: 50px;}
+  #zoffsetTuning a.nozzleBtn{
+    display: block;
+    margin-left: 200px;
+    height: 60px;
+    margin-bottom: 20px;
+    line-height: 60px;
+    margin-right: 30px;}
 
-#zoffsetTuning a.nozzleBtn{
-  display: block;
-  margin-left: 200px;
-  height: 60px;
-  margin-bottom: 20px;
-  line-height: 60px;
-  margin-right: 30px;}
-
-  #zoffsetTuning #next{
-    bottom: 20px;
-    right: 20px;}
+    #zoffsetTuning #next{
+      bottom: 20px;
+      right: 20px;}
 
 #zoffsetMoveNozzle{
   }
@@ -614,7 +612,6 @@ iframe{
   #zoffsetTestPrintStart p{
     margin-top: 0px;
     margin-bottom: 20px;}
-
 
 #zoffsetTestPrinting{
     margin: 0px 16px 0 0;}
@@ -668,19 +665,19 @@ iframe{
         width: 100%;
         font-size: 13px}
 
+#zoffsetSave{}
 
+  #zoffsetSave p.green-text{
+    margin-top: 80px;}
 
-#zoffsetSave p.green-text{
-  margin-top: 80px;}
-
-#zoffsetSave img{
-  width: 200px;
-  margin: 10px 70px;}
+  #zoffsetSave img{
+    width: 200px;
+    margin: 10px 70px;}
 
 
 /*
 ************************************************************************
-************************************************************************
+**************************** Firmware **********************************
 ************************************************************************
 */
 
@@ -699,62 +696,10 @@ iframe{
   #firwareDrag #burn {
     background-color: #e19531;
     width: 100%;}
-/*
-#dragBox{
-  width: 100%;
-  height: 330px;
-  border: 1px dashed grey;
-  margin-top: 10px;
-}
 
-.drag{
-  background-image: url("../images/arrow.png");
-  background-repeat: no-repeat;
-  background-position: center;
-	background-color: rgba(255,255,255, 0.9);
-	position: relative;
-  text-align: center;
-  padding-top: 268px;
-}
-
-.drag.hover{
-	opacity: 0.25;
-}
-
-.file{
-	padding: 10px;
-  width: 100%;
-  position: relative;
-  height: 330px;}
-
-.fileName{
-	font-weight: bold;
-  text-align: center;
-  position: relative;
-  top: 50%;
-  overflow-wrap: break-word;
-  -webkit-transform: translateY(-50%);
-  width: 80%;
-  margin: auto;
-}
-
-#burn{
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  left: 10px;
-  background-color: #e19531;
-}
-
-#errorMessage{
-  font-size: 1.5rem;
-  text-align: center;
-  margin-top: 40%;
-}
-*/
 /*
 ************************************************************************
-************************************************************************
+**************************** diagnostic ********************************
 ************************************************************************
 */
 
@@ -763,146 +708,152 @@ iframe{
   margin-top: -20px;
   margin-left: -10px;}
 
-#diagnostic .tabs{
-  margin-bottom: 10px;
-  overflow: hidden;}
+  #diagnostic .tabs{
+    margin-bottom: 10px;
+    overflow: hidden;}
 
-#diagnostic #move a{
-  margin:5px;
-  background-color: #4d5254;}
+  #diagnostic #move a{
+    margin:5px;
+    background-color: #4d5254;}
 
-#diagnostic .modal-action{
-  background-color: #ff8242;}
+  #diagnostic .modal-action{
+    background-color: #ff8242;}
 
-#diagnostic .modal-content{
-  overflow-y: hidden;}
+  #diagnostic .modal-content{
+    overflow-y: hidden;}
 
-#diagnostic #move table{
-  margin-left: 20px;
-  width: 190px;
-  margin-top: 0px;
-  float: left;}
-
-#diagnostic #serial{
-  position: relative;
-  top: 60px;
-  border: 1px solid #CCC;
-  margin-right: 10px;
-  height: 320px;}
-
-  #diagnostic #serial #console{
-    height: 266px;
-    border-bottom: 1px solid #CCC;
-    margin-bottom: 8px;
-    height: 270px;
-    overflow: scroll;
-    padding: 10px;
-    width: 100%;
-    position: relative;
-    bottom: 57px;}
-
-  #diagnostic form{
-    position: relative;
-    bottom: 62px;}
-
-  #diagnostic #graph{
+  #diagnostic #move table{
+    margin-left: 20px;
     width: 190px;
-    height: 320px;
-    position: absolute;
-    right: 10px;
-    top: 110px;}
-
-  #diagnostic #move input{
-    display: inline-block;
-    width: 53px;
-    margin-top: 10px;
-    margin-bottom: 9px;
-    text-align: center;}
-
-  #diagnostic #move p{
-    margin-top: 21px;
-    margin-bottom: 0px;
+    margin-top: 0px;
     float: left;}
 
-  #diagnostic #move a#ResetPort{
-    width: 185px;}
+  #diagnostic #serial{
+    position: relative;
+    top: 60px;
+    border: 1px solid #CCC;
+    margin-right: 10px;
+    height: 320px;}
 
-  #diagnostic #move a#ResetConfig{
-    width: 185px;}
-
-  #diagnostic #move a#pid{
-    width: 185px;}
-
-    #diagnostic #move a#pid .preloader-wrapper{
-      display: inline-block;
-      width: 22px;
-      height: 22px;
+    #diagnostic #serial #console{
+      height: 266px;
+      border-bottom: 1px solid #CCC;
+      margin-bottom: 8px;
+      height: 270px;
+      overflow: scroll;
+      padding: 10px;
+      width: 100%;
       position: relative;
-      top: 5px;}
+      bottom: 57px;}
+
+    #diagnostic form{
+      position: relative;
+      bottom: 62px;}
+
+    #diagnostic #graph{
+      width: 190px;
+      height: 320px;
+      position: absolute;
+      right: 10px;
+      top: 110px;}
+
+    #diagnostic #move input{
+      display: inline-block;
+      width: 53px;
+      margin-top: 10px;
+      margin-bottom: 9px;
+      text-align: center;}
+
+    #diagnostic #move p{
+      margin-top: 21px;
+      margin-bottom: 0px;
+      float: left;}
+
+    #diagnostic #move a#ResetPort{
+      width: 185px;}
+
+    #diagnostic #move a#ResetConfig{
+      width: 185px;}
+
+    #diagnostic #move a#pid{
+      width: 185px;}
+
+      #diagnostic #move a#pid .preloader-wrapper{
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        position: relative;
+        top: 5px;}
+
+  /*
+    #diagnostic .modal-content table{
+      margin-left: 80px;
+      margin-top: 20px;
+      border: 0px;}
+
+    #diagnostic .modal-content table td{
+      width: 70px!important;
+      padding-bottom: 5px!important;}
+  */
+    #diagnostic #move table.position td{
+      text-align: center;
+      margin: 0px;
+      border: 0px;
+      padding: 0px;
+      width: 42px;}
+
+      #diagnostic #move table.position td a{
+        width: 40px;
+        text-align: center;
+        padding: 0px;
+        margin: 1px;}
+
+      #diagnostic #move table.position td.colZ{
+        padding-left: 20px;}
+
+      #diagnostic #move table.position a.colZ{
+        margin-left: 20px;}
+
+      #diagnostic #move table.position .speedControl{
+        margin-top: 10px;
+        width: 100%;
+        background-color: #4d5254;
+        height: 42px;
+        line-height: 42px;
+        text-align: center;
+        color: white;
+        border-radius: 2px;}
+
+        #diagnostic #move table.position .speedControl a{
+          display: block;
+          background: transparent;
+          margin: 0px;
+          padding: 0px;
+          float: left;
+          width: 25%;
+          border-radius: 0px;
+          color: white;
+          border-left: 1px solid white;}
+
+        #diagnostic #move table.position .speedControl a:first-child{
+          border-left: 0px;}
+
+        #diagnostic #move table.position .speedControl a.selected{
+          box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+          background-color: #ff8242;
+          border-radius:2px;
+          }
+
+        #diagnostic #move #stopMotors{
+          background-color: red;
+          width: 100%;
+          margin: 10px 0px;}
 
 /*
-  #diagnostic .modal-content table{
-    margin-left: 80px;
-    margin-top: 20px;
-    border: 0px;}
-
-  #diagnostic .modal-content table td{
-    width: 70px!important;
-    padding-bottom: 5px!important;}
+************************************************************************
+**************************** dagoExperts *******************************
+************************************************************************
 */
-  #diagnostic #move table.position td{
-    text-align: center;
-    margin: 0px;
-    border: 0px;
-    padding: 0px;
-    width: 42px;}
-
-    #diagnostic #move table.position td a{
-      width: 40px;
-      text-align: center;
-      padding: 0px;
-      margin: 1px;}
-
-    #diagnostic #move table.position td.colZ{
-      padding-left: 20px;}
-
-    #diagnostic #move table.position a.colZ{
-      margin-left: 20px;}
-
-    #diagnostic #move table.position .speedControl{
-      margin-top: 10px;
-      width: 100%;
-      background-color: #4d5254;
-      height: 42px;
-      line-height: 42px;
-      text-align: center;
-      color: white;
-      border-radius: 2px;}
-
-      #diagnostic #move table.position .speedControl a{
-        display: block;
-        background: transparent;
-        margin: 0px;
-        padding: 0px;
-        float: left;
-        width: 25%;
-        border-radius: 0px;
-        color: white;
-        border-left: 1px solid white;}
-
-      #diagnostic #move table.position .speedControl a:first-child{
-        border-left: 0px;}
-
-      #diagnostic #move table.position .speedControl a.selected{
-        box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-        background-color: #ff8242;
-        border-radius:2px;
-        }
-
-      #diagnostic #move #stopMotors{
-        background-color: red;
-        width: 100%;
-        margin: 10px 0px;}
 
 #dagoExperts {
   margin-right: 20px;}
@@ -938,6 +889,12 @@ iframe{
       bottom: 15px;
       right: 5px;}
 
+/*
+************************************************************************
+**************************** SAV P2P ***********************************
+************************************************************************
+*/
+
 #pointer{
   pointer-events: none;
   position: absolute;
@@ -960,82 +917,70 @@ iframe{
   margin-top: -20px;
   margin-left: -10px;}
 
-#savAdmin #move a{
-  margin:5px;
-  background-color: #4d5254;}
+  #savAdmin .modal-action{
+    background-color: #ff8242;}
 
-#savAdmin .modal-action{
-  background-color: #ff8242;}
+  #savAdmin .modal-content{
+    overflow-y: hidden;}
 
-#savAdmin .modal-content{
-  overflow-y: hidden;}
 
-#savAdmin #move table{
-  margin-left: 20px;
-  width: 190px;
-  margin-top: 0px;
-  float: left;}
+  #savAdmin #graphOptions{
+    float: left;
+    margin-top: 18px;}
 
-#savAdmin #graphOptions{
-  float: left;
-  margin-top: 18px;}
-
-#savAdmin video{
-  flex: 1;
-  height: auto;
-  width: 100%;
-  max-width: 500px;
-  border-bottom: 1px solid #CCC;}
-
-#savAdmin #videoOptionsContainer{
-  flex: 0 1 auto;
-  height: 40px;}
-
-#savAdmin #serialOptionsContainer{
-  flex: 0 1 auto;
-  height: 40px;
-  border-bottom: 1px solid #CCC;
-    border-top: 1px solid #CCC;}
-
-#savAdmin #serial #serialOptions{
-  width: 300px;
-  margin-top: 10px;
-  height: 30px;
-  float: left;}
-
-#savAdmin #serial #serialOptions #autoScrollContainer{
-  float: right;
-  margin-right: 10px;}
-
-#savAdmin #serial{
-  display: flex; /* crée un contexte flex pour ses enfants */
-  flex-direction: column; /* affichage vertical */
-  position: absolute;
-  top: 70px;
-  border: 1px solid #CCC;
-  margin-right: 10px;
-  height: 100%;
-  /* float: left; */
-  left: 310px;
-  height: calc(100% - 80px);
-  width: calc(100% - 320px);}
-
-  #savAdmin #serial #console{
+  #savAdmin video{
     flex: 1;
-    border-bottom: 1px solid #CCC;
-    margin-bottom: 8px;
-    height: calc(100% - 110px);
-    overflow: scroll;
-    padding: 10px;
+    height: auto;
     width: 100%;
-    font-family: monospace;
-    -webkit-user-select: initial;
-    -khtml-user-select: initial;
-    -moz-user-select: initial;
-    -ms-user-select: initial;
-    user-select: initial;
-    /* position: relative; */
-    /* bottom: 57px; */}
+    max-width: 500px;
+    border-bottom: 1px solid #CCC;}
+
+  #savAdmin #videoOptionsContainer{
+    flex: 0 1 auto;
+    height: 40px;}
+
+  #savAdmin #serial{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    border: 1px solid #CCC;
+    margin-right: 10px;
+    height: 100%;
+    left: 310px;
+    height: calc(100% - 80px);
+    width: calc(100% - 320px);}
+
+    #savAdmin #serial #serialOptionsContainer{
+      flex: 0 1 auto;
+      height: 40px;
+      border-bottom: 1px solid #CCC;
+        border-top: 1px solid #CCC;}
+
+    #savAdmin #serial #serialOptions{
+      width: 300px;
+      margin-top: 10px;
+      height: 30px;
+      float: left;}
+
+      #savAdmin #serial #serialOptions #autoScrollContainer{
+        float: right;
+        margin-right: 10px;}
+
+    #savAdmin #serial #console{
+      flex: 1;
+      border-bottom: 1px solid #CCC;
+      margin-bottom: 8px;
+      height: calc(100% - 110px);
+      overflow: scroll;
+      padding: 10px;
+      width: 100%;
+      font-family: monospace;
+      -webkit-user-select: initial;
+      -khtml-user-select: initial;
+      -moz-user-select: initial;
+      -ms-user-select: initial;
+      user-select: initial;}
 
   #savAdmin #gcodeForm{
     flex: 0 1 auto;
@@ -1066,94 +1011,93 @@ iframe{
     height: 100%;
     width: 230px;}
 
-  #savAdmin #move input{
-    display: inline-block;
-    width: 53px;
-    margin-top: 10px;
-    margin-bottom: 9px;
-    text-align: center;}
+    #savAdmin #move a{
+      margin:5px;
+      background-color: #4d5254;}
 
-  #savAdmin #move p{
-    margin-top: 21px;
-    margin-bottom: 0px;
-    float: left;}
-
-  #savAdmin #move a#ResetPort{
-    width: 185px;}
-
-  #savAdmin #move a#ResetConfig{
-    width: 185px;}
-
-  #savAdmin #move a#pid{
-    width: 185px;}
-
-    #savAdmin #move a#pid .preloader-wrapper{
+    #savAdmin #move input{
       display: inline-block;
-      width: 22px;
-      height: 22px;
-      position: relative;
-      top: 5px;}
-
-/*
-  #savAdmin .modal-content table{
-    margin-left: 80px;
-    margin-top: 20px;
-    border: 0px;}
-
-  #savAdmin .modal-content table td{
-    width: 70px!important;
-    padding-bottom: 5px!important;}
-*/
-  #savAdmin #move table.position td{
-    text-align: center;
-    margin: 0px;
-    border: 0px;
-    padding: 0px;
-    width: 42px;}
-
-    #savAdmin #move table.position td a{
-      width: 40px;
-      text-align: center;
-      padding: 0px;
-      margin: 1px;}
-
-    #savAdmin #move table.position td.colZ{
-      padding-left: 20px;}
-
-    #savAdmin #move table.position a.colZ{
-      margin-left: 20px;}
-
-    #savAdmin #move table.position .speedControl{
+      width: 53px;
       margin-top: 10px;
+      margin-bottom: 9px;
+      text-align: center;}
+
+    #savAdmin #move p{
+      margin-top: 21px;
+      margin-bottom: 0px;
+      float: left;}
+
+    #savAdmin #move a#ResetPort{
+      width: 185px;}
+
+    #savAdmin #move a#ResetConfig{
+      width: 185px;}
+
+    #savAdmin #move a#pid{
+      width: 185px;}
+
+      #savAdmin #move a#pid .preloader-wrapper{
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        position: relative;
+        top: 5px;}
+
+    #savAdmin #move #stopMotors{
+      background-color: red;
       width: 100%;
-      background-color: #4d5254;
-      height: 42px;
-      line-height: 42px;
-      text-align: center;
-      color: white;
-      border-radius: 2px;}
+      margin: 10px 0px;}
 
-      #savAdmin #move table.position .speedControl a{
-        display: block;
-        background: transparent;
+    #savAdmin #move table{
+      margin-left: 20px;
+      width: 190px;
+      margin-top: 0px;
+      float: left;}
+
+      #savAdmin #move table.position td{
+        text-align: center;
         margin: 0px;
+        border: 0px;
         padding: 0px;
-        float: left;
-        width: 25%;
-        border-radius: 0px;
-        color: white;
-        border-left: 1px solid white;}
+        width: 42px;}
 
-      #savAdmin #move table.position .speedControl a:first-child{
-        border-left: 0px;}
+        #savAdmin #move table.position td a{
+          width: 40px;
+          text-align: center;
+          padding: 0px;
+          margin: 1px;}
 
-      #savAdmin #move table.position .speedControl a.selected{
-        box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-        background-color: #ff8242;
-        border-radius:2px;
-        }
+        #savAdmin #move table.position td.colZ{
+          padding-left: 20px;}
 
-      #savAdmin #move #stopMotors{
-        background-color: red;
+        #savAdmin #move table.position a.colZ{
+          margin-left: 20px;}
+
+      #savAdmin #move table.position .speedControl{
+        margin-top: 10px;
         width: 100%;
-        margin: 10px 0px;}
+        background-color: #4d5254;
+        height: 42px;
+        line-height: 42px;
+        text-align: center;
+        color: white;
+        border-radius: 2px;}
+
+        #savAdmin #move table.position .speedControl a{
+          display: block;
+          background: transparent;
+          margin: 0px;
+          padding: 0px;
+          float: left;
+          width: 25%;
+          border-radius: 0px;
+          color: white;
+          border-left: 1px solid white;}
+
+        #savAdmin #move table.position .speedControl a:first-child{
+          border-left: 0px;}
+
+        #savAdmin #move table.position .speedControl a.selected{
+          box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+          background-color: #ff8242;
+          border-radius:2px;}
