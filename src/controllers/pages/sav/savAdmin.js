@@ -56,11 +56,9 @@ SavAdminPageClass.prototype.show = function () {
   }else{
 
     that.content.find("video").on("mousedown", function(e){
-      console.log("ok");
       DeviceManager.getSelectedDevice().sendMouseDown(e.offsetX, e.offsetY);
     });
     that.content.find("video").on("mouseup", function(e){
-      console.log("ok");
       DeviceManager.getSelectedDevice().sendMouseUp(e.offsetX, e.offsetY);
     });
 
