@@ -637,11 +637,11 @@ iframe{
       top: 110px}
 
     #zoffsetTestPrinting .zOffsetButton{
-      width: 124px;
+      width: 120px;
       overflow-x: hidden;
       float: left;
       height: 250px;
-      margin-right: 2px;
+      margin-left: 2px;
       position: relative;
       transition: height 1s;}
 

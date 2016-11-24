@@ -80,7 +80,6 @@ P2PRelayClass.prototype.dataHandler = function(data) {
 
       $("#pointer").css("left", data.x);
       $("#pointer").css("top", data.y);
-      console.log("okok");
 
       if(data.t == "mD"){
         win.webContents.sendInputEvent({type:"mouseDown", x:data.x, y:data.y, button:"left", clickCount:1});
