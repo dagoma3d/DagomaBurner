@@ -45,8 +45,8 @@ SavClass.prototype.s4 = function() {
 SavClass.prototype.show = function () {
   var that = this;
   if(window.p2pId == null){
-    window.p2pId = (100000+(Math.random() * 899999)).toFixed();
-    var peer = new Peer(window.p2pId, {
+    var p2pId = (100000+(Math.random() * 899999)).toFixed();
+    var peer = new Peer(p2pId, {
       host: config.sav.url,
       port: config.sav.port,
       path : config.sav.path,
@@ -57,6 +57,7 @@ SavClass.prototype.show = function () {
     peer.on('open', function(id) {
       console.log('My peer ID is: ' + id);
       that.content.find("pre").text(id);
+      window.p2pId = p2pId;
     });
 
 
