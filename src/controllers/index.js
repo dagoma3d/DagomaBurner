@@ -163,7 +163,7 @@ function initPage(){
   NavManager.setContainer($("#pageContainer"));
   NavManager.setPage("home");
   $("#navHome").on("click", function(){
-    NavManager.setPage("home")
+    NavManager.setPage("home");
   });
   $("#navBack").on("click", function(){
     NavManager.back();
