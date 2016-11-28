@@ -1,3 +1,23 @@
+#0.2.36
+  - Correction d'un bug au clic des boutons du header
+
+#0.2.35beta
+  - Corrections visuel sur windows
+  - Correction du Parallelisme pour la E350
+
+#0.2.34beta
+  - Ajout de la détection de Min/MaxTemp
+
+#0.2.33beta
+  - Amélioration du temps de chargement des pages sur windows
+  - Correction des problèmes visuel lié au passage en mode fenêtre de l'application
+  - Ajout de la possibilité de cliqué pour l'utilisateur en P2P
+
+#0.2.32beta
+  - WIP TeamViewer like en p2p
+
+#0.2.31beta
+
 #0.2.30
   - Correction de la procédure de Z-offset sur la 350
   - Ajout d'une montée en Z avant la recherche du plateau au début d'un z-offset
