@@ -38,6 +38,53 @@ ZoffsetPlaceTargetClass.prototype.initView = function () {
   $("#navBack").show();
 };
 
+ZoffsetPlaceTargetClass.prototype.parallelismeX350 = function (callback) {
+  GCodeSender.send([
+    "M117 Parallelisme X",//      ; Message sur afficheur",
+    "M666 Z0",
+    "G28",
+    "G90",
+    "G0 X0 F8000",],
+    false,
+    function(){//;Parallelisme Axe X
+      GCodeSender.send([
+        "G30"],
+        false,
+        function(result){
+          console.log("result", result);
+          result = +(result.split("Z:")[1].split("echo")[0]);
+          console.log("result=", result);
+          GCodeSender.send([
+            "G90",
+            "G0 X350 F8000",
+            "G30"],
+            false,
+            function(result350){
+                console.log("result350", result350);
+                result350 = +(result350.split("Z:")[1].split("echo")[0]);
+                console.log("result350=", result350);
+                var globalResult = result350 - result;
+                GCodeSender.send([
+                  "M666 Z"+globalResult],
+                  false,
+                  function(){
+                    GCodeSender.send([
+                      "G28",
+                      "M666 Z0"],
+                      false,
+                      function(){
+                        callback();
+                      }
+                    );
+                  }
+                );
+            }
+          );
+        }
+      );
+    });
+}
+
 ZoffsetPlaceTargetClass.prototype.show = function () {
   var that = this;
 
@@ -46,28 +93,12 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
   ModalManager.showLoader(I18n.currentLanguage().z_offset_print_moving);
   switch(window.printer.type){
     case "E350":
-      //;Parallelisme Axe X
-      GCodeSender.send([
-        "M117 Parallelisme X",//      ; Message sur afficheur",
-        "G91",
-        "G0 Z10",
-        "G28",// ",
-        "G28 X Y",// ",
-        "G1 Z5 F9000",//           ; lift nozzle",
-        "G92 Z20",//",
-        "G91",//                   ; Passage coordonnees relatives",
-        "G1 Z-28 F200",//             ; Descente en dessous du plateau",
-        "G1 Z28 F9000",//,
-        "M851 Z-10",
-        "G28",//                 ; Home",
-        "G90",
-        "G0 Z15"],
-        false,
-        function(){
-          that.content.show();
-          ModalManager.hideLoader();
-        }
-      );
+    that.parallelismeX350( function(){
+      that.parallelismeX350(function(){
+        that.content.show();
+        ModalManager.hideLoader();
+      })
+    })
     break;
     case "Delta":
       if(window.zOffsetType == 1){
