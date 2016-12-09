@@ -95,8 +95,17 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
     case "E350":
     that.parallelismeX350( function(){
       that.parallelismeX350(function(){
-        that.content.show();
-        ModalManager.hideLoader();
+        GCodeSender.send([
+          "M851 Z-10",
+          "G28",//                 ; Home",
+          "G90",
+          "G0 Z15"],
+          false,
+          function(){
+            that.content.show();
+            ModalManager.hideLoader();
+          }
+        );
       })
     })
     break;
