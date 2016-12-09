@@ -6,6 +6,7 @@
   "author": "Dagoma",
   "private": true,
   "beta":true,
+  "betaNumber":2,
   "dependencies": {
     "avrgirl-arduino": "^1.7.1",
     "lodash": "^4.0.0",

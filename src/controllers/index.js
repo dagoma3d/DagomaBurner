@@ -239,6 +239,7 @@ function initPage(){
 
   if(require(_root+"package.json").beta){
     $("body").addClass("beta");
+    $("#version").append("<span class=\"beta\">b"+require(_root+"package.json").betaNumber+"</span>")
   }
 
   $("#savBar").hide();
