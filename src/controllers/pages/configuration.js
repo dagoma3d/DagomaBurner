@@ -4,6 +4,7 @@ var _root = __dirname + "/../../";
 
 var ViewLoader = require(_root+"controllers/utils/ViewLoader.js");
 var NavManager = require(_root+"manager/NavManager.js");
+var config = require(_root+"config.json");
 
 var ConfigurationPageClass = function ConfigurationPageClass(){
   this.content = null;
@@ -59,6 +60,12 @@ ConfigurationPageClass.prototype.show = function () {
 
   that.keys = [];
   $(document).on("keydown", this.keyDownListener);
+
+  // Sancho : for now, Neva does not support other configuration sections
+  if (window.printer == config.printer.type.Neva) {
+    that.content.find('#configuration-z-offset').hide();
+    that.content.find('#configuration-reset-factory').hide();
+  }
 };
 
 ConfigurationPageClass.prototype.keydownHandler = function (e) {

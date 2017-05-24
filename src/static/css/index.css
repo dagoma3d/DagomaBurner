@@ -415,19 +415,29 @@ html.update{
 ************************************************************************
 */
 
-.selectPrinter p{
+.selectPrinter p
+{
   font-size: 20px;
-  }
+}
 
-  .selectPrinter a{
-    width: 185px;
-    height: 140px;
-    margin: 0px 3px 6px 0px;
-    line-height: 29px;
-    padding: 10px 0px;}
+.selectPrinter a
+{
+  width: 185px;
+  height: 140px;
+  margin: 0px 3px 6px 0px;
+  line-height: 29px;
+  padding: 10px 0px;
+}
 
-  .selectPrinter a img{
-    height: 103px;}
+.selectPrinter a span
+{
+  display: block;
+}
+
+.selectPrinter a img
+{
+  height: 103px;
+}
 
 /*
 ************************************************************************

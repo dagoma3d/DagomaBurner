@@ -16,9 +16,9 @@
         "name":"Explorer350",
         "bootloader":"mega"
       },
-      "delta":{
-        "type":"Delta",
-        "name":"Delta",
+      "Neva":{
+        "type":"Neva",
+        "name":"Neva",
         "bootloader":"mega"
       }
     }
