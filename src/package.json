@@ -1,12 +1,12 @@
 {
   "name": "Dagom'App",
-  "version": "0.2.37",
+  "version": "0.2.40",
   "main": "app.js",
   "description": "Dagom'App",
   "author": "Dagoma",
   "private": true,
   "beta":true,
-  "betaNumber":2,
+  "betaNumber":1,
   "dependencies": {
     "avrgirl-arduino": "^1.7.1",
     "lodash": "^4.0.0",

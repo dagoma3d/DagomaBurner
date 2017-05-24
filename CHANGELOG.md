@@ -1,3 +1,7 @@
+#0.2.40b1
+  - Adding Neva products
+  - Removing parallelism calibration procedure for E350 printers
+
 #0.2.36
   - Correction d'un bug au clic des boutons du header
 
