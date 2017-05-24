@@ -93,21 +93,26 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
   ModalManager.showLoader(I18n.currentLanguage().z_offset_print_moving);
   switch(window.printer.type){
     case "E350":
+    /*
     that.parallelismeX350( function(){
       that.parallelismeX350(function(){
+    */
         GCodeSender.send([
           "M851 Z-10",
           "G28",//                 ; Home",
           "G90",
-          "G0 Z15"],
+          "G0 Z15",
+          "G0 F8000"],
           false,
           function(){
             that.content.show();
             ModalManager.hideLoader();
           }
         );
+    /*
       })
     })
+    */
     break;
     case "Delta":
       if(window.zOffsetType == 1){
