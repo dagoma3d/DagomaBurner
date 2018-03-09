@@ -22,7 +22,8 @@ apply_update_url_to_config() {
 if test $# -lt 1
 then
 	echo "[error] Please provide a build_date as first parameter"
-	echo "[error] E.g: ${0} 17195198"
+	bdExample=`git log -1 --format=%ct`
+	echo "[error] E.g: ${0} ${bdExample}"
 	exit 1
 fi
 
@@ -59,8 +60,10 @@ rm -f build/*.diff
 ############ Windows ############
 echo "[INFO] Building Windows ia32 ..."
 
-# Obtanined by : echo -n 'win arc:ia3' | md5sum
-BIN_HASH="a937d125692dd4f0f86f89458326881d"
+# Obtanined by : echo -n 'win-arc:ia3' | md5sum
+#BIN_HASH="a937d125692dd4f0f86f89458326881d"
+# New update hash from : echo -n 'os:win-arc:ia3' | md5sum
+BIN_HASH="2ae1978d18e9da2c76c3e604c065bfa4"
 apply_update_url_to_config "${BUILD_DATE}" "${BIN_HASH}"
 
 rm -rf build/${APP_NAME}-win-ia32/resources/app/
@@ -76,8 +79,10 @@ echo "[INFO] Built: build/${APP_NAME}-win-ia32.zip"
 ############ Windows ############
 echo "[INFO] Building Windows x64 ..."
 
-# Obtanined by : echo -n 'win arc:x64' | md5sum
-BIN_HASH="29784abacee62e7b397e41a65a26b56d"
+# Obtanined by : echo -n 'win-arc:x64' | md5sum
+#BIN_HASH="29784abacee62e7b397e41a65a26b56d"
+# New update hash from : echo -n 'os:win-arc:x64' | md5sum
+BIN_HASH="59aadf3454997763c10755b4c5e41039"
 apply_update_url_to_config "${BUILD_DATE}" "${BIN_HASH}"
 
 rm -rf build/${APP_NAME}-win-x64/resources/app/
@@ -94,7 +99,9 @@ echo "[INFO] Built: build/${APP_NAME}-win-x64.zip"
 echo "[INFO] Building Mac ..."
 
 # Obtanined by : echo -n 'mac' | md5sum
-BIN_HASH="140c1f12feeb2c52dfbeb2da6066a73a"
+#BIN_HASH="140c1f12feeb2c52dfbeb2da6066a73a"
+# New update hash from : echo -n 'os:mac' | md5sum
+BIN_HASH="da2c74615500af2d5233d1fa9938505b"
 apply_update_url_to_config "${BUILD_DATE}" "${BIN_HASH}"
 
 rm -rf build/${APP_NAME}-darwin-x64/${APP_NAME}.app/Contents/Resources/app/
@@ -111,7 +118,9 @@ echo "[INFO] Built: build/${APP_NAME}-darwin-x64.zip"
 echo "[INFO] Building Linux ..."
 
 # Obtanined by : echo -n 'lin' | md5sum
-BIN_HASH="c93169f1eb9be7246f990690b5e66b2d"
+#BIN_HASH="c93169f1eb9be7246f990690b5e66b2d"
+# New update hash from : echo -n 'os:lin' | md5sum
+BIN_HASH="6b9de332f1b95f66d80e364c87d5b41f"
 apply_update_url_to_config "${BUILD_DATE}" "${BIN_HASH}"
 
 rm -rf build/${APP_NAME}-linux-x64/resources/app/
