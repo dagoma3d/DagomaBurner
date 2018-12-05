@@ -36,8 +36,8 @@ html{
 #version{
   position: fixed;
   bottom: 1px;
-  color: #DDD;
-  left: 6px;}
+  color: grey;
+  right: 6px;}
 
   body.beta #version{
     color: black;
@@ -107,7 +107,7 @@ a, select, button, input, label, img{
     min-height: inherit;
     margin: 2px;
     padding: 0px;
-    width: 60px;
+    width: 47px;
     min-width: 10px;}
 
     #navbar #dropdownLanguage li img{
@@ -422,21 +422,23 @@ html.update{
 
 .selectPrinter a
 {
-  width: 185px;
-  height: 140px;
+  width: 120px;
+  height: 100px;
   margin: 0px 3px 6px 0px;
   line-height: 29px;
   padding: 10px 0px;
+  background-color: grey;
+}
+
+.selectPrinter a:hover {
+  background-color: #e19531;
 }
 
 .selectPrinter a span
 {
   display: block;
-}
-
-.selectPrinter a img
-{
-  height: 103px;
+  font-size: 15px;
+  text-transform: none;
 }
 
 /*

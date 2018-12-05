@@ -86,18 +86,36 @@ AppRunnerClass.prototype.openWindow = function(){
   if(that.mainWindow)
     return;
 
-  that.mainWindow = new BrowserWindow({
-    width: 500,
-    height:  (process.platform=="win32")?480:450,
-    resizable: false, frame: true,
-    //type:"dock",
-    title: "Dagom'App",
-    name: "Dagom'App",
-    'use-content-size': true,
-    autoHideMenuBar: true,
+  if(process.env.NODE_ENV == 'debug') {
+    that.mainWindow = new BrowserWindow({
+      fullscreen: true,
+      resizable: true,
+      frame: true,
+      //type:"dock",
+      title: "DagomApp",
+      name: "DagomApp",
+      'use-content-size': true,
+      autoHideMenuBar: false,
 
-    //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
-  });
+      //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
+    });
+  } else {
+    that.mainWindow = new BrowserWindow({
+      width: 500,
+      height:  (process.platform=="win32")?480:450,
+      resizable: false, frame: true,
+      //type:"dock",
+      title: "DagomApp",
+      name: "DagomApp",
+      'use-content-size': true,
+      autoHideMenuBar: true,
+
+      //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
+    });
+  }
+
+  if(process.env.NODE_ENV == 'debug') that.mainWindow.webContents.openDevTools();
+
   //mainWindow.loadURL(`file://${__dirname}/views/index.html`);
   console.log("that.versionInAppData", that.versionInAppData);
   if(that.versionInAppData){
@@ -115,8 +133,8 @@ AppRunnerClass.prototype.openWindow = function(){
   that.mainWindow.webContents.on('crashed', function () {
     const options = {
       type: 'info',
-      title: "Dagom'App Crashed",
-      message: "Dagom'App Crashed",
+      title: "DagomApp Crashed",
+      message: "DagomApp Crashed",
       buttons: ['Reload', 'Close']
     }
     dialog.showMessageBox(options, function (index) {
@@ -139,7 +157,7 @@ AppRunnerClass.prototype.openUpdateWindow = function(){
     width: 300,
     height:  (process.platform=="win32")?280:250,
     resizable: false, frame: false,
-    title: "Dagom'App",
+    title: "DagomApp",
     'use-content-size': true,
     //"icon":`file://${__dirname}/icon.ico` make a crash on windows! do not uncomment!
   });

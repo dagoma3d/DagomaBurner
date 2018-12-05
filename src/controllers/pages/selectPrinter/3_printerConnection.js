@@ -138,7 +138,7 @@ PrinterConnectionClass.prototype.openDevice = function () {
       //TODO: treat when no printer is discovered
       //no3DPrinterFound();
       printerFound();
-    }, 30000);
+    }, 5000);
     that.selectedDevice.on("printerFound", printerFound);
   }
 

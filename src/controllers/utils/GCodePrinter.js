@@ -231,6 +231,7 @@ GCodePrinterClass.prototype.initPrint = function (callback) {
     break;
     default :
       GCodeSender.send([
+        "D131 E1",
         "G90;",
         "G28 X Y",
         "M106 S160",
@@ -352,6 +353,7 @@ GCodePrinterClass.prototype.initPrintZOffset = function (callback) {
     break;
     default :
       GCodeSender.send([
+        "D131 E1",
         "G90",
         "G28 X Y",
         "M106 S160",

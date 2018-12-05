@@ -99,7 +99,7 @@ SavAdminPageClass.prototype.show = function () {
   })
 
   $("#navbar").css("background-color", "#1e88e5");
-  $("#navbar h1").text("Dagom'App SAV Mode");
+  $("#navbar h1").text("DagomApp SAV Mode");
   that.content.find("#console").empty();
 
   that.needToGoUp = true;
@@ -347,7 +347,7 @@ SavAdminPageClass.prototype.dispose = function () {
     DeviceManager.getSelectedDevice().removeListener("write", this.writeListener);
   }
   $("#navbar").css("background-color", "#e19531");
-  $("#navbar h1").text("Dagom'App");
+  $("#navbar h1").text("DagomApp");
 
   var win = remote.getCurrentWindow();
   win.setBounds(window.currentBounds);

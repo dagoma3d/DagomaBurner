@@ -88,7 +88,7 @@ SavClass.prototype.initVideo = function(peer, conn){
     for (let i = 0; i < sources.length; ++i) {
       console.log(sources[i])
       //if (sources[i].name.indexOf("DagomApp Helper") >= 0 || sources[i].name.indexOf("runElectronApp.sh") >= 0) {
-      if (sources[i].name === "Dagom'App") {
+      if (sources[i].name === "DagomApp") {
         navigator.webkitGetUserMedia({
           audio: false,
           video: {

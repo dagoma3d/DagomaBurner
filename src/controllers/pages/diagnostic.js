@@ -47,7 +47,7 @@ DiagnosticPageClass.prototype.show = function () {
   })
 
   $("#navbar").css("background-color", "#f44336");
-  $("#navbar h1").text("Dagom'App Expert Mode");
+  $("#navbar h1").text("DagomApp Expert Mode");
   that.content.find("#console").empty();
 
   that.needToGoUp = true;
@@ -254,7 +254,7 @@ DiagnosticPageClass.prototype.dispose = function () {
   if(DeviceManager.getSelectedDevice())
     DeviceManager.getSelectedDevice().removeListener("receive", this.dataListener);
   $("#navbar").css("background-color", "#e19531");
-  $("#navbar h1").text("Dagom'App");
+  $("#navbar h1").text("DagomApp");
 };
 
 module.exports = DiagnosticPageClass;

@@ -8,7 +8,7 @@
       },
       "D200V2":{
         "type":"D200V2",
-        "name":"DiscoVeryEasy200",
+        "name":"DiscoEasy200",
         "bootloader":"mega"
       },
       "E350":{
@@ -19,6 +19,16 @@
       "Neva":{
         "type":"Neva",
         "name":"Neva",
+        "bootloader":"mega"
+      },
+      "Magis":{
+        "type":"Neva",
+        "name":"Magis",
+        "bootloader":"mega"
+      },
+      "DU":{
+        "type":"D200V2",
+        "name":"DiscoUltimate",
         "bootloader":"mega"
       }
     }

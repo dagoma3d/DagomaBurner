@@ -32,7 +32,7 @@ try {
 }
 catch (e) {
   appRunner = require("./appRunner.js");
-  console.log("get Application From Application Directory because of an error : ", e);
+  //console.log("get Application From Application Directory because of an error : ", e);
   takeVersionFromAppData = false;
 }
 

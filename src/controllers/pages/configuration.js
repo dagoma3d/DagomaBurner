@@ -46,7 +46,7 @@ ConfigurationPageClass.prototype.initView = function () {
 
 
   that.content.find("#firmware").on("click", function(){
-    NavManager.setPage("firmware/1_preparation");
+    NavManager.setPage("firmware/4_firmware");
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 };

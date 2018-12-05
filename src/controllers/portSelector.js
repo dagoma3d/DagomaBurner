@@ -60,7 +60,7 @@ PortSelectorControllerClass.prototype.openDevice = function () {
     that.selectedDevice.removeListener("ready", deviceReady);
     timeOut3DPrinterSearch = setTimeout(function(){
       no3DPrinterFound();
-    }, 30000);
+    }, 5000);
     that.selectedDevice.on("printerFound", printerFound);
   }
 

@@ -33,7 +33,7 @@ ZoffsetChoseClass.prototype.initView = function () {
     //NavManager.setPage("zoffset/7_TestPrinting");
   });
 
-  if(window.printer.type != "Delta"){
+  if(window.printer.type != "Neva"){
     that.content.find("#initialisation2").hide();
   }else{
     that.content.addClass("delta")

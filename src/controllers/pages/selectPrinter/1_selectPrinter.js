@@ -60,6 +60,16 @@ SelectPrinterClass.prototype.initView = function () {
     NavManager.setPage("selectPrinter/3_printerConnection");
   });
 
+  that.content.find("#Magis").on("click", function(){
+    window.printer = config.printer.type.Neva;
+    NavManager.setPage("selectPrinter/3_printerConnection");
+  });
+
+  that.content.find("#DiscoUltimate").on("click", function(){
+    window.printer = config.printer.type.D200V2;
+    NavManager.setPage("selectPrinter/3_printerConnection");
+  });
+
   $("#navBack").show();
 }
 

@@ -114,7 +114,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
     })
     */
     break;
-    case "Delta":
+    case "Neva":
       if(window.zOffsetType == 1){
         GCodeSender.send([
           "G0 X-77.94 Y-45.00 Z5 F8000",
@@ -199,6 +199,7 @@ ZoffsetPlaceTargetClass.prototype.show = function () {
     break;
     default :
       GCodeSender.send([
+        "D131 E1",
         "G91",
         "G0 Z10",
         "M851 Z-10",//config.initialZOffset //Not -4 but -10 for the new V2],
