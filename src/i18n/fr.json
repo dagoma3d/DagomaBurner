@@ -95,6 +95,8 @@
   "firmware_error_title":"Erreur",
   "firmware_error_description":"La mise à jour a connu une erreur",
   "firmware_go_to_dist":"Vous ne savez pas ce qu'est un fichier .hex et/ou où le trouver? Allez faire un petit tour sur",
+  "dist_url":"https://dist.dagoma.fr/?lang=fr",
+  "dist_label":"dist.dagoma.fr",
   "printer_selection_question":"Quelle imprimante avez-vous ?",
   "printer_selection_discovery":"Discovery200",
   "printer_selection_discoeasy":"DiscoEasy200",

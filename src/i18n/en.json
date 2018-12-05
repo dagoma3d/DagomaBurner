@@ -95,6 +95,8 @@
   "firmware_error_title":"Error",
   "firmware_error_description":"There's been an error with the update",
   "firmware_go_to_dist":"You don't know what .hex is or where to find such a file? Check this link",
+  "dist_url":"https://dist.dagoma3d.com/?lang=en",
+  "dist_label":"dist.dagoma3d.com",
   "printer_selection_question":"What type of printer have you got?",
   "printer_selection_discovery":"Discovery200",
   "printer_selection_discoeasy":"DiscoEasy200",
