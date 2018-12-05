@@ -10,10 +10,10 @@
 
 
 .orange{
-  background-color: #ff8242 !important;}
+  background-color: #FF8200 !important;}
 
 .orange-text{
-  color: #ff8242 !important;}
+  color: #FF8200 !important;}
 
 body, html{
 	overflow: hidden;
@@ -36,7 +36,7 @@ html{
 #version{
   position: fixed;
   bottom: 2px;
-  color: grey;
+  color: #404041;
   left: 15px;}
 
   body.beta #version{
@@ -68,7 +68,7 @@ a, select, button, input, label, img{
 
 #navbar{
   -webkit-app-region: drag;
-  background-color: #e19531;
+  background-color: #FF8200;
   height: 60px;}
 
   #savBar{
@@ -81,7 +81,7 @@ a, select, button, input, label, img{
     text-align: center;}
 
   body.beta #navbar{
-    background-color: grey;}
+    background-color: #404041;}
 
   #navbar #language{
     position: absolute;
@@ -218,7 +218,7 @@ a, select, button, input, label, img{
 		background: white;
 		border-radius: 5px;
 	  margin-top: 10px;
-	  color: #e19531;}
+	  color: #FF8200;}
 
     #globalLoader .description .content{
       padding: 5px;
@@ -280,18 +280,18 @@ html.update{
 */
 
 .dagogrey {
-  background-color: grey;
+  background-color: #404041;
 }
 
 .dagogrey:hover {
-  background-color: #e19531;
+  background-color: #FF8200;
 }
 
 #welcome{
   position: absolute;
   z-index: 10;
   top: 0px;
-  background-color: #e19531;
+  background-color: #FF8200;
   bottom: 0px;
   padding: 60px 50px;
   font-size: 26px;
@@ -371,7 +371,7 @@ html.update{
 
       .buttonListExpendable .collapsible .collapsible-body p{
         margin: 0px;
-        color: #e19531;
+        color: #FF8200;
         font-size: 16px;
         padding: 2px 20px;}
 
@@ -435,11 +435,13 @@ html.update{
   margin: 0px 3px 6px 0px;
   line-height: 29px;
   padding: 10px 0px;
-  background-color: grey;
+  background-color: #fff;
+  color: #404041;
+  border-color: #404041;
 }
 
 .selectPrinter a:hover {
-  background-color: #e19531;
+  background-color: #E7E7E7;
 }
 
 .selectPrinter a span
@@ -483,8 +485,8 @@ html.update{
       list-style-type: none;}
 
     .zoffset [type="checkbox"].filled-in:checked + label:after {
-      border: 2px solid #e19531;
-      background-color: #e19531;}
+      border: 2px solid #FF8200;
+      background-color: #FF8200;}
 
     .zoffset select{
       display: inline-block;
@@ -505,7 +507,7 @@ html.update{
     position: relative;
     top: 70px;
   }
-  
+
   #zoffsetChose a{
     margin: 20px 0px;
     width: 100%;
@@ -566,7 +568,7 @@ html.update{
         font-size: 30px;
         margin: 0px 70px;
         line-height: 140px;
-        text-shadow: 1px 1px 2px grey;}
+        text-shadow: 1px 1px 2px #404041;}
 
 iframe{
   border: 0px;
@@ -714,7 +716,7 @@ iframe{
   }
 
   #firwareDrag #burn {
-    background-color: #e19531;
+    background-color: #FF8200;
     width: 100%;}
 
 /*
@@ -737,7 +739,7 @@ iframe{
     background-color: #4d5254;}
 
   #diagnostic .modal-action{
-    background-color: #ff8242;}
+    background-color: #FF8200;}
 
   #diagnostic .modal-content{
     overflow-y: hidden;}
@@ -860,7 +862,7 @@ iframe{
 
         #diagnostic #move table.position .speedControl a.selected{
           box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-          background-color: #ff8242;
+          background-color: #FF8200;
           border-radius:2px;
           }
 
@@ -938,7 +940,7 @@ iframe{
   margin-left: -10px;}
 
   #savAdmin .modal-action{
-    background-color: #ff8242;}
+    background-color: #FF8200;}
 
   #savAdmin .modal-content{
     overflow-y: hidden;}
@@ -1119,5 +1121,5 @@ iframe{
 
         #savAdmin #move table.position .speedControl a.selected{
           box-shadow: inset 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
-          background-color: #ff8242;
+          background-color: #FF8200;
           border-radius:2px;}
