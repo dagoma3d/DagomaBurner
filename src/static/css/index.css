@@ -35,9 +35,9 @@ html{
 
 #version{
   position: fixed;
-  bottom: 1px;
+  bottom: 2px;
   color: grey;
-  right: 6px;}
+  left: 15px;}
 
   body.beta #version{
     color: black;
@@ -279,6 +279,14 @@ html.update{
 ************************************************************************
 */
 
+.dagogrey {
+  background-color: grey;
+}
+
+.dagogrey:hover {
+  background-color: #e19531;
+}
+
 #welcome{
   position: absolute;
   z-index: 10;
@@ -454,8 +462,8 @@ html.update{
 
   .zoffset #next{
     position: absolute;
-    bottom: 20px;
-    right: 20px;}
+    bottom: 6px;
+    right: 6px;}
 
   #zoffsetPreparation .thanksToPrepare{
     margin-bottom: 0px;}
@@ -496,9 +504,8 @@ html.update{
     /* right: 30px; */
     position: relative;
     top: 70px;
-    background-color: grey !important;
   }
-
+  
   #zoffsetChose a{
     margin: 20px 0px;
     width: 100%;
@@ -590,8 +597,8 @@ iframe{
     margin-right: 30px;}
 
     #zoffsetTuning #next{
-      bottom: 20px;
-      right: 20px;}
+      bottom: 6px;
+      right: 6px;}
 
 #zoffsetMoveNozzle{
   }
@@ -611,8 +618,8 @@ iframe{
     margin-right: 30px;}
 
     #zoffsetMoveNozzle #next{
-      bottom: 20px;
-      right: 20px;}
+      bottom: 6px;
+      right: 6px;}
 
   #zoffsetTestPrintStart iframe{
     margin-left: 73px;
@@ -636,8 +643,8 @@ iframe{
     margin-right: 20px;}
 
   #zoffsetTestPrinting #next{
-    right: 10px;
-    bottom: 10px;}
+    right: 6px;
+    bottom: 6px;}
 
   #zoffsetTestPrinting.ready .zOffsetButton{
     height: 210px;}

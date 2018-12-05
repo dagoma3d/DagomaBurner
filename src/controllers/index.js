@@ -15,17 +15,17 @@ const {Menu, MenuItem} = remote;
 
 var template = [
   {
-    label: 'Dagoma Doctor',
+    label: 'DagomApp',
     submenu: [
       {
-        label: 'Dagoma Doctor',
+        label: 'DagomApp',
         selector: 'orderFrontStandardAboutPanel:'
       },
       {
         type: 'separator'
       },
       {
-        label: 'Hide Dagoma Doctor',
+        label: 'Hide DagomApp',
         accelerator: 'Command+H',
         selector: 'hide:'
       },
