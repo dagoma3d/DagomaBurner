@@ -115,23 +115,44 @@ bash -c "cd build && zip -y -r ${APP_NAME}-darwin-x64.zip ${APP_NAME}-darwin-x64
 echo "[INFO] Built: build/${APP_NAME}-darwin-x64.zip"
 
 ############ Linux ############
-echo "[INFO] Building Linux ..."
+echo "[INFO] Building Linux x64..."
 
-# Obtanined by : echo -n 'lin' | md5sum
+# Obtanined by : echo -n 'lin-arc:x64' | md5sum
 #BIN_HASH="c93169f1eb9be7246f990690b5e66b2d"
-# New update hash from : echo -n 'os:lin' | md5sum
-BIN_HASH="6b9de332f1b95f66d80e364c87d5b41f"
+# New update hash from : echo -n 'os:lin-arc:x64' | md5sum
+BIN_HASH="94c9c7f25dfc313681836fd14d326696"
 apply_update_url_to_config "${BUILD_DATE}" "${BIN_HASH}"
 
 rm -rf build/${APP_NAME}-linux-x64/resources/app/
 cp -R src/ build/${APP_NAME}-linux-x64/resources/app
 rm -rf build/${APP_NAME}-linux-x64/resources/app/node_modules
-cp -R build/modules/linux/node_modules/ build/${APP_NAME}-linux-x64/resources/app/node_modules
+cp -R build/modules/linux-x64/node_modules/ build/${APP_NAME}-linux-x64/resources/app/node_modules
 bash -c "cd build/${APP_NAME}-linux-x64/resources && zip -y -r ../../${APP_NAME}-linux-x64.diff app > /dev/null"
 ${ASAR} pack build/${APP_NAME}-linux-x64/resources/app/ build/${APP_NAME}-linux-x64/resources/app.asar
 rm -rf build/${APP_NAME}-linux-x64/resources/app/
 tar -czf build/${APP_NAME}-linux-x64.tar.gz -C build/ ${APP_NAME}-linux-x64
 bash -c "cd build && zip -y -r ${APP_NAME}-linux-x64.zip ${APP_NAME}-linux-x64.tar.gz > /dev/null"
 echo "[INFO] Built: build/${APP_NAME}-linux-x64.zip"
+
+############ Linux ############
+echo "[INFO] Building Linux ia32..."
+
+# Obtanined by : echo -n 'lin-arc:ia32' | md5sum
+#BIN_HASH="c93169f1eb9be7246f990690b5e66b2d"
+# New update hash from : echo -n 'os:lin-arc:ia3' | md5sum
+BIN_HASH="c57c7c3cbef5767eebdaf470c1bdb07a"
+apply_update_url_to_config "${BUILD_DATE}" "${BIN_HASH}"
+
+rm -rf build/${APP_NAME}-linux-ia32/resources/app/
+cp -R src/ build/${APP_NAME}-linux-ia32/resources/app
+rm -rf build/${APP_NAME}-linux-ia32/resources/app/node_modules
+cp -R build/modules/linux-ia32/node_modules/ build/${APP_NAME}-linux-ia32/resources/app/node_modules
+bash -c "cd build/${APP_NAME}-linux-ia32/resources && zip -y -r ../../${APP_NAME}-linux-ia32.diff app > /dev/null"
+${ASAR} pack build/${APP_NAME}-linux-ia32/resources/app/ build/${APP_NAME}-linux-ia32/resources/app.asar
+rm -rf build/${APP_NAME}-linux-ia32/resources/app/
+tar -czf build/${APP_NAME}-linux-ia32.tar.gz -C build/ ${APP_NAME}-linux-ia32
+bash -c "cd build && zip -y -r ${APP_NAME}-linux-ia32.zip ${APP_NAME}-linux-ia32.tar.gz > /dev/null"
+echo "[INFO] Built: build/${APP_NAME}-linux-ia32.zip"
+
 
 echo "[INFO] Build Finished ..."
