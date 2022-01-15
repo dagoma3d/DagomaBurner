@@ -20,7 +20,7 @@
     "electron-rebuild": "^1.8.2",
     "node-gyp": "^3.3.1",
     "node-pre-gyp": "^0.6.28",
-    "shelljs": "^0.7.0"
+    "shelljs": "^0.8.5"
   },
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build --runtime=electron --target=1.2.3 --target_arch=x64 --directory=node_modules/serialport/ --update-binary --dist-url=https://atom.io/download/atom-shell",
