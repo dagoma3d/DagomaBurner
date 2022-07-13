@@ -46,7 +46,7 @@ DeviceManagerClass.prototype.resetPort = function(){
     results.forEach(function(port){
         var portName = port.comName;
         //console.log(port);
-        if(that.devices[portName] == null && ["FTDI", "Silicon_Labs"].includes(port.manufacturer)){
+        if(that.devices[portName] == null && ["FTDI", "Silicon Labs"].includes(port.manufacturer)){
             console.log("port.serialNumber", port.serialNumber);
             //that.createDevice(portName, new DeviceUSB(portName, port.pnpId, port.manufacturer));
             that.createDevice(portName, new DeviceUSB(portName, port.serialNumber, port.manufacturer));
